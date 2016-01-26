@@ -44,24 +44,38 @@
 				notify.hide();
 				
 				$('img').css({
+					position: 'relative',
+					zIndex: '9999',
 					border: '5px solid rgba(255, 230, 0, 1)',
 					cursor: 'pointer'
 				});
 				
+				console.log('done');
+				
 				$('img').click(function(e){
 					e.preventDefault();
-				
-					
-					notify.fadeIn().delay(300).fadeOut();
 					
 					// get actual image size
 					var timg= new Image();
 					timg.src = $(this).attr("src");
 					var width = timg.width;
 					var height = timg.height;	
+					
+					// sanitize file name
+					// var itype = ('jpg','jpeg','png','gif');
+					
+					src = $(this).attr('src');
 										
-					$.post('http://dev.electricgecko.de/mark/upload.php', {f: $(this).attr('src'), w: width, h: height }).done(function(){
-						
+					if ($(this).attr('src').indexOf('?') > -1) {
+						var url = src.substr(0, src.indexOf('?'));
+					} else {
+						var url = src;
+					}
+					
+					console.log(url);
+					
+					$.post('http://dev.electricgecko.de/mark/upload.php', {f: url, w: width, h: height }).done(function(){
+						notify.fadeIn().delay(300).fadeOut();
 					});
 				});
 				

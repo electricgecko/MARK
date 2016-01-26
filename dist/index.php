@@ -26,9 +26,23 @@
 	</script>
 	
 	<style>
+		body {
+			font-family: 'Arial', sans-serif;
+
+		}
+		
+		h1 {
+			font-weight: normal;
+			font-size: 8pt;
+			letter-spacing: 2px;
+			
+			position: fixed;
+			top: 10px;
+			left: 10px;
+		}
 		
 		main {
-			margin: 3% auto;
+			margin: 60px auto;
 			width: 95%;
 		}
 		
@@ -80,13 +94,16 @@
 
 <body>
 	
+	<h1>MARK</h1>
+	
 	<main>
 		
 		<ul>
 
 		<?php
-			$dirname = "imgs/";
-			$images = glob($dirname."*.jpg");
+			$dirname = 'imgs/';
+			$images = glob($dirname.'*.{jpg,jpeg,gif,png}', GLOB_BRACE);
+			sort($images);
 		
 		
 			foreach($images as $image) {
