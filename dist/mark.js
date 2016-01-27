@@ -61,7 +61,6 @@
 					var width = timg.width;
 					var height = timg.height;	
 					
-					// sanitize file name
 					// var itype = ('jpg','jpeg','png','gif');
 					
 					src = $(this).attr('src');

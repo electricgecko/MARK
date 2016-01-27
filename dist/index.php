@@ -15,11 +15,32 @@
 	<script type="text/javascript">
 		
 		$(window).load(function(){	
-			$('main').masonry({
+			marked = $('main ul').masonry({
 				itemSelector: 'li',
-				columnWidth: 60,
-				gutter: 0
+				gutter: 40
 			});	
+			
+		});
+		
+		$(document).ready(function(){
+
+		// keyboard controls to adjust image size
+		$(window).keydown(function(evt) {	
+		  
+		  	var colwidth = parseInt($('li').css('width'));
+		  
+		  	// plus
+		    if (evt.keyCode === 187) {
+				$('li').css('width', colwidth+colwidth*.3+'px');
+				marked.masonry('layout');
+		
+			// minus
+		    } else if (evt.keyCode === 189) {
+				$('li').css('width', colwidth-colwidth*.3+'px');
+				marked.masonry('layout');
+		    }
+		    
+		});
 			
 		});
 	</script>
@@ -50,7 +71,7 @@
 		
 		li {
 			width: 250px;
-			margin-bottom: 20px;
+			margin-bottom: 40px;
 			
 			font-size: 9px;
 			font-family: 'Arial', sans-serif;
