@@ -11,16 +11,16 @@
 		script.onload = script.onreadystatechange = function(){
 			if (!done && (!this.readyState || this.readyState == "loaded" || this.readyState == "complete")) {
 				done = true;
-				initMyBookmarklet();
+				initMARK();
 			}
 		};
-		document.getElementsByTagName("head")[0].appendChild(script);
+		document.body.appendChild(script);
 	} else {
-		initMyBookmarklet();
+		initMARK();
 	}
 	
-	function initMyBookmarklet() {
-		(window.myBookmarklet = function() {
+	function initMARK() {
+		(window.MARK = function() {
 			
 			$(document).ready(function(){	
 				
@@ -74,7 +74,7 @@
 					
 					console.log(url);
 					
-					$.post('http://dev.electricgecko.de/mark/upload.php', {f: url, w: width, h: height }).done(function(){
+					$.post('http://dev.electricgecko.de/mark/markload.php', {f: url, w: width, h: height }).done(function(){
 						notify.fadeIn().delay(300).fadeOut();
 					});
 				});

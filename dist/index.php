@@ -1,17 +1,16 @@
 <!DOCTYPE html>
 <head>
 	<meta charset="UTF-8"/>
-	<meta name="author" content="We Are Fellows"/>
-	<meta name="description" content="">
-	<meta name="keywords" content="">
-	<meta name="robots" content="index, follow">
+	<meta name="author" content="Malte Müller"/>
+	<meta name="description" content="Private collection of images, collected silently by M A R K.">
+	<meta name="robots" content="noindex, nofollow">
 
 	<meta name="viewport" content="width=device-width,initial-scale=1.0">
 	
 	<title>M A R K</title>
 	
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-	<script src="http://dev.electricgecko.de/mark/masonry.js"></script>
+	<script src="http://dev.electricgecko.de/mark/vendor/masonry.js"></script>
 	
 	<script type="text/javascript">
 		
@@ -28,7 +27,6 @@
 	<style>
 		body {
 			font-family: 'Arial', sans-serif;
-
 		}
 		
 		h1 {
@@ -103,7 +101,7 @@
 		<?php
 			$dirname = 'imgs/';
 			$images = glob($dirname.'*.{jpg,jpeg,gif,png}', GLOB_BRACE);
-			sort($images);
+			rsort($images);
 		
 		
 			foreach($images as $image) {
@@ -116,8 +114,7 @@
 				$image_w = $img_info[1];
 				$image_h = $img_info[2];	
 				$image_title = $img_info[3];
-		
-				
+	
 				echo '<li><figure><a href="'.$image.'"><img width="'.$image_w.'" height="'.$image_h.'" src="'.$image.'" /></a></figure></li>';
 			}
 		
