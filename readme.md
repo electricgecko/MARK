@@ -1,4 +1,4 @@
-a# M A R K
+# M A R K
 Very basic image bookmarking
 
 ### bookmarklet
@@ -38,4 +38,4 @@ Very basic image bookmarking
 * ~~on click open server copy of original image~~
 * (add url/title with link to original image file)
 * ~~delete files (x btn on hover)~~
-* ~~resize images via keypress~~
+* ~~resize images via keypress, remember image size in local storage~~
