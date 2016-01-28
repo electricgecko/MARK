@@ -25,7 +25,6 @@
 			$(document).ready(function(){	
 				
 				// create notification element
-				
 				notify = $('<span id="MARK-notify" class="MARK-notify">Saved to MARK</span>').appendTo('body');
 				
 				notify.css({
@@ -43,6 +42,8 @@
 				
 				notify.hide();
 				
+				
+				// mark img elements
 				$('img').css({
 					position: 'relative',
 					zIndex: '9999',
@@ -50,9 +51,25 @@
 					cursor: 'pointer'
 				});
 				
+				// kill link elements around images to prevent leaving the page instead of saving image
+				$('img').each(function(){
+					$(this).off();
+					if ($(this).closest('a').length) {
+						var el = $(this).closest('a');
+						el.off();
+						el.attr('href','');
+						el.attr('data-url','');
+						console.log($(this).closest('a'));
+					}
+				
+				})					
+
+				
+				
 				console.log('done');
 				
 				$('img').click(function(e){
+					
 					e.preventDefault();
 					
 					// get actual image size

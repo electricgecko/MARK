@@ -23,24 +23,54 @@
 		});
 		
 		$(document).ready(function(){
+			
+			if (localStorage.getItem('MARKsz') === null) {
+				// set image size to default value
+				sz = parseInt($('main ul li').css('width'));
+			} else {
+				// set image size to stored value
+				sz = localStorage.getItem('MARKsz');
+					$('li').css('width',localStorage.getItem('MARKsz')+'px');
+					
+			}
 
-		// keyboard controls to adjust image size
-		$(window).keydown(function(evt) {	
-		  
-		  	var colwidth = parseInt($('li').css('width'));
-		  
-		  	// plus
-		    if (evt.keyCode === 187) {
-				$('li').css('width', colwidth+colwidth*.3+'px');
-				marked.masonry('layout');
-		
-			// minus
-		    } else if (evt.keyCode === 189) {
-				$('li').css('width', colwidth-colwidth*.3+'px');
-				marked.masonry('layout');
-		    }
-		    
-		});
+			// keyboard controls to adjust image size
+			$(window).keydown(function(evt) {	
+			  
+			  	var colwidth = parseInt($('li').css('width'));
+			  	var mult = .3; // image resize multiplier for each keypress
+			  
+			  	// plus
+			    if (evt.keyCode === 187) {
+					$('li').css('width', colwidth+colwidth*mult+'px');
+					marked.masonry('layout');
+					localStorage.setItem('MARKsz',colwidth+colwidth*mult);
+			
+				// minus
+			    } else if (evt.keyCode === 189) {
+					$('li').css('width', colwidth-colwidth*mult+'px');
+					marked.masonry('layout');
+					localStorage.setItem('MARKsz',colwidth-colwidth*mult);
+			    }
+			    
+			});
+			
+			// delete images
+			$('a.del').each(function(){
+				$(this).click(function(){
+					// get image url
+					var url = $(this).next().find('img').attr('src');
+					console.log(url);
+					
+					// pass to delete helper
+					$.post('http://dev.electricgecko.de/mark/markdel.php', {f: url,}).done(function(){
+						console.log('deleted');
+					});
+					
+					// remove image from view & rearrange layout
+					marked.masonry('remove', $(this).parent()).masonry('layout');	
+				})
+			});
 			
 		});
 	</script>
@@ -76,7 +106,32 @@
 			font-size: 9px;
 			font-family: 'Arial', sans-serif;
 			letter-spacing: 1px;
-		}		
+		}
+		
+		li a.del {
+			display: none;
+			
+			font-size: 160%;
+			text-decoration: none;
+			color: #000;
+			line-height: 20px;
+			text-align: center;
+			
+			position: absolute;
+			width: 20px;
+			height: 20px;
+			z-index: 10;
+			top: 0;
+			right: 0;
+		}
+		
+		li a.del:hover {
+			background: #fff;
+		}
+		
+		li:hover a.del {
+			display: block;
+		}
 		
 		figure {
 			margin: 0;
@@ -84,8 +139,7 @@
 			
 		}
 	
-		
-		figure > a:hover:after {
+		li:hover figure > a:after {
 			content: ' ';
 			display: block;
 			position: absolute;
@@ -136,7 +190,7 @@
 				$image_h = $img_info[2];	
 				$image_title = $img_info[3];
 	
-				echo '<li><figure><a href="'.$image.'"><img width="'.$image_w.'" height="'.$image_h.'" src="'.$image.'" /></a></figure></li>';
+				echo '<li><a class="del" href="javascript:void(0);">×</a><figure><a href="'.$image.'"><img width="'.$image_w.'" height="'.$image_h.'" src="'.$image.'" /></a></figure></li>';
 			}
 		
 		?>
