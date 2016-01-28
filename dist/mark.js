@@ -59,7 +59,6 @@
 						el.off();
 						el.attr('href','');
 						el.attr('data-url','');
-						console.log($(this).closest('a'));
 					}
 				
 				})					
