@@ -17,4 +17,5 @@ Very basic image bookmarking
 * (per folder)
 * ~~on click open server copy of original image~~
 * (add url/title with link to original image file)
-* delete files (x btn on hover)
+* ~~delete files (x btn on hover)~~
+* ~~resize images via keypress~~
