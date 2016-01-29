@@ -187,8 +187,9 @@
 			$dirname = 'imgs/';
 			$images = glob($dirname.'*.{jpg,jpeg,gif,png}', GLOB_BRACE);
 			rsort($images);
-		
-		
+			
+			$imgs = array();
+			
 			foreach($images as $image) {
 				
 			// read image info from filename
@@ -199,8 +200,16 @@
 				$image_w = $img_info[1];
 				$image_h = $img_info[2];	
 				$image_title = $img_info[3];
-	
-				echo '<li><a class="del" href="javascript:void(0);">×</a><figure><a href="'.$image.'"><img width="'.$image_w.'" height="'.$image_h.'" src="'.$image.'" /></a></figure></li>';
+				
+				// self-cleaning: if image is a duplicate, don't show it and delete it from server
+				
+				if (in_array($image_title, $imgs)) {
+					unlink($image);
+				} else {
+					array_push($imgs, $image_title);
+					echo '<li><a class="del" href="javascript:void(0);">×</a><figure><a href="'.$image.'"><img width="'.$image_w.'" height="'.$image_h.'" src="'.$image.'" /></a></figure></li>';
+				}
+			
 			}
 		
 		?>
