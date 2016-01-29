@@ -1,5 +1,12 @@
 (function(){
-
+	
+	// enter you M A R K installation path here
+	
+	var MARKpath = 'http://dev.electricgecko.de/mark/'; 
+	
+	/* ------------------------------------------------- */
+	
+	
 	// the minimum version of jQuery we want
 	var v = "2.1.1";
 
@@ -89,7 +96,7 @@
 					
 					console.log(url);
 					
-					$.post('http://dev.electricgecko.de/mark/markload.php', {f: url, w: width, h: height }).done(function(){
+					$.post(MARKpath+'markload.php', {f: url, w: width, h: height }).done(function(){
 						notify.fadeIn().delay(300).fadeOut();
 					});
 				});

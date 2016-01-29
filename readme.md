@@ -1,5 +1,5 @@
 # M A R K
-Very basic image bookmarking
+Very simple image bookmarking
 
 ### bookmarklet
 * ~~get all img elements from page~~

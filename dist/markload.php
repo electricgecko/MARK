@@ -23,6 +23,7 @@
 	return strtolower($f);
 	}
 	
+	// file name exploder char
 	$exp = '-';
 	
 	// get vars
@@ -35,9 +36,9 @@
 	
 	// $img_file = basename($img);
 	$img_file =sanitizeFilename(basename($img));
-
+	
+	// define image name
 	$img_name = 'imgs/'.$img_date.$exp.$img_w.$exp.$img_h.$exp.$img_file;
-	
-	
+
 	copy($img, $img_name);
 ?>

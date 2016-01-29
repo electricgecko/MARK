@@ -10,7 +10,7 @@
 	<title>M A R K</title>
 	
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-	<script src="http://dev.electricgecko.de/mark/vendor/masonry.js"></script>
+	<script src="vendor/masonry.js"></script>
 	
 	<script type="text/javascript">
 		
@@ -60,13 +60,10 @@
 				$(this).click(function(){
 					// get image url
 					var url = $(this).next().find('img').attr('src');
-					console.log(url);
 					
 					// pass to delete helper
-					$.post('http://dev.electricgecko.de/mark/markdel.php', {f: url,}).done(function(){
-						console.log('deleted');
-					});
-					
+					$.post('markdel.php', {f: url,})
+										
 					// remove image from view & rearrange layout
 					marked.masonry('remove', $(this).parent()).masonry('layout');	
 				})
@@ -92,7 +89,6 @@
 		
 		main {
 			margin: 60px auto;
-			width: 95%;
 		}
 		
 		ul {
@@ -161,6 +157,20 @@
 			width: 100%;
 			height: auto;
 		}	
+
+		@media only screen 
+		and (min-device-width : 320px) 
+		and (max-device-width : 568px)  {
+			
+			ul {
+				/* this is hacky but simpler than a js implementation */
+				margin-left: -20px;	
+			}
+			
+			li {
+				width: 125px;
+			}
+		}
 		
 	</style>
 </head>
