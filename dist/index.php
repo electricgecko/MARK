@@ -16,7 +16,7 @@
 		
 		$(window).load(function(){	
 			marked = $('main ul').masonry({
-				itemSelector: 'li',
+				itemSelector: 'main ul li',
 				gutter: 40
 			});	
 			
@@ -24,13 +24,15 @@
 		
 		$(document).ready(function(){
 			
+			$('aside').hide();
+			
 			if (localStorage.getItem('MARKsz') === null) {
 				// set image size to default value
 				sz = parseInt($('main ul li').css('width'));
 			} else {
 				// set image size to stored value
 				sz = localStorage.getItem('MARKsz');
-					$('li').css('width',localStorage.getItem('MARKsz')+'px');
+					$('main ul li').css('width',localStorage.getItem('MARKsz')+'px');
 					
 			}
 
@@ -42,27 +44,65 @@
 			  
 			  	// plus
 			    if (evt.keyCode === 187) {
-					$('li').css('width', colwidth+colwidth*mult+'px');
+					$('main ul li').css('width', colwidth+colwidth*mult+'px');
 					marked.masonry('layout');
 					localStorage.setItem('MARKsz',colwidth+colwidth*mult);
 			
 				// minus
 			    } else if (evt.keyCode === 189) {
-					$('li').css('width', colwidth-colwidth*mult+'px');
+					$('main ul li').css('width', colwidth-colwidth*mult+'px');
 					marked.masonry('layout');
 					localStorage.setItem('MARKsz',colwidth-colwidth*mult);
 			    }
-			    
 			});
+			
+			// shift-click images to mark them
+			$('main ul li').click(function(e) {
+				if (e.shiftKey) {
+					
+					e.preventDefault();
+					
+					// mark clicked image as selected
+					$(this).toggleClass('selected');
+					
+					// if at least one image is selected, show sidebar
+					if ($('li.selected').length) {
+						$('aside').show();
+					} else {
+						$('aside').hide();
+					}
+				}
+			});
+			
+			// move images to folders, remove images from folders
+			
+			$('aside ol li').not('aside ol li:first').each(function(){
+				$(this).click(function(){
+										
+					// get desitnation folder name
+					var dir = $(this).text();
+							
+					// get image url
+					var sel = $('main ul li.selected figure a img');
+					
+					// pass to move helper
+					sel.each(function(){
+						url = $(this).attr('src');
+						$.post('markmove.php', {f: url, d: dir})
+					})
+					
+				});
+			})
 			
 			// delete images
 			$('a.del').each(function(){
 				$(this).click(function(){
+					
 					// get image url
 					var url = $(this).next().find('img').attr('src');
 					
 					// pass to delete helper
-					$.post('markdel.php', {f: url,})
+					$.post('markdel.php', {f: url})
 										
 					// remove image from view & rearrange layout
 					marked.masonry('remove', $(this).parent()).masonry('layout');	
@@ -146,7 +186,16 @@
 			background: rgba(255, 230, 0, 0.5)
 		}
 		
-			
+		li.selected figure > a:after {
+			content: ' ';
+			display: block;
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			top: 0;
+		
+			background: rgba(255, 65, 13, 0.5)		
+		}
 		
 		span {
 			display: block;
@@ -157,7 +206,46 @@
 			width: 100%;
 			height: auto;
 		}	
+		
+		aside {
+			position: fixed;
+			z-index: 15;
+			
+			right: 0;
+			top: 0;
+			height: 100%;
+			width: 300px;
+			
+			background: #efefef;
+		}
 
+		aside ol {
+			list-style: none;
+			padding: 0;
+			width: 100%;
+		}
+		
+		aside ol li {
+			padding: 0;
+			display: block;
+			width: 100%;
+			height: 60px;
+			
+			background: #ccc;
+			line-height: 20px;
+			margin: 0 0 2px 0;
+			
+			cursor: pointer;
+		}
+		
+		aside ol li:hover {
+			background: yellow;
+		}
+		
+		aside ol li span {
+			padding: 5px 0 0 5px;
+		}
+		
 		@media only screen 
 		and (min-device-width : 320px) 
 		and (max-device-width : 568px)  {
@@ -184,11 +272,33 @@
 		<ul>
 
 		<?php
-			$dirname = 'imgs/';
-			$images = glob($dirname.'*.{jpg,jpeg,gif,png}', GLOB_BRACE);
-			rsort($images);
+			$imgdir = 'imgs';
+			$folders = array_filter(glob('imgs/*', GLOB_NOCHECK), 'is_dir');
+			$images = array();
+		
+			// get images, including subfolders
 			
-			$imgs = array();
+			$images = glob($imgdir.'/*.{jpg,jpeg,gif,png}', GLOB_BRACE);
+			
+			foreach ($folders as $folder) {
+				$t = glob($folder.'/*.{jpg,jpeg,gif,png}', GLOB_BRACE);
+				$images = array_merge($images,$t);	
+			}
+			
+			// sort images, ingoring folders
+			
+			function cmp($a, $b) {
+				$a = basename($a);
+				$b = basename($b);
+				
+				if ($a == $b) {
+					return 0;
+				}	
+					return ($a < $b) ? 1 : -1;
+			}
+			
+			uasort($images, 'cmp');
+	
 			
 			foreach($images as $image) {
 				
@@ -212,10 +322,30 @@
 			
 			}
 		
+		
 		?>
 		
 		</ul>
 
 	</main>
+	
+	<aside>
+		<ol>
+			<li>everything</li>
+		<?php
+			
+			if (count($folders) > 0) {				
+				foreach ($folders as $folder) {
+					echo '<li><span>'.basename($folder).'</span></li>';
+				}
+
+			} else {
+				echo 'no folders';
+			}
+		?>
+		</ol>
+		
+	</aside>
+	
 
 </body>

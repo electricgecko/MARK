@@ -64,8 +64,8 @@
 					if ($(this).closest('a').length) {
 						var el = $(this).closest('a');
 						el.off();
-						el.attr('href','');
-						el.attr('data-url','');
+						el.attr('href','javascript:void(0);');
+						el.attr('data-url','#');
 					}
 				
 				})					
