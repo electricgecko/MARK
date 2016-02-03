@@ -11,7 +11,6 @@
 	
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 	<script src="vendor/masonry.js"></script>
-	
 	<script type="text/javascript">
 		
 		$(window).load(function(){	
@@ -19,45 +18,49 @@
 				itemSelector: 'main ul li',
 				gutter: 40
 			});	
-			
 		});
-		
+
 		$(document).ready(function(){
 			
+			imgdir = 'imgs/';
+			images = $('main ul li');
+			hidden = null;
+		
+			// hide sidebar
 			$('aside').hide();
 			
+			// get image size from local storage
 			if (localStorage.getItem('MARKsz') === null) {
 				// set image size to default value
-				sz = parseInt($('main ul li').css('width'));
+				sz = parseInt(images.css('width'));
 			} else {
 				// set image size to stored value
 				sz = localStorage.getItem('MARKsz');
-					$('main ul li').css('width',localStorage.getItem('MARKsz')+'px');
-					
+					images.css('width',localStorage.getItem('MARKsz')+'px');
 			}
 
 			// keyboard controls to adjust image size
 			$(window).keydown(function(evt) {	
 			  
-			  	var colwidth = parseInt($('li').css('width'));
+			  	var colwidth = parseInt(images.css('width'));
 			  	var mult = .3; // image resize multiplier for each keypress
 			  
 			  	// plus
 			    if (evt.keyCode === 187) {
-					$('main ul li').css('width', colwidth+colwidth*mult+'px');
+					images.css('width', colwidth+colwidth*mult+'px');
 					marked.masonry('layout');
 					localStorage.setItem('MARKsz',colwidth+colwidth*mult);
 			
 				// minus
 			    } else if (evt.keyCode === 189) {
-					$('main ul li').css('width', colwidth-colwidth*mult+'px');
+					images.css('width', colwidth-colwidth*mult+'px');
 					marked.masonry('layout');
 					localStorage.setItem('MARKsz',colwidth-colwidth*mult);
 			    }
 			});
 			
 			// shift-click images to mark them
-			$('main ul li').click(function(e) {
+			images.click(function(e) {
 				if (e.shiftKey) {
 					
 					e.preventDefault();
@@ -75,8 +78,8 @@
 			});
 			
 			// move images to folders, remove images from folders
-			
 			$('aside ol li').not('aside ol li:first').each(function(){
+				
 				$(this).click(function(){
 										
 					// get desitnation folder name
@@ -84,15 +87,42 @@
 							
 					// get image url
 					var sel = $('main ul li.selected figure a img');
-					
+			
 					// pass to move helper
 					sel.each(function(){
+						el = $(this);
 						url = $(this).attr('src');
-						$.post('markmove.php', {f: url, d: dir})
-					})
-					
+						$.post('markmove.php', {f: url, d: dir}).done(function(){
+							var findex = el.attr('src').lastIndexOf('/') + 1;
+							var sel_filename = el.attr('src').substr(findex);
+							var sel_fileurl = imgdir+dir+'/'+sel_filename;
+							el.attr('src',sel_fileurl);
+							el.parent().attr('href',sel_fileurl);
+						});
+					});
 				});
 			})
+			
+			
+			// filter images by folder
+			$('nav ol li').click(function(){
+				
+				if (hidden != null) {
+					hidden.appendTo($('main ul'));
+					
+					marked.masonry('reloadItems');
+					marked.masonry('layout');
+					
+					hidden = null;
+				}		
+						
+				if (!$(this).is('nav ol li:first')) {						
+					hidden = images.not('.'+$(this).text());
+					marked.masonry('remove',hidden);
+					marked.masonry('layout');
+				}
+				
+			});
 			
 			// delete images
 			$('a.del').each(function(){
@@ -108,34 +138,65 @@
 					marked.masonry('remove', $(this).parent()).masonry('layout');	
 				})
 			});
-			
 		});
 	</script>
 	
 	<style>
-		body {
-			font-family: 'Arial', sans-serif;
+		
+		* {
+			font-weight: normal;
+			font-size: 100%;
 		}
 		
-		h1 {
+		body {
+			font-family: 'Arial', sans-serif;
 			font-weight: normal;
 			font-size: 8pt;
-			letter-spacing: 2px;
 			
+		}
+		
+		ul, ol {
+			list-style: none;
+			padding: 0;
+			margin: 0;
+		}
+		
+		header {
 			position: fixed;
 			top: 10px;
 			left: 10px;
+			z-index: 10;			
+		}
+		
+		nav {
+			display: inline;
+			margin-left: 100px;
+		}
+		
+		nav ol {
+			display: inline;
+		}
+		
+		nav ol li {
+			display: inline;
+			margin-right: 20px;
+			cursor: pointer;
+		}
+		
+		nav ol li:hover {
+			text-decoration: underline;
+		}
+		
+		h1 {
+			display: inline;
+			letter-spacing: 2px;
 		}
 		
 		main {
 			margin: 60px auto;
 		}
 		
-		ul {
-			list-style: none;
-		}
-		
-		li {
+		main ul li {
 			width: 250px;
 			margin-bottom: 40px;
 			
@@ -144,7 +205,7 @@
 			letter-spacing: 1px;
 		}
 		
-		li a.del {
+		main ul li a.del {
 			display: none;
 			
 			font-size: 160%;
@@ -161,11 +222,11 @@
 			right: 0;
 		}
 		
-		li a.del:hover {
+		main ul li a.del:hover {
 			background: #fff;
 		}
 		
-		li:hover a.del {
+		main ul li:hover a.del {
 			display: block;
 		}
 		
@@ -175,7 +236,7 @@
 			
 		}
 	
-		li:hover figure > a:after {
+		main ul li:hover figure > a:after {
 			content: ' ';
 			display: block;
 			position: absolute;
@@ -186,7 +247,7 @@
 			background: rgba(255, 230, 0, 0.5)
 		}
 		
-		li.selected figure > a:after {
+		main ul li.selected figure > a:after {
 			content: ' ';
 			display: block;
 			position: absolute;
@@ -197,7 +258,7 @@
 			background: rgba(255, 65, 13, 0.5)		
 		}
 		
-		span {
+		figure span {
 			display: block;
 		}
 		
@@ -264,67 +325,88 @@
 </head>
 
 <body>
+
+	<?php
+		$imgdir = 'imgs'; // main image folder
+		$folders = array_filter(glob('imgs/*', GLOB_NOCHECK), 'is_dir'); // read folders in main image folder
+		$images = array();	
+		
+		$c = 0;
+
+		// read main image folder	
+		$main_content = glob($imgdir.'/*.{jpg,jpeg,gif,png}', GLOB_BRACE);
+		
+		// add to image object
+		foreach ($main_content as $image) {
+			$images[$c]['name'] = $image;
+			$images[$c]['folder'] = 'imgs';
+			$c++;
+		}
+			
+		foreach ($folders as $folder) {
+			
+			// read folder content
+			$folder_content = glob($folder.'/*.{jpg,jpeg,gif,png}', GLOB_BRACE);
+			
+			// add to image object
+			foreach ($folder_content as $image) {
+				$images[$c]['name'] = $image;
+				$images[$c]['folder'] = $folder;
+				$c++;
+			}			
+		}
 	
-	<h1>MARK</h1>
+		// sort image object
+		uasort($images, function($a, $b) {
+			return basename($b['name']) - basename($a['name']);
+		});
+	?>
+		
+	<header>
+		<h1>MARK</h1>
+		<nav>
+			<ol>
+				<li>everything</li>
+				<?php
+					if (count($folders) > 0) {				
+						foreach ($folders as $folder) {
+							echo '<li><span>'.basename($folder).'</span></li>';
+						}
+					}
+				?>
+			</ol>
+		</nav>
+	
+	</header>
 	
 	<main>
-		
 		<ul>
-
-		<?php
-			$imgdir = 'imgs';
-			$folders = array_filter(glob('imgs/*', GLOB_NOCHECK), 'is_dir');
-			$images = array();
-		
-			// get images, including subfolders
-			
-			$images = glob($imgdir.'/*.{jpg,jpeg,gif,png}', GLOB_BRACE);
-			
-			foreach ($folders as $folder) {
-				$t = glob($folder.'/*.{jpg,jpeg,gif,png}', GLOB_BRACE);
-				$images = array_merge($images,$t);	
-			}
-			
-			// sort images, ingoring folders
-			
-			function cmp($a, $b) {
-				$a = basename($a);
-				$b = basename($b);
-				
-				if ($a == $b) {
-					return 0;
-				}	
-					return ($a < $b) ? 1 : -1;
-			}
-			
-			uasort($images, 'cmp');
+			<?php
 	
-			
-			foreach($images as $image) {
+				$index = 0;
 				
-			// read image info from filename
-			
-				$img_info = explode("-", basename($image));
-				
-				$image_date = $img_info[0];
-				$image_w = $img_info[1];
-				$image_h = $img_info[2];	
-				$image_title = $img_info[3];
-				
-				// self-cleaning: if image is a duplicate, don't show it and delete it from server
-				
-				if (in_array($image_title, $imgs)) {
-					unlink($image);
-				} else {
-					array_push($imgs, $image_title);
-					echo '<li><a class="del" href="javascript:void(0);">×</a><figure><a href="'.$image.'"><img width="'.$image_w.'" height="'.$image_h.'" src="'.$image.'" /></a></figure></li>';
+				foreach ($images as $image) {
+		
+						// parse image info from filename
+						$img_info = explode("-", basename($image['name']));
+						$image_date = $img_info[0];
+						$image_w = $img_info[1];
+						$image_h = $img_info[2];	
+						$image_title = $img_info[3];
+						
+						// self-cleaning: if image is a duplicate, don't show it and delete it from server
+						if (in_array($image_title, $displayed_images)) {
+						unlink($image);
+						
+						} else {
+							
+							// show image
+							array_push($displayed_images, $image_title);
+							echo '<li id="'.$index.'" class="'.basename($image['folder']).'"><a class="del" href="javascript:void(0);">×</a><figure><a href="'.$image['name'].'"><img width="'.$image_w.'" height="'.$image_h.'" src="'.$image['name'].'" /></a></figure></li>';
+							$index++;
+						}
 				}
-			
-			}
-		
-		
-		?>
-		
+			?>
 		</ul>
 
 	</main>
@@ -332,20 +414,15 @@
 	<aside>
 		<ol>
 			<li>everything</li>
-		<?php
-			
-			if (count($folders) > 0) {				
-				foreach ($folders as $folder) {
-					echo '<li><span>'.basename($folder).'</span></li>';
+			<?php
+				
+				// list folders 
+				if (count($folders) > 0) {				
+					foreach ($folders as $folder) {
+						echo '<li><span>'.basename($folder).'</span></li>';
+					}
 				}
-
-			} else {
-				echo 'no folders';
-			}
-		?>
+			?>
 		</ol>
-		
 	</aside>
-	
-
 </body>
