@@ -58,21 +58,55 @@
 					localStorage.setItem('MARKsz',colwidth-colwidth*mult);
 			    }
 			});
-			
-			// shift-click images to mark them
-			images.click(function(e) {
-				if (e.shiftKey) {
+
+			// remove selections by clicking in white space
+			$(document).click(function(e){
+				
+				if (!$(e.target).closest('li').length) {
 					
-					e.preventDefault();
-					
-					// mark clicked image as selected
-					$(this).toggleClass('selected');
-					
-					// if at least one image is selected, show sidebar
+					// remove selected
 					if ($('li.selected').length) {
-						$('aside').show();
-					} else {
+						$('li.selected').removeClass('selected');
+						$('main').css({
+							'max-width': 'none',
+							'margin': '60px auto',
+						});
+						marked.masonry('layout');
 						$('aside').hide();
+					}
+
+				} else {
+					
+					el = $(e.target).closest('li');
+
+					// shift-click images to mark them
+					if (e.shiftKey) {
+								
+						e.preventDefault();
+						
+						// mark clicked image as selected
+						el.toggleClass('selected');
+						
+						// if at least one image is selected, show sidebar
+						if ($('li.selected').length) {
+							
+							$('main').css({
+								'max-width': $(window).width()-$('aside').width(),
+								'margin': '60px 0 60px 0'
+							});
+							marked.masonry('layout');
+							$('aside').show();
+							
+						} else {
+							
+							$('main').css({
+								'max-width': 'none',
+								'margin': '60px auto',
+							});
+							marked.masonry('layout');
+							$('aside').hide();
+							
+						}
 					}
 				}
 			});
@@ -80,10 +114,12 @@
 			// move images to folders, remove images from folders
 			$('aside ol li').not('aside ol li:first').each(function(){
 				
-				$(this).click(function(){
+				$(this).click(function(e){
+					
+					e.stopPropagation();
 										
 					// get desitnation folder name
-					var dir = $(this).text();
+					var folder = $(this).text();
 							
 					// get image url
 					var sel = $('main ul li.selected figure a img');
@@ -91,14 +127,15 @@
 					// pass to move helper
 					sel.each(function(){
 						el = $(this);
-						url = $(this).attr('src');
-						$.post('markmove.php', {f: url, d: dir}).done(function(){
+						url = el.attr('src');
+						$.post('markmove.php', {f: url, d: folder}).done(function(){
 							var findex = el.attr('src').lastIndexOf('/') + 1;
 							var sel_filename = el.attr('src').substr(findex);
-							var sel_fileurl = imgdir+dir+'/'+sel_filename;
+							var sel_fileurl = imgdir+folder+'/'+sel_filename;
 							el.attr('src',sel_fileurl);
 							el.parent().attr('href',sel_fileurl);
 						});
+						$(this).closest('li').addClass(folder);
 					});
 				});
 			})
@@ -275,7 +312,7 @@
 			right: 0;
 			top: 0;
 			height: 100%;
-			width: 300px;
+			width: 200px;
 			
 			background: #efefef;
 		}
@@ -327,6 +364,7 @@
 <body>
 
 	<?php
+		
 		$imgdir = 'imgs'; // main image folder
 		$folders = array_filter(glob('imgs/*', GLOB_NOCHECK), 'is_dir'); // read folders in main image folder
 		$images = array();	
