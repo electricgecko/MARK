@@ -87,15 +87,23 @@
 					// var itype = ('jpg','jpeg','png','gif');
 					
 					src = $(this).attr('src');
-										
-					if ($(this).attr('src').indexOf('?') > -1) {
+					
+					// remove php vars					
+					if (src.indexOf('?') > -1) {
 						var url = src.substr(0, src.indexOf('?'));
 					} else {
 						var url = src;
 					}
 					
-					console.log(url);
+					// add http:// if necessary
+					if (src.indexOf('http://') < 0) {
+						console.log('no http');
+						url = url.replace('//','http://');
+						console.log(url);
+					}
 					
+		
+										
 					$.post(MARKpath+'markload.php', {f: url, w: width, h: height }).done(function(){
 						notify.fadeIn().delay(300).fadeOut();
 					});
