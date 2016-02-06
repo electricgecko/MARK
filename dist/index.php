@@ -126,9 +126,16 @@
 			
 					// pass to move helper
 					sel.each(function(){
+						
 						el = $(this);
-						url = el.attr('src');
-						$.post('markmove.php', {f: url, d: folder}).done(function(){
+						
+						thumb = $(this).attr('src');
+						url = el.parent().attr('href');;
+						
+						console.log(thumb);
+						console.log(url);
+						
+						$.post('markmove.php', {f: url, t: thumb, d: folder}).done(function(){
 							var findex = el.attr('src').lastIndexOf('/') + 1;
 							var sel_filename = el.attr('src').substr(findex);
 							var sel_fileurl = imgdir+folder+'/'+sel_filename;
@@ -367,12 +374,25 @@
 		
 		$imgdir = 'imgs'; // main image folder
 		$folders = array_filter(glob('imgs/*', GLOB_NOCHECK), 'is_dir'); // read folders in main image folder
+		$exp = '-'; // exploder for image names
+		$thumb_indicator = 'MARKthumb'; // thumbnail filename prefix
 		$images = array();	
-		
 		$c = 0;
-
+		
+		function remove_thumbs($arr) {
+			global $thumb_indicator;
+			$thumbs = array_filter($arr, function($var) use ($thumb_indicator) { return preg_match("/\b$thumb_indicator\b/i", $var); });
+			$arr = array_diff($arr, $thumbs);
+			return $arr;	
+		}
+		
+		// go.
+		
 		// read main image folder	
 		$main_content = glob($imgdir.'/*.{jpg,jpeg,gif,png}', GLOB_BRACE);
+		
+		// remove thumbnails
+		$main_content = remove_thumbs($main_content);
 		
 		// add to image object
 		foreach ($main_content as $image) {
@@ -385,6 +405,9 @@
 			
 			// read folder content
 			$folder_content = glob($folder.'/*.{jpg,jpeg,gif,png}', GLOB_BRACE);
+			
+			// remove thumbnails
+			$folder_content = remove_thumbs($folder_content);
 			
 			// add to image object
 			foreach ($folder_content as $image) {
@@ -426,11 +449,12 @@
 				foreach ($images as $image) {
 		
 						// parse image info from filename
-						$img_info = explode("-", basename($image['name']));
+						$img_info = explode($exp, basename($image['name']));
 						$image_date = $img_info[0];
 						$image_w = $img_info[1];
 						$image_h = $img_info[2];	
 						$image_title = $img_info[3];
+						$image_thumbnail = substr_replace($image['name'], $exp.$thumb_indicator, strpos($image['name'],$exp), 0);
 						
 						// self-cleaning: if image is a duplicate, don't show it and delete it from server
 						if (in_array($image_title, $displayed_images)) {
@@ -440,7 +464,7 @@
 							
 							// show image
 							array_push($displayed_images, $image_title);
-							echo '<li id="'.$index.'" class="'.basename($image['folder']).'"><a class="del" href="javascript:void(0);">×</a><figure><a href="'.$image['name'].'"><img width="'.$image_w.'" height="'.$image_h.'" src="'.$image['name'].'" /></a></figure></li>';
+							echo '<li id="'.$index.'" class="'.basename($image['folder']).'"><a class="del" href="javascript:void(0);">×</a><figure><a href="'.$image['name'].'"><img width="'.$image_w.'" height="'.$image_h.'" src="'.$image_thumbnail.'" /></a></figure></li>';
 							$index++;
 						}
 				}

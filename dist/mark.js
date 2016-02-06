@@ -81,8 +81,6 @@
 					// get actual image size
 					var timg= new Image();
 					timg.src = $(this).attr("src");
-					var width = timg.width;
-					var height = timg.height;	
 					
 					// var itype = ('jpg','jpeg','png','gif');
 					
@@ -104,7 +102,7 @@
 					
 		
 										
-					$.post(MARKpath+'markload.php', {f: url, w: width, h: height }).done(function(){
+					$.post(MARKpath+'markload.php', {f: url}).done(function(){
 						notify.fadeIn().delay(300).fadeOut();
 					});
 				});
