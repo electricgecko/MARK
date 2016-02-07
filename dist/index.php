@@ -10,13 +10,16 @@
 	<title>M A R K</title>
 	
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-	<script src="vendor/masonry.js"></script>
+	<!-- <script src="vendor/masonry.js"></script> -->
+	<script src="vendor/isotope.min.js"></script>
 	<script type="text/javascript">
 		
 		$(window).load(function(){	
-			marked = $('main ul').masonry({
+			marked = $('main ul').isotope({
 				itemSelector: 'main ul li',
-				gutter: 40
+				masonry: {
+					gutter: 40
+				}
 			});	
 		});
 
@@ -48,13 +51,13 @@
 			  	// plus
 			    if (evt.keyCode === 187) {
 					images.css('width', colwidth+colwidth*mult+'px');
-					marked.masonry('layout');
+					marked.isotope('layout');
 					localStorage.setItem('MARKsz',colwidth+colwidth*mult);
 			
 				// minus
 			    } else if (evt.keyCode === 189) {
 					images.css('width', colwidth-colwidth*mult+'px');
-					marked.masonry('layout');
+					marked.isotope('layout');
 					localStorage.setItem('MARKsz',colwidth-colwidth*mult);
 			    }
 			});
@@ -71,7 +74,7 @@
 							'max-width': 'none',
 							'margin': '60px auto',
 						});
-						marked.masonry('layout');
+						marked.isotope('layout');
 						$('aside').hide();
 					}
 
@@ -94,7 +97,7 @@
 								'max-width': $(window).width()-$('aside').width(),
 								'margin': '60px 0 60px 0'
 							});
-							marked.masonry('layout');
+							marked.isotope('layout');
 							$('aside').show();
 							
 						} else {
@@ -103,7 +106,7 @@
 								'max-width': 'none',
 								'margin': '60px auto',
 							});
-							marked.masonry('layout');
+							marked.isotope('layout');
 							$('aside').hide();
 							
 						}
@@ -129,11 +132,9 @@
 						
 						el = $(this);
 						
-						thumb = $(this).attr('src');
-						url = el.parent().attr('href');;
-						
-						console.log(thumb);
-						console.log(url);
+						var thumb = $(this).attr('src');
+						var url = el.parent().attr('href');;
+
 						
 						$.post('markmove.php', {f: url, t: thumb, d: folder}).done(function(){
 							var findex = el.attr('src').lastIndexOf('/') + 1;
@@ -150,20 +151,11 @@
 			
 			// filter images by folder
 			$('nav ol li').click(function(){
-				
-				if (hidden != null) {
-					hidden.appendTo($('main ul'));
-					
-					marked.masonry('reloadItems');
-					marked.masonry('layout');
-					
-					hidden = null;
-				}		
 						
 				if (!$(this).is('nav ol li:first')) {						
-					hidden = images.not('.'+$(this).text());
-					marked.masonry('remove',hidden);
-					marked.masonry('layout');
+					marked.isotope({filter: '.'+$(this).text()});
+				} else {
+					marked.isotope({filter: '*'})
 				}
 				
 			});
@@ -173,13 +165,14 @@
 				$(this).click(function(){
 					
 					// get image url
-					var url = $(this).next().find('img').attr('src');
+					var thumb = $(this).next().find('img').attr('src');
+					var url = $(this).next().find('a').attr('href');
 					
 					// pass to delete helper
-					$.post('markdel.php', {f: url})
+					$.post('markdel.php', {f: url, t:thumb});
 										
 					// remove image from view & rearrange layout
-					marked.masonry('remove', $(this).parent()).masonry('layout');	
+					marked.isotope('remove', $(this).parent()).isotope('layout');	
 				})
 			});
 		});
@@ -400,7 +393,8 @@
 			$images[$c]['folder'] = 'imgs';
 			$c++;
 		}
-			
+		
+		// read subfolders
 		foreach ($folders as $folder) {
 			
 			// read folder content
@@ -445,6 +439,7 @@
 			<?php
 	
 				$index = 0;
+				$displayed_images = array();
 				
 				foreach ($images as $image) {
 		
@@ -464,6 +459,7 @@
 							
 							// show image
 							array_push($displayed_images, $image_title);
+							
 							echo '<li id="'.$index.'" class="'.basename($image['folder']).'"><a class="del" href="javascript:void(0);">×</a><figure><a href="'.$image['name'].'"><img width="'.$image_w.'" height="'.$image_h.'" src="'.$image_thumbnail.'" /></a></figure></li>';
 							$index++;
 						}

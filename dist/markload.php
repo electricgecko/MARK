@@ -24,6 +24,7 @@
 	}
 	
 	$exp = '-';
+	$rep_exp = '_'; // character used to replace occurences of $exp in original filename
 	$thumb_indicator = 'MARKthumb';
 	$thumb_width = 400;
 	
@@ -40,10 +41,13 @@
 	
 	// $img_file = basename($img);
 	$img_file = sanitizeFilename(basename($img));
+	echo $img_file;
+	$img_file = str_replace($exp, $rep_exp, $img_file);
+	echo $img_file;
 	
 	// define image name
 	$img_name = 'imgs/'.$img_date.$exp.$img_w.$exp.$img_h.$exp.$img_file;
-	
+	echo $img_name;
 	// copy actual image
 	copy($img, $img_name);
 	
