@@ -28,6 +28,7 @@
 			imgdir = 'imgs/';
 			images = $('main ul li');
 			hidden = null;
+			thumb_breakpoint = 600;
 		
 			// hide sidebar
 			$('aside').hide();
@@ -41,7 +42,14 @@
 				sz = localStorage.getItem('MARKsz');
 					images.css('width',localStorage.getItem('MARKsz')+'px');
 			}
-
+			
+			// dodgy, magic-number method to load full-sized images if thumbnail size is big
+			if (sz >= thumb_breakpoint) {
+				images.each(function(){
+					$(this).find('figure a img').attr('src',$(this).data('url'));
+				});
+			}
+			
 			// keyboard controls to adjust image size
 			$(window).keydown(function(evt) {	
 			  
@@ -51,14 +59,30 @@
 			  	// plus
 			    if (evt.keyCode === 187) {
 					images.css('width', colwidth+colwidth*mult+'px');
+
+					if (colwidth+colwidth*mult >= thumb_breakpoint) {
+						images.each(function(){
+							$(this).find('figure a img').attr('src',$(this).data('url'));
+							console.log('big images');
+						});						
+					}
+
 					marked.isotope('layout');
 					localStorage.setItem('MARKsz',colwidth+colwidth*mult);
 			
 				// minus
 			    } else if (evt.keyCode === 189) {
 					images.css('width', colwidth-colwidth*mult+'px');
+
+					if (colwidth-colwidth*mult < thumb_breakpoint) {
+						images.each(function(){
+							$(this).find('figure a img').attr('src',$(this).data('thumb'));
+							console.log('small image');
+						});						
+					}
+					
 					marked.isotope('layout');
-					localStorage.setItem('MARKsz',colwidth-colwidth*mult);
+					localStorage.setItem('MARKsz', colwidth-colwidth*mult);
 			    }
 			});
 
@@ -460,7 +484,7 @@
 							// show image
 							array_push($displayed_images, $image_title);
 							
-							echo '<li id="'.$index.'" class="'.basename($image['folder']).'"><a class="del" href="javascript:void(0);">×</a><figure><a href="'.$image['name'].'"><img width="'.$image_w.'" height="'.$image_h.'" src="'.$image_thumbnail.'" /></a></figure></li>';
+							echo '<li id="'.$index.'" class="'.basename($image['folder']).'" data-thumb="'.$image_thumbnail.'" data-url="'.$image[name].'"><a class="del" href="javascript:void(0);">×</a><figure><a href="'.$image['name'].'"><img width="'.$image_w.'" height="'.$image_h.'" src="'.$image_thumbnail.'" /></a></figure></li>';
 							$index++;
 						}
 				}
