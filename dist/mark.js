@@ -102,7 +102,7 @@
 					
 		
 										
-					$.post(MARKpath+'markload.php', {f: url}).done(function(){
+					$.post(MARKpath+'mark.php', {a: 'load', f: url}).done(function(){
 						notify.fadeIn().delay(300).fadeOut();
 					});
 				});

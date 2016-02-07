@@ -32,6 +32,7 @@
 		
 			// hide sidebar
 			$('aside').hide();
+			$('aside #done').hide();
 			
 			// get image size from local storage
 			if (localStorage.getItem('MARKsz') === null) {
@@ -117,20 +118,11 @@
 						// if at least one image is selected, show sidebar
 						if ($('li.selected').length) {
 							
-							$('main').css({
-								'max-width': $(window).width()-$('aside').width(),
-								'margin': '60px 0 60px 0'
-							});
-							marked.isotope('layout');
+		
 							$('aside').show();
 							
 						} else {
-							
-							$('main').css({
-								'max-width': 'none',
-								'margin': '60px auto',
-							});
-							marked.isotope('layout');
+
 							$('aside').hide();
 							
 						}
@@ -160,18 +152,19 @@
 						var url = el.parent().attr('href');;
 
 						
-						$.post('markmove.php', {f: url, t: thumb, d: folder}).done(function(){
+						$.post('mark.php', {a: 'move', f: url, t: thumb, d: folder}).done(function(){
 							var findex = el.attr('src').lastIndexOf('/') + 1;
 							var sel_filename = el.attr('src').substr(findex);
 							var sel_fileurl = imgdir+folder+'/'+sel_filename;
 							el.attr('src',sel_fileurl);
 							el.parent().attr('href',sel_fileurl);
+							
+							$('aside #done').fadeIn().fadeOut();
 						});
 						$(this).closest('li').addClass(folder);
 					});
 				});
-			})
-			
+			})		
 			
 			// filter images by folder
 			$('nav ol li').click(function(){
@@ -193,7 +186,7 @@
 					var url = $(this).next().find('a').attr('href');
 					
 					// pass to delete helper
-					$.post('markdel.php', {f: url, t:thumb});
+					$.post('mark.php', {a: 'del', f: url, t:thumb});
 										
 					// remove image from view & rearrange layout
 					marked.isotope('remove', $(this).parent()).isotope('layout');	
@@ -224,33 +217,72 @@
 		
 		header {
 			position: fixed;
-			top: 10px;
-			left: 10px;
-			z-index: 10;			
+			top: 0;
+			left: 0;
+			
+			line-height: 20px;
+			padding: 5px 10px;
+			
+			z-index: 10;
 		}
 		
+		aside {
+			position: fixed;
+			
+			top: 0;
+			left: 0;
+			
+			line-height: 20px;
+			padding: 5px 10px;
+			
+			background: #fff;
+			
+			z-index: 15;
+		}
+		
+		aside p {
+			display: inline-block;
+			padding: 0;
+			margin: 0;
+			width: 100px;
+		}
+
+		aside ol {
+			margin-left: 100px;
+		}
+		
+		aside ol li {
+			cursor: pointer;
+		}
+
 		nav {
 			display: inline;
 			margin-left: 100px;
 		}
 		
-		nav ol {
+		nav ol,
+		aside ol {
 			display: inline;
 		}
 		
-		nav ol li {
+		nav ol li,
+		aside ol li {
 			display: inline;
 			margin-right: 20px;
 			cursor: pointer;
 		}
 		
-		nav ol li:hover {
+		nav ol li:hover,
+		aside ol li:hover {
 			text-decoration: underline;
 		}
 		
 		h1 {
-			display: inline;
+			display: inline-block;
 			letter-spacing: 2px;
+			padding: 0;
+			margin: 0;
+			min-width: 100px;
 		}
 		
 		main {
@@ -305,7 +337,7 @@
 			height: 100%;
 			top: 0;
 		
-			background: rgba(255, 230, 0, 0.5)
+			background: rgba(255, 230, 0, 0.5);
 		}
 		
 		main ul li.selected figure > a:after {
@@ -316,7 +348,7 @@
 			height: 100%;
 			top: 0;
 		
-			background: rgba(255, 65, 13, 0.5)		
+			background: rgba(255, 230, 0, 0.5);	
 		}
 		
 		figure span {
@@ -328,45 +360,6 @@
 			width: 100%;
 			height: auto;
 		}	
-		
-		aside {
-			position: fixed;
-			z-index: 15;
-			
-			right: 0;
-			top: 0;
-			height: 100%;
-			width: 200px;
-			
-			background: #efefef;
-		}
-
-		aside ol {
-			list-style: none;
-			padding: 0;
-			width: 100%;
-		}
-		
-		aside ol li {
-			padding: 0;
-			display: block;
-			width: 100%;
-			height: 60px;
-			
-			background: #ccc;
-			line-height: 20px;
-			margin: 0 0 2px 0;
-			
-			cursor: pointer;
-		}
-		
-		aside ol li:hover {
-			background: yellow;
-		}
-		
-		aside ol li span {
-			padding: 5px 0 0 5px;
-		}
 		
 		@media only screen 
 		and (min-device-width : 320px) 
@@ -494,10 +487,10 @@
 	</main>
 	
 	<aside>
+		<p>Add selected to</p>
 		<ol>
-			<li>everything</li>
+			<li><span>everything</span></li>
 			<?php
-				
 				// list folders 
 				if (count($folders) > 0) {				
 					foreach ($folders as $folder) {
@@ -506,5 +499,6 @@
 				}
 			?>
 		</ol>
+		<span id="done" class="done">✔</span>
 	</aside>
 </body>
