@@ -28,7 +28,8 @@
 			imgdir = 'imgs/';
 			images = $('main ul li');
 			hidden = null;
-			thumb_breakpoint = 600;
+			thumbBreakpoint = 600;
+			activeFilter = '*';
 		
 			// hide sidebar
 			$('aside').hide();
@@ -45,7 +46,7 @@
 			}
 			
 			// dodgy, magic-number method to load full-sized images if thumbnail size is big
-			if (sz >= thumb_breakpoint) {
+			if (sz >= thumbBreakpoint) {
 				images.each(function(){
 					$(this).find('figure a img').attr('src',$(this).data('url'));
 				});
@@ -61,7 +62,7 @@
 			    if (evt.keyCode === 187) {
 					images.css('width', colwidth+colwidth*mult+'px');
 
-					if (colwidth+colwidth*mult >= thumb_breakpoint) {
+					if (colwidth+colwidth*mult >= thumbBreakpoint) {
 						images.each(function(){
 							$(this).find('figure a img').attr('src',$(this).data('url'));
 							console.log('big images');
@@ -75,7 +76,7 @@
 			    } else if (evt.keyCode === 189) {
 					images.css('width', colwidth-colwidth*mult+'px');
 
-					if (colwidth-colwidth*mult < thumb_breakpoint) {
+					if (colwidth-colwidth*mult < thumbBreakpoint) {
 						images.each(function(){
 							$(this).find('figure a img').attr('src',$(this).data('thumb'));
 							console.log('small image');
@@ -99,6 +100,9 @@
 							'max-width': 'none',
 							'margin': '60px auto',
 						});
+						
+						$('header > nav').show();
+						
 						marked.isotope('layout');
 						$('aside').hide();
 					}
@@ -107,7 +111,7 @@
 					
 					el = $(e.target).closest('li');
 
-					// shift-click images to mark them
+			// shift-click images to mark them
 					if (e.shiftKey) {
 								
 						e.preventDefault();
@@ -118,11 +122,36 @@
 						// if at least one image is selected, show sidebar
 						if ($('li.selected').length) {
 							
-		
+							// adjust main container width to sidebar width
+							$('main').css({
+								'max-width': $(window).width()-$('aside').outerWidth(),
+								'margin': '60px 0 60px 0'
+							});
+							
+							$('header > nav').hide();
+							
+							// add leading 0
+							n = $('li.selected').length;
+							if ((n < 10)) {
+								n = '0'+n
+							}
+							
+							$('aside p > span').text(n);
+							
+							marked.isotope('layout');
 							$('aside').show();
 							
 						} else {
-
+						
+						// reset main container width
+						$('main').css({
+								'max-width': 'none',
+								'margin': '60px auto',
+							});
+							
+							$('header > nav').show();
+							
+							marked.isotope('layout');
 							$('aside').hide();
 							
 						}
@@ -131,7 +160,7 @@
 			});
 			
 			// move images to folders, remove images from folders
-			$('aside ol li').not('aside ol li:first').each(function(){
+			$('aside ol li').each(function(){
 				
 				$(this).click(function(e){
 					
@@ -139,6 +168,9 @@
 										
 					// get desitnation folder name
 					var folder = $(this).text();
+					if (folder == $('aside ol li:first-child').text()) {
+						folder = '';
+					}
 							
 					// get image url
 					var sel = $('main ul li.selected figure a img');
@@ -150,30 +182,41 @@
 						
 						var thumb = $(this).attr('src');
 						var url = el.parent().attr('href');;
-
 						
 						$.post('mark.php', {a: 'move', f: url, t: thumb, d: folder}).done(function(){
+							
 							var findex = el.attr('src').lastIndexOf('/') + 1;
 							var sel_filename = el.attr('src').substr(findex);
 							var sel_fileurl = imgdir+folder+'/'+sel_filename;
+							
 							el.attr('src',sel_fileurl);
 							el.parent().attr('href',sel_fileurl);
 							
-							$('aside #done').fadeIn().fadeOut();
-						});
-						$(this).closest('li').addClass(folder);
+							// keep selection
+							if (el.closest('li').hasClass('selected')) { var sel = true; }
+							el.closest('li').removeClass().addClass(folder);
+							if (sel) {el.closest('li').addClass('selected')};
+							
+						});	
 					});
+					
+					// fltr = '.'+activeFilter;
+					marked.isotope({filter: activeFilter});
+					$('aside #done').fadeIn().fadeOut();
 				});
-			})		
+			})	
 			
+	
 			// filter images by folder
 			$('nav ol li').click(function(){
 						
-				if (!$(this).is('nav ol li:first')) {						
-					marked.isotope({filter: '.'+$(this).text()});
+				if (!$(this).is('nav ol li:first')) {
+					activeFilter = '.'+$(this).text();			
 				} else {
-					marked.isotope({filter: '*'})
+					activeFilter = '*';	
 				}
+				
+				marked.isotope({filter: activeFilter});
 				
 			});
 			
@@ -203,10 +246,16 @@
 		}
 		
 		body {
-			font-family: 'Arial', sans-serif;
+			font-family: 'Eurostile', 'EurostileTEE-Regu', 'Arial', sans-serif;
 			font-weight: normal;
-			font-size: 8pt;
+			font-size: 9pt;
+			letter-spacing: 1px;
 			
+		}
+		
+		a {
+			color: #000;
+			text-decoration: none;
 		}
 		
 		ul, ol {
@@ -225,61 +274,29 @@
 			
 			z-index: 10;
 		}
-		
-		aside {
-			position: fixed;
-			
-			top: 0;
-			left: 0;
-			
-			line-height: 20px;
-			padding: 5px 10px;
-			
-			background: #fff;
-			
-			z-index: 15;
-		}
-		
-		aside p {
-			display: inline-block;
-			padding: 0;
-			margin: 0;
-			width: 100px;
-		}
-
-		aside ol {
-			margin-left: 100px;
-		}
-		
-		aside ol li {
-			cursor: pointer;
-		}
 
 		nav {
 			display: inline;
 			margin-left: 100px;
 		}
 		
-		nav ol,
-		aside ol {
+		nav ol {
 			display: inline;
 		}
 		
-		nav ol li,
-		aside ol li {
+		nav ol li {
 			display: inline;
 			margin-right: 20px;
 			cursor: pointer;
 		}
 		
-		nav ol li:hover,
-		aside ol li:hover {
+		nav ol li:hover {
 			text-decoration: underline;
 		}
 		
 		h1 {
 			display: inline-block;
-			letter-spacing: 2px;
+			letter-spacing: 3px;
 			padding: 0;
 			margin: 0;
 			min-width: 100px;
@@ -336,8 +353,7 @@
 			width: 100%;
 			height: 100%;
 			top: 0;
-		
-			background: rgba(255, 230, 0, 0.5);
+			background: rgba(255, 220, 50, 0.5);
 		}
 		
 		main ul li.selected figure > a:after {
@@ -348,7 +364,7 @@
 			height: 100%;
 			top: 0;
 		
-			background: rgba(255, 230, 0, 0.5);	
+			background: rgba(0, 190, 255, 0.5);	
 		}
 		
 		figure span {
@@ -360,6 +376,49 @@
 			width: 100%;
 			height: auto;
 		}	
+
+		aside {
+			position: fixed;
+			
+			top: 0;
+			right: 0;
+			min-height: 100%;
+			width: 200px;
+			
+			line-height: 20px;
+			padding: 5px 10px;
+			
+			background: #fff;
+			
+			z-index: 15;
+		}
+		
+		aside p {
+			padding: 0;
+			margin: 0 0 1em 0;
+			width: 100px;
+		}
+		
+		aside p span {
+			font-size: 90%;
+		}
+
+		aside ol {
+		
+		}
+		
+		aside ol li:before {
+			
+		}
+		
+		aside ol li {
+			cursor: pointer;
+			margin-bottom: 1em;
+		}
+		
+		aside ol li:hover {
+			text-decoration: underline;
+		}
 		
 		@media only screen 
 		and (min-device-width : 320px) 
@@ -382,6 +441,7 @@
 
 	<?php
 		
+		$installpath = 'http://dev.electricgecko.de/mark';
 		$imgdir = 'imgs'; // main image folder
 		$folders = array_filter(glob('imgs/*', GLOB_NOCHECK), 'is_dir'); // read folders in main image folder
 		$exp = '-'; // exploder for image names
@@ -435,7 +495,7 @@
 	?>
 		
 	<header>
-		<h1>MARK</h1>
+		<h1><a href="<?php echo $installpath ?>">MARK</a></h1>
 		<nav>
 			<ol>
 				<li>everything</li>
@@ -448,7 +508,6 @@
 				?>
 			</ol>
 		</nav>
-	
 	</header>
 	
 	<main>
@@ -476,7 +535,6 @@
 							
 							// show image
 							array_push($displayed_images, $image_title);
-							
 							echo '<li id="'.$index.'" class="'.basename($image['folder']).'" data-thumb="'.$image_thumbnail.'" data-url="'.$image[name].'"><a class="del" href="javascript:void(0);">×</a><figure><a href="'.$image['name'].'"><img width="'.$image_w.'" height="'.$image_h.'" src="'.$image_thumbnail.'" /></a></figure></li>';
 							$index++;
 						}
@@ -487,7 +545,7 @@
 	</main>
 	
 	<aside>
-		<p>Add selected to</p>
+		<p>add <span>0</span> to</p>
 		<ol>
 			<li><span>everything</span></li>
 			<?php
