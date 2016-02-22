@@ -159,6 +159,7 @@
 				}
 			});
 			
+			
 			// move images to folders, remove images from folders
 			$('aside ol li').each(function(){
 				
@@ -204,7 +205,7 @@
 					marked.isotope({filter: activeFilter});
 					$('aside #done').fadeIn().fadeOut();
 				});
-			})	
+			})
 			
 	
 			// filter images by folder
@@ -299,9 +300,21 @@
 			letter-spacing: 3px;
 			padding: 0;
 			margin: 0;
-			min-width: 100px;
+			min-width: 40px;
+			height: .7em;
+			line-height: .8em;
+			
+			text-indent: -9999px;
+			background: url('mark.svg') no-repeat;
+			background-size: contain;
 		}
-		
+
+		h1 a {
+			display: block;
+			height: .7em;
+			min-width: 40px;
+		}
+				
 		main {
 			margin: 60px auto;
 		}
