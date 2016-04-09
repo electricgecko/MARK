@@ -17,6 +17,8 @@
 	if (isset($_POST[t])) { $thumb = $_POST[t]; }
 	if (isset($_POST[d])) { $dir = $_POST[d]; }
 	
+	echo 'file: '.$file;
+	
 	switch ($a) {
     case 'del':
         markdel($file, $thumb);
@@ -68,11 +70,9 @@
 		
 		global $exp, $rep_exp, $thumb_indicator, $thumb_width;
         
-        echo exif_imagetype($img);
-        echo ' ';
+        echo ' imagetype: '.exif_imagetype($img);
         if (exif_imagetype($img) == IMAGETYPE_JPEG) {
             $img_el = imagecreatefromjpeg($img);
-            echo ' jpg ';
         } elseif (exif_imagetype($img) == IMAGETYPE_PNG) {
             $img_el = imagecreatefrompng($img);
         } elseif (exif_imagetype($img) == IMAGETYPE_GIF) {
@@ -82,9 +82,9 @@
 		$img_w = imagesx($img_el);
 		$img_h = imagesy($img_el);
 		
-		echo 'width: '.$img_w;
+		echo ' width: '.$img_w;
 		echo ' ';
-		echo 'height: '.$img_h;
+		echo ' height: '.$img_h;
 		
 		
 		// get time/date string

@@ -82,7 +82,7 @@
 					
 					// var itype = ('jpg','jpeg','png','gif');
 					
-					src = $(this).attr('src');
+					src = $(this)[0].src;
 					
 					// remove php vars					
 					if (src.indexOf('?') > -1) {
@@ -96,8 +96,6 @@
 						url = url.replace('//','http://');
 					}
 					
-		
-										
 					$.post(MARKpath+'mark.php', {a: 'load', f: url}).done(function(data){
 						notify.fadeIn().delay(300).fadeOut();
 						console.log(data);
