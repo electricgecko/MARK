@@ -67,8 +67,15 @@
 		}
 		
 		global $exp, $rep_exp, $thumb_indicator, $thumb_width;
-			
-		$img_el = imagecreatefromjpeg($img);
+        
+        if (exif_imagetype($img) == IMAGETYPE_JPG) {
+            $img_el = imagecreatefromjpeg($img);
+        } elseif (exif_imagetype($img) == IMAGETYPE_PNG) {
+            $img_el = imagecreatefrompng($img);
+        } elseif (exif_imagetype($img) == IMAGETYPE_GIF) {
+            $img_el = imagecreatefromgif($img);
+        }
+        
 		$img_w = imagesx($img_el);
 		$img_h = imagesy($img_el);
 		
