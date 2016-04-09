@@ -11,7 +11,7 @@
 	$thumb_width = 400;
 	
 	$a = $_POST[a];
-	echo $a;
+	echo 'command: '.$a;
 
 	if (isset($_POST[f])) { $file = $_POST[f]; }
 	if (isset($_POST[t])) { $thumb = $_POST[t]; }
@@ -68,8 +68,11 @@
 		
 		global $exp, $rep_exp, $thumb_indicator, $thumb_width;
         
-        if (exif_imagetype($img) == IMAGETYPE_JPG) {
+        echo exif_imagetype($img);
+        echo ' ';
+        if (exif_imagetype($img) == IMAGETYPE_JPEG) {
             $img_el = imagecreatefromjpeg($img);
+            echo ' jpg ';
         } elseif (exif_imagetype($img) == IMAGETYPE_PNG) {
             $img_el = imagecreatefrompng($img);
         } elseif (exif_imagetype($img) == IMAGETYPE_GIF) {
@@ -79,14 +82,17 @@
 		$img_w = imagesx($img_el);
 		$img_h = imagesy($img_el);
 		
+		echo 'width: '.$img_w;
+		echo ' ';
+		echo 'height: '.$img_h;
+		
+		
 		// get time/date string
 		$img_date = date(ymdHis);
 		
 		// $img_file = basename($img);
 		$img_file = sanitizeFilename(basename($img));
-		echo $img_file;
 		$img_file = str_replace($exp, $rep_exp, $img_file);
-		echo $img_file;
 		
 		// define image name
 		$img_name = 'imgs/'.$img_date.$exp.$img_w.$exp.$img_h.$exp.$img_file;

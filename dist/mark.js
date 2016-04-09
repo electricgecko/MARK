@@ -30,7 +30,7 @@
 		(window.MARK = function() {
 			
 			$(document).ready(function(){	
-				
+
 				// create notification element
 				notify = $('<span id="MARK-notify" class="MARK-notify">Saved to MARK</span>').appendTo('body');
 				
@@ -72,8 +72,6 @@
 
 				
 				
-				console.log('done');
-				
 				$('img').click(function(e){
 					
 					e.preventDefault();
@@ -95,15 +93,14 @@
 					
 					// add http:// if necessary
 					if (src.indexOf('http://') < 0) {
-						console.log('no http');
 						url = url.replace('//','http://');
-						console.log(url);
 					}
 					
 		
 										
-					$.post(MARKpath+'mark.php', {a: 'load', f: url}).done(function(){
+					$.post(MARKpath+'mark.php', {a: 'load', f: url}).done(function(data){
 						notify.fadeIn().delay(300).fadeOut();
+						console.log(data);
 					});
 				});
 				
