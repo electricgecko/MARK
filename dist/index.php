@@ -5,12 +5,11 @@
 	<meta name="description" content="Private collection of images, collected silently by M A R K.">
 	<meta name="robots" content="noindex, nofollow">
 
-	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	
 	<title>M A R K</title>
 	
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-	<!-- <script src="vendor/masonry.js"></script> -->
 	<script src="vendor/isotope.min.js"></script>
 	<script type="text/javascript">
 		
@@ -181,11 +180,10 @@
 						
 						el = $(this);
 						
-						var thumb = $(this).attr('src');
+						var thumb = el.attr('src');
 						var url = el.parent().attr('href');;
 						
-						$.post('mark.php', {a: 'move', f: url, t: thumb, d: folder}).done(function(){
-							
+						function updateFiles() {
 							var findex = el.attr('src').lastIndexOf('/') + 1;
 							var sel_filename = el.attr('src').substr(findex);
 							var sel_fileurl = imgdir+folder+'/'+sel_filename;
@@ -198,11 +196,17 @@
 							el.closest('li').removeClass().addClass(folder);
 							if (sel) {el.closest('li').addClass('selected')};
 							
+							marked.isotope({filter: activeFilter});
+						}		
+						
+				
+						$.post('mark.php', {a: 'move', f: url, t: thumb, d: folder}).done(function(){
+							updateFiles(folder);
 						});	
 					});
 					
 					// fltr = '.'+activeFilter;
-					marked.isotope({filter: activeFilter});
+					
 					$('aside #done').fadeIn().fadeOut();
 				});
 			})
@@ -251,6 +255,7 @@
 			font-weight: normal;
 			font-size: 9pt;
 			letter-spacing: 1px;
+			-webkit-text-size-adjust: none
 			
 		}
 		
@@ -433,19 +438,47 @@
 			text-decoration: underline;
 		}
 		
-		@media only screen 
-		and (min-device-width : 320px) 
-		and (max-device-width : 568px)  {
-			
-			ul {
-				/* this is hacky but simpler than a js implementation */
-				margin-left: -20px;	
-			}
-			
-			li {
-				width: 125px;
-			}
-		}
+        @media only screen 
+        and (min-device-width : 320px) 
+        and (max-device-width : 568px)  {
+            
+            h1 {
+                position: fixed;
+                display: block;
+                float: left;
+                padding-top: 30px;
+                background-position: center center;
+                min-width: 50px;
+                margin-right: 30px;
+            }
+            
+            header {
+                width: 100%;
+            }
+            
+            nav {
+                display: block;
+                
+                margin-left: 60px;
+                padding: 10px;
+                width: auto;
+
+                overflow-x: scroll;
+                overflow-y: hidden;
+            }
+            
+            main {
+                margin-top: 100px;
+                width: 300px;  
+            
+            }
+
+            main ul li {
+                width: 300px;
+            }
+
+            
+        }
 		
 	</style>
 </head>
@@ -511,8 +544,7 @@
 		<h1><a href="<?php echo $installpath ?>">MARK</a></h1>
 		<nav>
 			<ol>
-				<li>everything</li>
-				<?php
+				<li>everything</li><?php
 					if (count($folders) > 0) {				
 						foreach ($folders as $folder) {
 							echo '<li><span>'.basename($folder).'</span></li>';
