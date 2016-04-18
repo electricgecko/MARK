@@ -437,6 +437,14 @@
 		aside ol li:hover {
 			text-decoration: underline;
 		}
+
+        @media only screen 
+        and (min-device-width : 768px) 
+        and (max-device-width : 1024px) {
+            main ul li {
+                width: 180px;
+            }
+        }
 		
         @media only screen 
         and (min-device-width : 320px) 
