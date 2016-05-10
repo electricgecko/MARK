@@ -1,3 +1,22 @@
+<?php
+	session_start();
+	
+	require_once('config.php');
+	
+	if(isset($_GET['logout'])) {
+	    $_SESSION['username'] = '';
+	    header('Location:  ' . $_SERVER['PHP_SELF']);
+	}
+	
+	if(isset($_POST['username'])) {
+	    if($userinfo[$_POST['username']] == $_POST['password']) {
+	        $_SESSION['username'] = $_POST['username'];
+	    }else {
+	       echo 'invalid login';
+	    }
+	}
+?>
+
 <!DOCTYPE html>
 <head>
 	<meta charset="UTF-8"/>
@@ -493,6 +512,9 @@
 
 <body>
 
+
+    <?php if($_SESSION['username']): ?>
+        
 	<?php
 		
 		$installpath = 'http://dev.electricgecko.de/mark';
@@ -612,4 +634,17 @@
 		</ol>
 		<span id="done" class="done">✔</span>
 	</aside>
+	
+	<p><a href="?logout=1">Logout</a></p>
+	
+	
+	<?php else: ?>
+	
+		<form name="login" action="" method="post">
+    	        Username:  <input type="text" name="username" value="" /><br />
+    	        Password:  <input type="password" name="password" value="" /><br />
+    	        <input type="submit" name="submit" value="Submit" />
+    	</form>	
+    	
+	<?php endif; ?>
 </body>
