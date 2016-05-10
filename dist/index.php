@@ -4,13 +4,13 @@
 	require_once('config.php');
 	
 	if(isset($_GET['logout'])) {
-	    $_SESSION['username'] = '';
-	    header('Location:  ' . $_SERVER['PHP_SELF']);
+	    $_SESSION['user'] = '';
+	    header('Location:  http://' . $_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF']));
 	}
 	
-	if(isset($_POST['username'])) {
-	    if($userinfo[$_POST['username']] == $_POST['password']) {
-	        $_SESSION['username'] = $_POST['username'];
+	if (isset($_POST['user'])) {
+	    if($userinfo[$_POST['user']] == $_POST['password']) {
+	        $_SESSION['user'] = $_POST['user'];
 	    }else {
 	       echo 'invalid login';
 	    }
@@ -52,6 +52,9 @@
 			// hide sidebar
 			$('aside').hide();
 			$('aside #done').hide();
+			
+			// focus login form
+			$('form input').first().focus();
 			
 			// get image size from local storage
 			if (localStorage.getItem('MARKsz') === null) {
@@ -319,7 +322,7 @@
 			text-decoration: underline;
 		}
 		
-		h1 {
+		header h1 {
 			display: inline-block;
 			letter-spacing: 3px;
 			padding: 0;
@@ -333,7 +336,7 @@
 			background-size: contain;
 		}
 
-		h1 a {
+		header h1 a {
 			display: block;
 			height: .7em;
 			min-width: 40px;
@@ -440,14 +443,6 @@
 			font-size: 90%;
 		}
 
-		aside ol {
-		
-		}
-		
-		aside ol li:before {
-			
-		}
-		
 		aside ol li {
 			cursor: pointer;
 			margin-bottom: 1em;
@@ -455,6 +450,74 @@
 		
 		aside ol li:hover {
 			text-decoration: underline;
+		}
+		
+		a.logout {
+    		display: block;
+    		position: fixed;
+    		right: 10px;
+    		bottom: 10px;
+		}
+		
+		a.logout:hover {
+    		text-decoration: underline;
+		}
+		
+		main.login {
+    		padding-top: 15%;
+    		margin-top: 0;
+		}
+		
+		form {
+    		width: 40%;
+    		margin: 0 auto;
+		}
+		
+        form label {
+            margin-bottom: 1em;
+            display: block;
+
+        }
+		
+		form input[type=text],
+		form input[type=password] {
+    		-webkit-appearance:none;
+    		outline: none;
+    		
+    		font-size: 400%;
+    		font-weight: normal;
+    		font-family: 'Eurostile', 'EurostileTEE-Regu', 'Arial', sans-serif;
+    		
+    		width: 100%;
+    		
+    		display: block;
+    		    		
+    		border: 0;
+    		border-bottom: 1px solid;
+		}
+		
+		form input[type=submit] {
+    		-webkit-appearance:none;
+    		outline: none;
+    		background: none;
+    		
+    		padding: 0;
+    		border: 0;
+    		cursor: pointer;
+    		
+    		font-size: 100%;
+    		            
+            margin-top: 5em;
+		}
+		
+		form input[type=submit]:hover {
+    		text-decoration: underline;
+
+		}
+		
+		.login > h1 {
+            position: absolute;
+            top: 0;
 		}
 
         @media only screen 
@@ -513,15 +576,10 @@
 <body>
 
 
-    <?php if($_SESSION['username']): ?>
+    <?php if ($_SESSION['user']): ?>
         
 	<?php
-		
-		$installpath = 'http://dev.electricgecko.de/mark';
-		$imgdir = 'imgs'; // main image folder
 		$folders = array_filter(glob('imgs/*', GLOB_NOCHECK), 'is_dir'); // read folders in main image folder
-		$exp = '-'; // exploder for image names
-		$thumb_indicator = 'MARKthumb'; // thumbnail filename prefix
 		$images = array();	
 		$c = 0;
 		
@@ -635,16 +693,24 @@
 		<span id="done" class="done">✔</span>
 	</aside>
 	
-	<p><a href="?logout=1">Logout</a></p>
+	<a class="logout" id="logout" href="?logout=1">logout</a>
 	
 	
 	<?php else: ?>
-	
-		<form name="login" action="" method="post">
-    	        Username:  <input type="text" name="username" value="" /><br />
-    	        Password:  <input type="password" name="password" value="" /><br />
+	    <main class="login">
+	        <h1><a href="<?php echo $installpath ?>">MARK</a></h1>
+            <form name="login" action="" method="post">
+    	        
+
+    	        <input type="text" name="user" value="" />
+    	        <label for="user">Username</label>
+    	            	        
+                <input type="password" name="password" value="" />
+                <label for="password">Password</label>
+    	        
     	        <input type="submit" name="submit" value="Submit" />
-    	</form>	
+    	   </form>	
+	    </main>
     	
 	<?php endif; ?>
 </body>
