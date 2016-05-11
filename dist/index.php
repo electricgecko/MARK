@@ -322,7 +322,7 @@
 			text-decoration: underline;
 		}
 		
-		header h1 {
+		h1 {
 			display: inline-block;
 			letter-spacing: 3px;
 			padding: 0;
@@ -336,7 +336,7 @@
 			background-size: contain;
 		}
 
-		header h1 a {
+		h1 a {
 			display: block;
 			height: .7em;
 			min-width: 40px;
@@ -483,6 +483,7 @@
 		form input[type=password] {
     		-webkit-appearance:none;
     		outline: none;
+    		background: none;
     		
     		font-size: 400%;
     		font-weight: normal;
@@ -516,8 +517,9 @@
 		}
 		
 		.login > h1 {
-            position: absolute;
-            top: 0;
+           position: absolute;
+           top: 10px;
+           left: 10px;
 		}
 
         @media only screen 
@@ -565,6 +567,21 @@
 
             main ul li {
                 width: 300px;
+            }
+            
+            .login form {
+	            width: 100%;
+            }
+            
+			form input[type=text],
+			form input[type=password] {
+	            border-radius: 0;
+	            padding: 0;
+	            width: 100%;
+            }
+            
+            .login > h1 {
+	            top: 0;
             }
 
             
@@ -700,7 +717,6 @@
 	    <main class="login">
 	        <h1><a href="<?php echo $installpath ?>">MARK</a></h1>
             <form name="login" action="" method="post">
-    	        
 
     	        <input type="text" name="user" value="" />
     	        <label for="user">Username</label>
