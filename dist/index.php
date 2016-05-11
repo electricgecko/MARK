@@ -28,6 +28,17 @@
 	
 	<title>M A R K</title>
 	
+	<link rel="apple-touch-icon" sizes="114x114" href="vendor/favicons/apple-touch-icon-114x114.png">
+	<link rel="apple-touch-icon" sizes="120x120" href="vendor/favicons/apple-touch-icon-120x120.png">
+	<link rel="apple-touch-icon" sizes="144x144" href="vendor/favicons/apple-touch-icon-144x144.png">
+	<link rel="apple-touch-icon" sizes="152x152" href="vendor/favicons/apple-touch-icon-152x152.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="vendor/favicons/apple-touch-icon-180x180.png">
+	<link rel="icon" type="image/png" href="vendor/favicons/favicon-32x32.png" sizes="32x32">
+	<link rel="icon" type="image/png" href="vendor/favicons/favicon-16x16.png" sizes="16x16">
+	<link rel="manifest" href="vendor/favicons/manifest.json">
+	<link rel="mask-icon" href="vendor/favicons/safari-pinned-tab.svg" color="#5bbad5">
+	<link rel="shortcut icon" href="vendor/favicons/favicon.ico">
+		
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 	<script src="vendor/isotope.min.js"></script>
 	<script type="text/javascript">
