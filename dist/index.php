@@ -143,7 +143,7 @@
 					
 					el = $(e.target).closest('li');
 
-			// shift-click images to mark them
+                    // shift-click images to mark them
 					if (e.shiftKey) {
 								
 						e.preventDefault();
@@ -199,8 +199,9 @@
 					
 					e.stopPropagation();
 										
-					// get desitnation folder name
+					// get destination folder name
 					var folder = $(this).text();
+					
 					if (folder == $('aside ol li:first-child').text()) {
 						folder = '';
 					}

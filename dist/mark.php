@@ -3,11 +3,10 @@
 	header("Access-Control-Allow-Origin: *");
 	date_default_timezone_set('Europe/Berlin');
 	
+    require_once('config.php');
+    
 	// globals
-	
-	$exp = '-';
 	$rep_exp = '_'; // character used to replace occurences of $exp in original filename
-	$thumb_indicator = 'MARKthumb';
 	$thumb_width = 400;
 	
 	$a = $_POST[a];
