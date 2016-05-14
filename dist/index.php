@@ -482,7 +482,8 @@
 		
 		form input[type=text],
 		form input[type=password] {
-    		-webkit-appearance:none;
+    		-webkit-appearance: none;
+    		border-radius: 0;
     		outline: none;
     		background: none;
     		
@@ -491,6 +492,7 @@
     		font-family: 'Eurostile', 'EurostileTEE-Regu', 'Arial', sans-serif;
     		
     		width: 100%;
+    		padding: 0;
     		
     		display: block;
     		    		
@@ -529,6 +531,12 @@
             main ul li {
                 width: 180px;
             }
+    
+            form input[type=text],
+            form input[type=password] {
+                font-size: 300%;   
+            }
+    		
         }
 		
         @media only screen 
@@ -576,7 +584,6 @@
             
 			form input[type=text],
 			form input[type=password] {
-	            border-radius: 0;
 	            padding: 0;
 	            width: 100%;
             }
