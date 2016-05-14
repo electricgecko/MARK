@@ -25,7 +25,7 @@
 	<meta name="robots" content="noindex, nofollow">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-	
+    
 	<title>M A R K</title>
 	
 	<link rel="apple-touch-icon" sizes="114x114" href="vendor/favicons/apple-touch-icon-114x114.png">
@@ -691,10 +691,15 @@
 						
 						} else {
 							
-							// show image
-							array_push($displayed_images, $image_title);
-							echo '<li id="'.$index.'" class="'.basename($image['folder']).'" data-thumb="'.$image_thumbnail.'" data-url="'.$image[name].'"><a class="del" href="javascript:void(0);">×</a><figure><a href="'.$image['name'].'"><img width="'.$image_w.'" height="'.$image_h.'" src="'.$image_thumbnail.'" /></a></figure></li>';
-							$index++;
+							// make sure the image isn't still being copied – and thumbnail is created
+							if (file_exists($image_thumbnail)) {
+							
+				    			// show image
+				    			array_push($displayed_images, $image_title);
+				    			echo '<li id="'.$index.'" class="'.basename($image['folder']).'" data-thumb="'.$image_thumbnail.'" data-url="'.$image[name].'"><a class="del" href="javascript:void(0);">×</a><figure><a href="'.$image['name'].'"><img width="'.$image_w.'" height="'.$image_h.'" src="'.$image_thumbnail.'" /></a></figure></li>';
+				    			$index++;
+				    			
+                            }
 						}
 				}
 			?>
