@@ -11,7 +11,7 @@
 	if (isset($_POST['user'])) {
 	    if($userinfo[$_POST['user']] == $_POST['password']) {
 	        $_SESSION['user'] = $_POST['user'];
-	    }else {
+	    } else {
 	       echo 'invalid login';
 	    }
 	}
