@@ -4,10 +4,6 @@
 	date_default_timezone_set('Europe/Berlin');
 	
     require_once('config.php');
-    
-	// globals
-	$rep_exp = '_'; // character used to replace occurences of $exp in original filename
-	$thumb_width = 400;
 	
 	$a = $_POST[a];
 	echo 'command: '.$a;
