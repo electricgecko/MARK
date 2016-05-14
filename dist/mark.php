@@ -1,18 +1,14 @@
 <?php
-	
 	header("Access-Control-Allow-Origin: *");
 	date_default_timezone_set('Europe/Berlin');
 	
     require_once('config.php');
-	
+ 	
 	$a = $_POST[a];
-	echo 'command: '.$a;
 
 	if (isset($_POST[f])) { $file = $_POST[f]; }
 	if (isset($_POST[t])) { $thumb = $_POST[t]; }
 	if (isset($_POST[d])) { $dir = $_POST[d]; }
-	
-	echo 'file: '.$file;
 	
 	switch ($a) {
     case 'del':
@@ -27,8 +23,13 @@
 	}
 	
 	function markdel($del_img, $del_thumb) {
-		unlink($del_img);
-		unlink($del_thumb);				
+    	
+		if (!unlink($del_img)) {
+
+		}
+		if (!unlink($del_thumb)) {
+
+		}				
 	}	
 	
 	function markmove($move_img, $move_thumb, $move_dir) {

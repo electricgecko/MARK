@@ -215,15 +215,14 @@
 						el = $(this);
 						
 						var thumb = el.attr('src');
-						var url = el.parent().attr('href');;
+						var file = el.parent().attr('href');;
 						
 						function updateFiles() {
 							var findex = el.attr('src').lastIndexOf('/') + 1;
-							var sel_filename = el.attr('src').substr(findex);
-							var sel_fileurl = imgdir+folder+'/'+sel_filename;
 							
-							el.attr('src',sel_fileurl);
-							el.parent().attr('href',sel_fileurl);
+							// set correct urls for image and thumb
+							el.attr('src', el.data('url'));
+							el.parent().attr('href', el.data('thumb'));
 							
 							// keep selection
 							if (el.closest('li').hasClass('selected')) { var sel = true; }
@@ -234,7 +233,7 @@
 						}		
 						
 				
-						$.post('mark.php', {a: 'move', f: url, t: thumb, d: folder}).done(function(){
+						$.post('mark.php', {a: 'move', f: file, t: thumb, d: folder}).done(function(){
 							updateFiles(folder);
 						});	
 					});
@@ -262,13 +261,12 @@
 			// delete images
 			$('a.del').each(function(){
 				$(this).click(function(){
-					
-					// get image url
-					var thumb = $(this).next().find('img').attr('src');
+
+                    var thumb = $(this).next().find('img').attr('src');
 					var url = $(this).next().find('a').attr('href');
-					
+
 					// pass to delete helper
-					$.post('mark.php', {a: 'del', f: url, t:thumb});
+					$.post('mark.php', {a: 'del', f: url, t: thumb});
 										
 					// remove image from view & rearrange layout
 					marked.isotope('remove', $(this).parent()).isotope('layout');	
