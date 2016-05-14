@@ -17,6 +17,8 @@
     // default thumbnail size
     $thumb_width = 400;
 
+    /* ----------------------------- */
+    
     // user accounts
 	$userinfo = array(
     	'Foo' => 'PASSWORD'
