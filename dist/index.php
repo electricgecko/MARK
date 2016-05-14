@@ -211,35 +211,26 @@
 			
 					// pass to move helper
 					sel.each(function(){
+
+						var thumb = $(this).attr('src');
+						var file = $(this).parent().attr('href');
 						
-						el = $(this);
-						
-						var thumb = el.attr('src');
-						var file = el.parent().attr('href');;
-						
-						function updateFiles() {
-							var findex = el.attr('src').lastIndexOf('/') + 1;
+						$.post('mark.php', {a: 'move', f: file, t: thumb, d: folder}).done($.proxy(function(){
 							
 							// set correct urls for image and thumb
-							el.attr('src', el.data('url'));
-							el.parent().attr('href', el.data('thumb'));
+							$(this).attr('src', $(this).data('url'));
+							$(this).parent().attr('href', $(this).data('thumb'));
 							
 							// keep selection
-							if (el.closest('li').hasClass('selected')) { var sel = true; }
-							el.closest('li').removeClass().addClass(folder);
-							if (sel) {el.closest('li').addClass('selected')};
+							if ($(this).closest('li').hasClass('selected')) { var selection = true; }
+                            $(this).closest('li').removeClass().addClass(folder);
+							if (selection) {$(this).closest('li').addClass('selected')};
 							
-							marked.isotope({filter: activeFilter});
-						}		
-						
-				
-						$.post('mark.php', {a: 'move', f: file, t: thumb, d: folder}).done(function(){
-							updateFiles(folder);
-						});	
+							// re-apply active filter
+                            marked.isotope({filter: activeFilter});
+						}, this));	
 					});
-					
-					// fltr = '.'+activeFilter;
-					
+
 					$('aside #done').fadeIn().fadeOut();
 				});
 			})
