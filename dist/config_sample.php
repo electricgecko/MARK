@@ -1,6 +1,6 @@
 <?php 
     // full URL M A R K is installed to
-    $installpath = 'http://dev.electricgecko.de/mark';
+    $installpath = 'http://yourserver.com/yourfolder';
     
     // name of folder images are stored in
     $imgdir = 'imgs';
@@ -9,7 +9,7 @@
     $exp = '-';
     
     // character used to replace occurences of $exp in original filename
-	$rep_exp = '_';
+    $rep_exp = '_';
     
     // thumbnail filename prefix
     $thumb_indicator = 'MARKthumb';
