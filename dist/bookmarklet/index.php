@@ -1,3 +1,7 @@
+<?php
+    require_once('../config.php');    
+?>
+
 <!DOCTYPE html>
 <html class="page-index" dir="ltr" lang="en-EN">
 	<head>
@@ -49,7 +53,7 @@
 </head>
 <body>
     <div>
-        <a href="javascript:(function()%7Bif(window.MARK!==undefined)%7Bmark()%7Delse%7Bif(document.body)%7Bconsole.log('exists')%7Ddocument.body.appendChild(document.createElement('script')).src='http://dev.electricgecko.de/mark/mark.js'%7D%7D)();">→ M A R K</a>
+        <a href="javascript:(function()%7Bif(window.MARK!==undefined)%7Bmark()%7Delse%7Bif(document.body)%7Bconsole.log('exists')%7Ddocument.body.appendChild(document.createElement('script')).src='<?php echo urlencode($installdir) ?>/bookmarklet.js'%7D%7D)();">→ M A R K</a>
     </div>
     <p>Drag the box to your bookmark bar or long press and add to your bookmarks on mobile devices.</p>
 </body>

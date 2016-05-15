@@ -101,7 +101,7 @@
 	?>
 		
 	<header>
-		<h1><a href="<?php echo $installpath ?>">MARK</a></h1>
+		<h1><a href="<?php echo $installdir ?>">MARK</a></h1>
 		<nav>
 			<ol>
 				<li>everything</li><?php
@@ -175,7 +175,7 @@
 	
 	<?php else: ?>
 	    <main class="login">
-	        <h1><a href="<?php echo $installpath ?>">MARK</a></h1>
+	        <h1><a href="<?php echo $installdir ?>">MARK</a></h1>
             <form name="login" action="" method="post">
 
     	        <input type="text" name="user" value="" />

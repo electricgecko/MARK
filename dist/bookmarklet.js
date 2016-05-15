@@ -1,11 +1,5 @@
+
 (function(){
-	
-	// enter you M A R K installation path here
-	
-	var MARKpath = 'http://dev.electricgecko.de/mark/'; 
-	
-	/* ------------------------------------------------- */
-	
 	
 	// the minimum version of jQuery we want
 	var v = "2.1.1";
@@ -30,6 +24,8 @@
 		(window.MARK = function() {
 			
 			$(document).ready(function(){	
+    			
+    			markdir = 'http://dev.electricgecko.de/mark';
 
 				// create notification element
 				notify = $('<span id="MARK-notify" class="MARK-notify">Saved to MARK</span>').appendTo('body');
@@ -69,8 +65,6 @@
 					}
 				
 				})					
-
-				
 				
 				$('img').click(function(e){
 					
@@ -96,7 +90,7 @@
 						url = url.replace('//','http://');
 					}
 					
-					$.post(MARKpath+'mark.php', {a: 'load', f: url}).done(function(data){
+					$.post(markdir+'mark.php', {a: 'load', f: url}).done(function(data){
 						notify.fadeIn().delay(300).fadeOut();
 						console.log(data);
 					});
