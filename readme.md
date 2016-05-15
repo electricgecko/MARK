@@ -17,8 +17,9 @@ M A R K is a simple image bookmarking tool. I wrote it as an replacement for the
 - You need to host M A R K on your own (LAMP-) server. For now, the installation process involves uploading the package and changing some php files (see *installation*).
 - If your server does not have an SSL certificate, M A R K will not be able to save images via secure connections for cross-domain scripting reasons.
 - For now, folders have to be created manually, on the server. For the beta version, I'd like to add an UI for this.
+- Adding images via bookmarklet works well on iOS devices. Moving images to folders or zooming the view does not.
 - The user account system is rudimentary and prehistoric, to say the least.
-- JS & CSS remain uncompiled, no SCSS no nothing.
+- JS & CSS remain uncompiled, no task runner, no SCSS no nothing.
 
 ## Installation
 TBC
