@@ -1,7 +1,7 @@
 {
   "name": "MARK",
   "version": "0.1.0",
-  "desription": "DESCRIPTION",
+  "desription": "M A R K is a simple image bookmarking tool.",
   "main": "index.html",
   "author": "Malte Müller",
   "License": "MIT",
