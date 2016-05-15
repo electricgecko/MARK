@@ -1,4 +1,3 @@
-
 (function(){
 	
 	// the minimum version of jQuery we want
@@ -24,9 +23,7 @@
 		(window.MARK = function() {
 			
 			$(document).ready(function(){	
-    			
-    			markdir = 'http://dev.electricgecko.de/mark';
-
+                   
 				// create notification element
 				notify = $('<span id="MARK-notify" class="MARK-notify">Saved to MARK</span>').appendTo('body');
 				
@@ -90,7 +87,7 @@
 						url = url.replace('//','http://');
 					}
 					
-					$.post(markdir+'mark.php', {a: 'load', f: url}).done(function(data){
+					$.post(installdir+'mark.php', {a: 'load', f: url}).done(function(data){
 						notify.fadeIn().delay(300).fadeOut();
 						console.log(data);
 					});
