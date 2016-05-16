@@ -48,3 +48,10 @@ Version 0.1.0 (Alpha)
 2. Visit */bookmarklet/* subfolder within the path you installed M A R K to. On this page, drag the bookmarklet to your favourites bar.
 3. In **config.php**, you will find some basic configuration options, such as the default thumbnail size and the name of your image folder. You may change these values if you like.
 4. Good to go. Happy M A R King!
+
+## Usage
+- To add an image, click the M A R K bookmarklet. Saveable images are marked by a yellow frame. Click an image to save it to your collection. If an image cannot be added, try opening it in its own tab by selecting *open image in new tab* from your browser's context menu.
+- Within M A R K, **shift click** one or more images to select them. With images selected, click on a folder on the right hand side to add them to this folder. Click in white space to remove selection.
+- While hovering an image, click on the **×** in the upper right corner to delete the image from your collection.
+- Press **+** and **-** to change thumbnail image size.
+- Click on an image to display it in full resolution.
