@@ -87,7 +87,7 @@
 						url = url.replace('//','http://');
 					}
 					
-					$.post(installdir+'mark.php', {a: 'load', f: url}).done(function(data){
+					$.post(installdir+'/mark.php', {a: 'load', f: url}).done(function(data){
 						notify.fadeIn().delay(300).fadeOut();
 						console.log(data);
 					});
