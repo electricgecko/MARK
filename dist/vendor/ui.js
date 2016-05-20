@@ -3,8 +3,9 @@ $(window).load(function(){
     	itemSelector: 'main ul li',
     	masonry: {
     		gutter: 40
-    	}
-    });	
+    	},
+    	filter: activeFilter
+    });
 });
 
 $(document).ready(function(){
@@ -31,7 +32,12 @@ $(document).ready(function(){
     	sz = localStorage.getItem('MARKsz');
     		images.css('width',localStorage.getItem('MARKsz')+'px');
     }
-    
+       
+    // if set, get active filter from local storage
+    if (localStorage.getItem('MARKfilter') != null) {
+        activeFilter = localStorage.getItem('MARKfilter');
+    }
+   
     // dodgy, magic-number method to load full-sized images if thumbnail size is big
     if (sz >= thumbBreakpoint) {
     	images.each(function(){
@@ -205,7 +211,7 @@ $(document).ready(function(){
     	}
     	
     	marked.isotope({filter: activeFilter});
-    	
+    	localStorage.setItem('MARKfilter', activeFilter);
     });
     
     // delete images
