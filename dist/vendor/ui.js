@@ -194,8 +194,12 @@ $(document).ready(function(){
     // filter images by folder
     $('nav ol li').click(function(){
     			
-    	if (!$(this).is('nav ol li:first')) {
-    		activeFilter = '.'+$(this).text();			
+    	if (!$(this).is('nav ol li:first') ) {
+        	if ($(this).is('nav ol li:last')) {
+                activeFilter = '.imgs';
+        	} else {
+    		    activeFilter = '.'+$(this).text();
+            }        
     	} else {
     		activeFilter = '*';	
     	}

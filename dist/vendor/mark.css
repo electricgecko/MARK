@@ -49,6 +49,10 @@ nav ol li {
     cursor: pointer;
 }
 
+nav ol li:last-child {
+    margin-left: 60px;
+}
+
 nav ol li:hover {
     text-decoration: underline;
 }

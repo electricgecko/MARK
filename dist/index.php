@@ -120,7 +120,7 @@
 							echo '<li><span>'.basename($folder).'</span></li>';
 						}
 					}
-				?>
+				?><li>unsorted</li>
 			</ol>
 		</nav>
 	</header>
