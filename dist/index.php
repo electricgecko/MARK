@@ -1,20 +1,30 @@
 <?php
+    ob_start();
 	session_start();
 	
 	require_once('config.php');
 	
 	if(isset($_GET['logout'])) {
 	    $_SESSION['user'] = '';
+	    setcookie('MARKsession','', time()-86400, '/');
 	    header('Location:  http://' . $_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF']));
+	    exit;
 	}
 	
-	if (isset($_POST['user'])) {
+	if (isset($_COOKIE['MARKsession'])) {
+    	$_SESSION['user'] = $_COOKIE['MARKsession'];
+	} 
+	else if (isset($_POST['user'])) {
+    	
 	    if($userinfo[$_POST['user']] == $_POST['password']) {
 	        $_SESSION['user'] = $_POST['user'];
+	        setcookie('MARKsession',$_POST['user'], time()+86400*30, '/');
+	   
 	    } else {
 	       echo 'invalid login';
 	    }
 	}
+	ob_end_flush();
 ?>
 
 <!DOCTYPE html>
