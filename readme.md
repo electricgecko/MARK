@@ -8,6 +8,7 @@ Version 0.1.0 (Alpha)
 - M A R K is a tool for personal bookmarking. There is no way to share your bookmarks with others, unless you grant them full access rights.
 - M A R Ks general idea is to create a singular stream of your aesthetic sensibilities, their disparities, their evolution. Every image saved becomes part of this stream, called *everything*. GimmeBar worked in this way, and I enjoyed it greatly.
 - Images are added via bookmarklet, which can be conveniently dragged to your bookmarks bar from */bookmarklet/*.
+- Images are always sorted by date saved.
 - The display size of images can be adjusted by using the **+** and **-** keys. I find this to be a crucial feature.
 - Images can be organized into folders. An image can be in one folder. All images also remain part of the *everything* stream.
 - The tool consciously does not use a database. Instead, it creates a server-side file structure that is understandable to humans.
