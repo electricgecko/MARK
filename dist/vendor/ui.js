@@ -176,9 +176,7 @@ $(document).ready(function(){
     			var thumb = $(this).attr('src');
     			var file = $(this).parent().attr('href');
     			
-    			$.post('mark.php', {a: 'move', f: file, t: thumb, d: folder}).done($.proxy(function(){
-    				
-    				console.log(this);    				
+    			$.post('mark.php', {a: 'move', f: file, t: thumb, d: folder}).done($.proxy(function(){  				
     				var li = $(this).closest('li');
     				
     				// determine correct urls for image and thumb
