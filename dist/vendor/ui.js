@@ -38,7 +38,7 @@ $(document).ready(function(){
         activeFilter = localStorage.getItem('MARKfilter');
     }
    
-    // dodgy, magic-number method to load full-sized images if thumbnail size is big
+    // dodgy, magic-number method to load full-sized images if thumbnails are set to a big size
     if (sz >= thumbBreakpoint) {
     	images.each(function(){
     		$(this).find('figure a img').attr('src',$(this).data('url'));
@@ -178,17 +178,27 @@ $(document).ready(function(){
     			
     			$.post('mark.php', {a: 'move', f: file, t: thumb, d: folder}).done($.proxy(function(){
     				
-    				// set correct urls for image and thumb
-    				$(this).attr('src', $(this).data('url'));
-    				$(this).parent().attr('href', $(this).data('thumb'));
+    				console.log(this);    				
+    				var li = $(this).closest('li');
     				
+    				// determine correct urls for image and thumb
+    				var newurl = li.data('url').replace(li.attr('class').split(' ')[0], folder);
+                    li.data('url', newurl);
+                    var newthumb = li.data('thumb').replace(li.attr('class').split(' ')[0], folder);
+                    li.data('thumb', newthumb);
+    				
+    				// apply urls	
+    				$(this).attr('src', li.data('thumb'));
+    				$(this).parent().attr('href', li.data('url'));
+
     				// keep selection
-    				if ($(this).closest('li').hasClass('selected')) { var selection = true; }
-                    $(this).closest('li').removeClass().addClass(folder);
-    				if (selection) {$(this).closest('li').addClass('selected')};
-    				
-    				// re-apply active filter
+    				if (li.hasClass('selected')) { var selection = true; }
+                    li.removeClass().addClass(folder);
+    				if (selection) {li.addClass('selected')};
+    			
+                    // re-apply active filter
                     marked.isotope({filter: activeFilter});
+    				
     			}, this));	
     		});
 
