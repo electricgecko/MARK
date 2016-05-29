@@ -180,11 +180,18 @@ $(document).ready(function(){
     				var li = $(this).closest('li');
     				
     				// determine correct urls for image and thumb
-    				var newurl = li.data('url').replace(li.attr('class').split(' ')[0], folder);
+
+    				if (li.attr('class').split(' ')[0] != 'imgs') { 
+        				var pre = '';
+    				} else {
+        				var pre = 'imgs/';
+    				}
+
+                    var newurl = li.data('url').replace(li.attr('class').split(' ')[0],pre+folder);
                     li.data('url', newurl);
-                    var newthumb = li.data('thumb').replace(li.attr('class').split(' ')[0], folder);
+                    var newthumb = li.data('thumb').replace(li.attr('class').split(' ')[0], pre+folder);
                     li.data('thumb', newthumb);
-    				
+
     				// apply urls	
     				$(this).attr('src', li.data('thumb'));
     				$(this).parent().attr('href', li.data('url'));
