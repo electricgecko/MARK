@@ -82,7 +82,7 @@ main {
     margin: 60px auto;
 }
 
-main p {
+main > p {
     margin: 100px 0 0 145px;
 }
 
@@ -310,7 +310,10 @@ and (max-device-width : 568px)  {
     main {
         margin-top: 100px;
         width: 300px;  
-    
+    }
+
+    main > p {
+        margin-left: 40px;
     }
 
     main ul li {
