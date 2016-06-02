@@ -5,7 +5,7 @@ $(window).load(function(){
     		gutter: 40
     	},
     	filter: activeFilter
-    });
+    }, $('main ul').fadeIn(100));
     
     if (activeFilter == '.imgs' && $(activeFilter).length == 0) {
         showmessage(unsortedmsg);
@@ -41,6 +41,9 @@ $(document).ready(function(){
     $('aside').hide();
     $('aside #done').hide();
     
+    // hide images until sorted
+    $('main ul').hide();
+    
     // focus login form
     $('form input').first().focus();
     
@@ -57,7 +60,19 @@ $(document).ready(function(){
     // if set, get active filter from local storage
     if (localStorage.getItem('MARKfilter') != null) {
         activeFilter = localStorage.getItem('MARKfilter');
-        $('nav ol li:contains('+activeFilter.substr(1)+')').addClass('active');
+
+        switch (activeFilter) {
+        case '*':
+            setActive = $('nav ol li').first();
+            break;
+        case '.imgs':
+            setActive = $('nav ol li').last();
+            break;
+        default:
+            setActive = $('nav ol li:contains('+activeFilter.substr(1)+')');          
+        }
+        
+        setActive.addClass('active');
     }
    
     // dodgy, magic-number method to load full-sized images if thumbnails are set to a big size
