@@ -53,7 +53,8 @@ nav ol li:last-child {
     margin-left: 60px;
 }
 
-nav ol li:hover {
+nav ol li:hover,
+nav ol li.active {
     text-decoration: underline;
 }
 
@@ -79,6 +80,10 @@ h1 a {
     	
 main {
     margin: 60px auto;
+}
+
+main p {
+    margin: 100px 0 0 145px;
 }
 
 main ul li {

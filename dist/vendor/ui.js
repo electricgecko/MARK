@@ -6,7 +6,26 @@ $(window).load(function(){
     	},
     	filter: activeFilter
     });
+    
+    if (activeFilter == '.imgs' && $(activeFilter).length == 0) {
+        showmessage(unsortedmsg);
+    }
 });
+
+    
+// show a message to the user
+function showmessage(msg) {
+    if ($('main').children('p').length > 0 ) {
+    	$('main > p').html(msg);
+    } else {
+    	$('main').prepend('<p>'+msg+'</p>');		
+    }
+}
+
+// remove message
+function removemessage() {
+    $('main p').remove();
+}
 
 $(document).ready(function(){
     
@@ -15,6 +34,8 @@ $(document).ready(function(){
     hidden = null;
     thumbBreakpoint = 600;
     activeFilter = '*';
+    
+    unsortedmsg = 'No unsorted images.'
 
     // hide sidebar
     $('aside').hide();
@@ -36,6 +57,7 @@ $(document).ready(function(){
     // if set, get active filter from local storage
     if (localStorage.getItem('MARKfilter') != null) {
         activeFilter = localStorage.getItem('MARKfilter');
+        $('nav ol li:contains('+activeFilter.substr(1)+')').addClass('active');
     }
    
     // dodgy, magic-number method to load full-sized images if thumbnails are set to a big size
@@ -179,8 +201,7 @@ $(document).ready(function(){
     			$.post('mark.php', {a: 'move', f: file, t: thumb, d: folder}).done($.proxy(function(){  				
     				var li = $(this).closest('li');
     				
-    				// determine correct urls for image and thumb
-
+    				// determine new correct urls for image and thumb
     				if (li.attr('class').split(' ')[0] != 'imgs') { 
         				var pre = '';
     				} else {
@@ -196,12 +217,16 @@ $(document).ready(function(){
     				$(this).attr('src', li.data('thumb'));
     				$(this).parent().attr('href', li.data('url'));
 
-    				// keep selection
+    				// keep selection & add appropiate classes
     				if (li.hasClass('selected')) { var selection = true; }
                     li.removeClass().addClass(folder);
-    				if (selection) {li.addClass('selected')};
+                    if (folder == '') { li.addClass('imgs') };
+    				if (selection) { li.addClass('selected') };
     			
                     // re-apply active filter
+                    if (activeFilter == '.imgs') {
+                        showmessage(unsortedmsg);
+                    }
                     marked.isotope({filter: activeFilter});
     				
     			}, this));	
@@ -210,23 +235,28 @@ $(document).ready(function(){
     		$('aside #done').fadeIn().fadeOut();
     	});
     })
-    
 
     // filter images by folder
     $('nav ol li').click(function(){
-    			
+        $('nav ol li').removeClass();
     	if (!$(this).is('nav ol li:first') ) {
         	if ($(this).is('nav ol li:last')) {
                 activeFilter = '.imgs';
+                if ($(activeFilter).length == 0) {
+	            	showmessage(unsortedmsg);   
+                }
         	} else {
+            	removemessage();
     		    activeFilter = '.'+$(this).text();
             }        
     	} else {
+        	removemessage();
     		activeFilter = '*';	
     	}
     	
     	marked.isotope({filter: activeFilter});
     	localStorage.setItem('MARKfilter', activeFilter);
+    	$(this).addClass('active');
     });
     
     // delete images
@@ -242,5 +272,5 @@ $(document).ready(function(){
     		// remove image from view & rearrange layout
     		marked.isotope('remove', $(this).parent()).isotope('layout');	
     	})
-    });
+    }); 
 });
