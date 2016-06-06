@@ -239,7 +239,7 @@ $(document).ready(function(){
     				if (selection) { li.addClass('selected') };
     			
                     // re-apply active filter
-                    if (activeFilter == '.imgs') {
+                    if (activeFilter == '.imgs' && $(activeFilter).length == 0) {
                         showmessage(unsortedmsg);
                     }
                     marked.isotope({filter: activeFilter});
