@@ -190,15 +190,11 @@ $(document).ready(function(){
     });
     
     
-    // move images to folders, remove images from folders
-    $('aside ol li').each(function(){
-    	
-    	$(this).click(function(e){
-    		
-    		e.stopPropagation();
-    							
-    		// get destination folder name
-    		var folder = $(this).text();
+    // moves an image to a different folder
+    
+    function moveImage(target) {
+	// get destination folder name
+    		var folder = $(target).text();
     		
     		if (folder == $('aside ol li:first-child').text()) {
     			folder = '';
@@ -209,13 +205,14 @@ $(document).ready(function(){
     
     		// pass to move helper
     		sel.each(function(){
-
+        		
+        		var item = $(this)
     			var thumb = $(this).attr('src');
     			var file = $(this).parent().attr('href');
+    			var li = $(this).closest('li');
     			
     			$.post('mark.php', {a: 'move', f: file, t: thumb, d: folder}).done($.proxy(function(){  				
-    				var li = $(this).closest('li');
-    				
+
     				// determine new correct urls for image and thumb
     				if (li.attr('class').split(' ')[0] != 'imgs') { 
         				var pre = '';
@@ -229,8 +226,8 @@ $(document).ready(function(){
                     li.data('thumb', newthumb);
 
     				// apply urls	
-    				$(this).attr('src', li.data('thumb'));
-    				$(this).parent().attr('href', li.data('url'));
+    				item.attr('src', li.data('thumb'));
+    				item.parent().attr('href', li.data('url'));
 
     				// keep selection & add appropiate classes
     				if (li.hasClass('selected')) { var selection = true; }
@@ -244,10 +241,17 @@ $(document).ready(function(){
                     }
                     marked.isotope({filter: activeFilter});
     				
-    			}, this));	
+    			}, target));	
     		});
 
-    		$('aside #done').fadeIn().fadeOut();
+    		$('aside #done').fadeIn().fadeOut();        
+    }
+    
+    // move images to folders, remove images from folders
+    $('aside ol li').each(function(){
+    	$(this).click(function(e){
+    		e.stopPropagation();
+            moveImage($(this));
     	});
     })
 
@@ -260,8 +264,7 @@ $(document).ready(function(){
             $('aside').show();
             
             // TO DO
-            // PUT FUNCTIONALITY FOR MOVING IMAGES INTO AN ABSTRACTED FUNCTION TO WORK WITH
-            // BOT LONGPRESS AND REGULAR DESKTOP
+            // STYLE ASIDE OVERLAY ON MOBILE
     });
         
     })
