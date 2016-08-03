@@ -251,6 +251,21 @@ $(document).ready(function(){
     	});
     })
 
+
+    // long press images on mobile to filter to folder
+    images.each(function(){
+        $(this).longpress(function(e) {
+            e.preventDefault();
+            
+            $('aside').show();
+            
+            // TO DO
+            // PUT FUNCTIONALITY FOR MOVING IMAGES INTO AN ABSTRACTED FUNCTION TO WORK WITH
+            // BOT LONGPRESS AND REGULAR DESKTOP
+    });
+        
+    })
+
     // filter images by folder
     $('nav ol li').click(function(){
         $('nav ol li').removeClass();

@@ -8,9 +8,10 @@ body {
     font-weight: normal;
     font-size: 9pt;
     letter-spacing: 1px;
-    -webkit-text-size-adjust: none
-    
+    -webkit-text-size-adjust: none;
+    -webkit-touch-callout: none !important;
 }
+
 
 a {
     color: #000;
@@ -320,6 +321,10 @@ and (max-device-width : 568px)  {
         width: 300px;
     }
     
+    main ul li:hover figure > a:after {
+        display: none;
+    }
+        
     .login form {
         width: 100%;
     }
