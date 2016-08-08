@@ -348,10 +348,10 @@ and (max-device-width : 568px)
 and (orientation : landscape)  {
     
     main {
-        width: 400px;
+        width: 568px;
     }
     
      main ul li {
-        width: 400px;
+        width: 100px;
     }   
 }
