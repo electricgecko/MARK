@@ -6,10 +6,11 @@
     require_once('config.php');
  	
 	$a = $_POST[a];
-
-	if (isset($_POST[f])) { $file = $_POST[f]; }
-	if (isset($_POST[t])) { $thumb = $_POST[t]; }
-	if (isset($_POST[d])) { $dir = $_POST[d]; }
+    
+	if (isset($_POST[f]))  { $file = $_POST[f];     }
+	if (isset($_POST[t]))  { $thumb = $_POST[t];    }
+	if (isset($_POST[d]))  { $dir = $_POST[d];      }
+	if (isset($_FILES[u])) { $upload = true;        }
 	
 	switch ($a) {
     case 'del':
@@ -19,7 +20,7 @@
     	markmove($file, $thumb, $dir);
 		break;
 	case 'load':
-		markload($file);
+        markload($file, $upload);
 		break;
 	}
 	
@@ -34,15 +35,17 @@
 	}	
 	
 	function markmove($move_img, $move_thumb, $move_dir) {
-		$dest = 'imgs/'.$move_dir.'/'.basename($move_img);
+    	global $imgdir;
+    	
+		$dest = $imgdir.'/'.$move_dir.'/'.basename($move_img);
 		rename($move_img, $dest);
 		
-		$dest = 'imgs/'.$move_dir.'/'.basename($move_thumb);
+		$dest = $imgdir.'/'.$move_dir.'/'.basename($move_thumb);
 		rename($move_thumb, $dest);		
 	}
 
 	
-	function markload($img) {
+	function markload($img, $upload) {
 	
 		function sanitizeFilename($f) {
 			$replace_chars = array(
@@ -65,24 +68,25 @@
 			return strtolower($f);
 		}
 		
-		global $exp, $rep_exp, $thumb_indicator, $thumb_width;
-        
-        echo ' imagetype: '.exif_imagetype($img);
+		global $exp, $rep_exp, $thumb_indicator, $thumb_width, $imgdir;
+    
+        if ($upload) {
+           $img = $_FILES['u']['tmp_name'];
+        }    
+          
         if (exif_imagetype($img) == IMAGETYPE_JPEG) {
             $img_el = imagecreatefromjpeg($img);
+            $ext = '.jpg';
         } elseif (exif_imagetype($img) == IMAGETYPE_PNG) {
             $img_el = imagecreatefrompng($img);
+            $ext = '.png';
         } elseif (exif_imagetype($img) == IMAGETYPE_GIF) {
             $img_el = imagecreatefromgif($img);
+            $ext = '.gif';
         }
         
 		$img_w = imagesx($img_el);
 		$img_h = imagesy($img_el);
-		
-		echo ' width: '.$img_w;
-		echo ' ';
-		echo ' height: '.$img_h;
-		
 		
 		// get time/date string
 		$img_date = date(ymdHis);
@@ -92,17 +96,20 @@
 		$img_file = str_replace($exp, $rep_exp, $img_file);
 		
 		// define image name
-		$img_name = 'imgs/'.$img_date.$exp.$img_w.$exp.$img_h.$exp.$img_file;
-		echo $img_name;
+		$img_name = $imgdir.'/'.$img_date.$exp.$img_w.$exp.$img_h.$exp.$img_file;
+		if ($upload) { $img_name .= $ext; }
+		
 		// copy actual image
 		copy($img, $img_name);
 		
 		// create thumbnail	
 		$thumb_height = floor($img_h * ($thumb_width / $img_w));	
-		$thumb_name = 'imgs/'.$img_date.$exp.$thumb_indicator.$exp.$img_w.$exp.$img_h.$exp.$img_file;
+		$thumb_name = $imgdir.'/'.$img_date.$exp.$thumb_indicator.$exp.$img_w.$exp.$img_h.$exp.$img_file;   
+		if ($upload) { $thumb_name .= $ext; }
 		$thumb_image = imagecreatetruecolor($thumb_width, $thumb_height);
 		imagecopyresampled($thumb_image, $img_el, 0, 0, 0, 0, $thumb_width, $thumb_height, $img_w, $img_h);
 	
 		imagejpeg($thumb_image, $thumb_name);	
 	}
+	
 ?>

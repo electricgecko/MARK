@@ -306,4 +306,54 @@ $(document).ready(function(){
     		marked.isotope('remove', $(this).parent()).isotope('layout');	
     	})
     }); 
+    
+    
+    // upload images by drag and drop
+
+    // check if browser is capable
+    var isAdvancedUpload = function() {
+      var div = document.createElement('div');
+      return (('draggable' in div) || ('ondragstart' in div && 'ondrop' in div)) && 'FormData' in window && 'FileReader' in window;
+    }();
+    
+    
+    if (isAdvancedUpload) {       
+        
+       var dragto = $('html');
+       
+       dragto.on('dragenter', function(e) {
+           e.stopPropagation();
+           e.preventDefault();
+           
+       }).on('dragover', function(e) {
+            e.stopPropagation();
+            e.preventDefault();
+            $(this).css('background', 'rgba(255, 230, 0, 1)');
+            
+       }).on('dragleave', function(e) {
+           e.stopPropagation();
+           e.preventDefault();
+           $(this).css('background', 'transparent');
+           
+       }).on('drop', function (e) {
+            e.preventDefault();
+            var files = e.originalEvent.dataTransfer.files;
+ 
+            var fdata = new FormData();
+            fdata.append( 'u', files[0] );
+            fdata.append( 'a', 'load');             
+
+            $.ajax({
+               type: "POST",                
+               url: "mark.php",
+               processData: false,
+               contentType: false,
+               cache:false,
+               data: fdata
+            });
+            
+            $(this).css('background', 'transparent');
+       });  
+    }  
+        
 });
