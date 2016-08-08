@@ -2,7 +2,7 @@
 
 M A R K is a simple image bookmarking tool. I wrote it as an replacement for the now sadly dysfunctional [GimmeBar](http://gimmebar.com). It is tailored to my personal needs and preferences, so chances are it won’t fit your use case or make no sense to you at all.
 
-Version 0.1.6 (Alpha)
+Version 0.1.7 (Alpha)
 
 ## Rationale
 - M A R K is a tool for personal bookmarking. There is no way to share your bookmarks with others, unless you grant them full access rights.
@@ -22,6 +22,7 @@ Version 0.1.6 (Alpha)
 - If your server does not have an SSL certificate, M A R K will not be able to save images via secure connections for cross-domain scripting reasons.
 - M A R K does not save image sources in any way. In the rare cases this is of interest to me, I use a [reverse image search](https://gist.github.com/electricgecko/44152c19c83d7d1960a9).
 - For now, folders have to be created manually, on the server. For the beta version, I'd like to add an UI for this.
+- Images can be uploaded by dragging them into the browser window (lacking a success response so far).
 - Adding images via bookmarklet works well on iOS devices. Moving images to folders or zooming the view does not.
 - The user account system is rudimentary and prehistoric, to say the least. Passwords are stored as plain text, even.
 - JS & CSS remain uncompiled, no task runner, no SCSS no nothing.
@@ -46,7 +47,7 @@ Version 0.1.6 (Alpha)
 
 ### Setup & configuration
 1. In your */imgs/* folder, create subfolders you want M A R K to use, such as **architecture**, **art** or **textures**. Folder names should not contain spaces.
-2. Visit */bookmarklet/* subfolder within the path you installed M A R K to. On this page, drag the bookmarklet to your favourites bar.
+2. Open the */bookmarklet/* subfolder within the path you installed M A R K to in your browser. On this page, drag the bookmarklet to your favourites bar.
 3. In **config.php**, you will find some basic configuration options, such as the default thumbnail size and the name of your image folder. You may change these values if you like.
 4. Good to go. Happy M A R King!
 
