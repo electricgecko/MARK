@@ -23,6 +23,10 @@ a {
     text-decoration: none;
 }
 
+body.inv a {
+    color: #fff;
+}
+
 ul, ol {
     list-style: none;
     padding: 0;
@@ -182,6 +186,10 @@ aside {
     background: #fff;
     
     z-index: 15;
+}
+
+body.inv aside {
+    background: #131313;
 }
 
 aside p {
