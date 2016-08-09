@@ -34,6 +34,7 @@ $(document).ready(function(){
     hidden = null;
     thumbBreakpoint = 600;
     activeFilter = '*';
+    filetypes = new Array('image/jpeg', 'image/png', 'image/gif');
     
     unsortedmsg = 'No unsorted images.'
 
@@ -257,14 +258,20 @@ $(document).ready(function(){
 
 
     // long press images on mobile to filter to folder
+    // not yet implemented
     images.each(function(){
         $(this).longpress(function(e) {
+            
+            /*
+            
             e.preventDefault();
             
             $('aside').show();
             
             // TO DO
             // STYLE ASIDE OVERLAY ON MOBILE
+            
+            */
     });
         
     })
@@ -338,20 +345,25 @@ $(document).ready(function(){
        }).on('drop', function (e) {
             e.preventDefault();
             var files = e.originalEvent.dataTransfer.files;
- 
-            var fdata = new FormData();
-            fdata.append( 'u', files[0] );
-            fdata.append( 'a', 'load');             
-
-            $.ajax({
-               type: "POST",                
-               url: "mark.php",
-               processData: false,
-               contentType: false,
-               cache:false,
-               data: fdata
-            });
             
+            // simple file type validation
+            if (jQuery.inArray(files[0].type, filetypes) > -1) {
+             
+              var fdata = new FormData();
+              fdata.append( 'u', files[0] );
+              fdata.append( 'a', 'load');     
+              
+              $.ajax({
+                 type: "POST",                
+                 url: "mark.php",
+                 processData: false,
+                 contentType: false,
+                 cache:false,
+                 data: fdata
+              });
+                             
+            }
+
             $(this).css('background', 'transparent');
        });  
     }  
