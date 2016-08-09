@@ -2,7 +2,7 @@
 
 M A R K is a simple image bookmarking tool. I wrote it as an replacement for the now sadly dysfunctional [GimmeBar](http://gimmebar.com). It is tailored to my personal needs and preferences, so chances are it won’t fit your use case or make no sense to you at all.
 
-Version 0.1.7 (Alpha)
+Version 0.1.8 (Alpha)
 
 ## Rationale
 - M A R K is a tool for personal bookmarking. There is no way to share your bookmarks with others, unless you grant them full access rights.
@@ -22,7 +22,7 @@ Version 0.1.7 (Alpha)
 - If your server does not have an SSL certificate, M A R K will not be able to save images via secure connections for cross-domain scripting reasons.
 - M A R K does not save image sources in any way. In the rare cases this is of interest to me, I use a [reverse image search](https://gist.github.com/electricgecko/44152c19c83d7d1960a9).
 - For now, folders have to be created manually, on the server. For the beta version, I'd like to add an UI for this.
-- Images can be uploaded by dragging them into the browser window (lacking a success response so far).
+- Images can be uploaded by dragging them into the browser window but lack a coherent interface.
 - Adding images via bookmarklet works well on iOS devices. Moving images to folders or zooming the view does not.
 - The user account system is rudimentary and prehistoric, to say the least. Passwords are stored as plain text, even.
 - JS & CSS remain uncompiled, no task runner, no SCSS no nothing.
@@ -55,5 +55,7 @@ Version 0.1.7 (Alpha)
 - To add an image, click the M A R K bookmarklet. Saveable images are marked by a yellow frame. Click an image to save it to your collection. If an image cannot be added, try opening it in its own tab by selecting *open image in new tab* from your browser's context menu.
 - Within M A R K, **shift click** one or more images to select them. With images selected, click on a folder on the right hand side to add them to this folder. Click in white space to remove selection.
 - While hovering an image, click on the **×** in the upper right corner to delete the image from your collection.
+- Drag an image file from your desktop into the M A R K browser window to upload it.
 - Press **+** and **-** to change thumbnail image size.
+- Press **i** to invert the color scheme.
 - Click on an image to display it in full resolution.

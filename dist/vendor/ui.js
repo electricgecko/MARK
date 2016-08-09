@@ -57,7 +57,12 @@ $(document).ready(function(){
     	sz = localStorage.getItem('MARKsz');
     		images.css('width',localStorage.getItem('MARKsz')+'px');
     }
-       
+    
+    // get background color from local storage
+    if (localStorage.getItem('MARKbg') != null) {
+        $('body').addClass(localStorage.getItem('MARKbg'));
+    }
+    
     // if set, get active filter from local storage
     if (localStorage.getItem('MARKfilter') != null) {
         activeFilter = localStorage.getItem('MARKfilter');
@@ -96,7 +101,6 @@ $(document).ready(function(){
     		if (colwidth+colwidth*mult >= thumbBreakpoint) {
     			images.each(function(){
     				$(this).find('figure a img').attr('src',$(this).data('url'));
-    				console.log('big images');
     			});						
     		}
 
@@ -110,13 +114,18 @@ $(document).ready(function(){
     		if (colwidth-colwidth*mult < thumbBreakpoint) {
     			images.each(function(){
     				$(this).find('figure a img').attr('src',$(this).data('thumb'));
-    				console.log('small image');
     			});						
     		}
     		
     		marked.isotope('layout');
-    		localStorage.setItem('MARKsz', colwidth-colwidth*mult);
+    		localStorage.setItem('MARKsz', colwidth-colwidth*mult)
+
+    	// i (to change background color)
+        } else if (evt.keyCode === 73) {
+            $('body').toggleClass('inv');
+    		localStorage.setItem('MARKbg', $('body').attr('class'));
         }
+        
     });
 
     // remove selections by clicking in white space

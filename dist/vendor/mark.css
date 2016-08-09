@@ -12,6 +12,11 @@ body {
     -webkit-touch-callout: none !important;
 }
 
+body.inv {
+    background: #131313;
+    color: #fff;
+}
+
 
 a {
     color: #000;
@@ -71,6 +76,11 @@ h1 {
     text-indent: -9999px;
     background: url('mark.svg') no-repeat;
     background-size: contain;
+}
+
+body.inv h1 {
+  -webkit-filter: grayscale(100%) brightness(10);
+  filter: grayscale(100%) brightness(10);
 }
 
 h1 a {
