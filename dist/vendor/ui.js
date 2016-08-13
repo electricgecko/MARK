@@ -344,12 +344,14 @@ $(document).ready(function(){
        }).on('dragover', function(e) {
             e.stopPropagation();
             e.preventDefault();
-            $(this).css('background', 'rgba(255, 230, 0, 1)');
+            $('body').addClass('drag');
             
        }).on('dragleave', function(e) {
            e.stopPropagation();
            e.preventDefault();
-           $(this).css('background', 'transparent');
+           $('body').removeClass('drag');
+           
+
            
        }).on('drop', function (e) {
             e.preventDefault();

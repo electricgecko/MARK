@@ -10,11 +10,17 @@ body {
     letter-spacing: 1px;
     -webkit-text-size-adjust: none;
     -webkit-touch-callout: none !important;
+    background-color: #fff;
 }
 
 body.inv {
     background: #131313;
     color: #fff;
+}
+
+body.drag {
+    background: #cacaca;
+    color: #000;
 }
 
 
