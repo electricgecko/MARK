@@ -378,5 +378,21 @@ $(document).ready(function(){
             $(this).css('background', 'transparent');
        });  
     }  
-        
+
+	// upload images on touch-based devices
+	$('#mobileUpload').change(function() {
+    	
+        var fdata = new FormData();
+        fdata.append( 'u', $('#mobileUpload')[0].files[0] );
+        fdata.append( 'a', 'load');     
+              
+              $.ajax({
+                 type: "POST",                
+                 url: "mark.php",
+                 processData: false,
+                 contentType: false,
+                 cache:false,
+                 data: fdata
+              });
+	})
 });

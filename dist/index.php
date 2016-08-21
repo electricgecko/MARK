@@ -53,6 +53,7 @@
 		
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 	<script src="vendor/isotope.min.js"></script>
+	<script src="vendor/longpress.min.js"></script>
 	<script src="vendor/ui.js"></script>
 </head>
 
@@ -180,6 +181,11 @@
 		<span id="done" class="done">✔</span>
 	</aside>
 	
+
+	<div class="mobileUploadWrap">
+        <a href="javascript:;">upload</a>
+    	<input class="mobileUpload" id="mobileUpload" type="file"/>
+    </div>
 	<a class="logout" id="logout" href="?logout=1">logout</a>
 	
 	
