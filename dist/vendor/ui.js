@@ -332,9 +332,8 @@ $(document).ready(function(){
       return (('draggable' in div) || ('ondragstart' in div && 'ondrop' in div)) && 'FormData' in window && 'FileReader' in window;
     }();
     
-    
-    if (isAdvancedUpload) {       
-        
+    if (isAdvancedUpload) { 
+                
        var dragto = $('html');
        
        dragto.on('dragenter', function(e) {
@@ -345,13 +344,12 @@ $(document).ready(function(){
             e.stopPropagation();
             e.preventDefault();
             $('body').addClass('drag');
+            console.log('dragover');
             
        }).on('dragleave', function(e) {
            e.stopPropagation();
            e.preventDefault();
            $('body').removeClass('drag');
-           
-
            
        }).on('drop', function (e) {
             e.preventDefault();
@@ -375,8 +373,8 @@ $(document).ready(function(){
                              
             }
 
-            $(this).css('background', 'transparent');
-       });  
+            $('body').removeClass('drag');
+       }); 
     }  
 
 	// upload images on touch-based devices
