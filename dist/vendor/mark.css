@@ -329,7 +329,10 @@ and (max-device-width : 1024px) {
     form input[type=password] {
         font-size: 300%;   
     }
-    
+
+    .mobileUploadWrap {
+        display: block;
+    }    
 }
 
 @media only screen 
