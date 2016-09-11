@@ -410,7 +410,26 @@ $(document).ready(function(){
                  processData: false,
                  contentType: false,
                  cache:false,
-                 data: fdata
+                 data: fdata,
+                 dataType: 'JSON',
+                 success: function(data) {
+                     var imgName = data.img_name;
+                     var thumbName = data.thumb_name;
+                     var theIMG = $('<li class="imgs" data-thumb="'+thumbName+'" data-url="'+imgName+'" style="width: '+images.css('width')+';"><a class="del" href="javascript:void(0);">×</a><figure><a href="'+imgName+'"><img src="'+thumbName+'" /></a></figure></li>');
+                 
+                     // add delete feature
+                     addDeleteFunction($('a.del', theIMG));
+                 
+                     $('img', theIMG).load(function(){
+                 
+                         // add to collection
+                         marked.prepend(theIMG).isotope('prepended', theIMG)
+                         marked.isotope('layout');
+                       
+                         $('body').removeClass('drag');
+                                           
+                     });
+                 }
               });
 	})
 });
