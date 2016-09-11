@@ -200,6 +200,21 @@ $(document).ready(function(){
     });
     
     
+    // add delete function to image
+    function addDeleteFunction(btn) {
+        btn.click(function(){
+
+            var thumb = btn.next().find('img').attr('src');
+    		var url = btn.next().find('a').attr('href');
+
+    		// pass to delete helper
+    		$.post('mark.php', {a: 'del', f: url, t: thumb});
+    							
+    		// remove image from view & rearrange layout
+    		marked.isotope('remove', btn.parent()).isotope('layout');	
+    	})        
+    }   
+     
     // moves an image to a different folder
     
     function moveImage(target) {
@@ -310,22 +325,12 @@ $(document).ready(function(){
     
     // delete images
     $('a.del').each(function(){
-    	$(this).click(function(){
-
-            var thumb = $(this).next().find('img').attr('src');
-    		var url = $(this).next().find('a').attr('href');
-
-    		// pass to delete helper
-    		$.post('mark.php', {a: 'del', f: url, t: thumb});
-    							
-    		// remove image from view & rearrange layout
-    		marked.isotope('remove', $(this).parent()).isotope('layout');	
-    	})
+        addDeleteFunction($(this));
     }); 
     
     
     // upload images by drag and drop
-
+    
     // check if browser is capable
     var isAdvancedUpload = function() {
       var div = document.createElement('div');
@@ -344,7 +349,6 @@ $(document).ready(function(){
             e.stopPropagation();
             e.preventDefault();
             $('body').addClass('drag');
-            console.log('dragover');
             
        }).on('dragleave', function(e) {
            e.stopPropagation();
@@ -358,24 +362,41 @@ $(document).ready(function(){
             // simple file type validation
             if (jQuery.inArray(files[0].type, filetypes) > -1) {
              
-              var fdata = new FormData();
-              fdata.append( 'u', files[0] );
-              fdata.append( 'a', 'load');     
+                var fdata = new FormData();
+                fdata.append( 'u', files[0] );
+                fdata.append( 'a', 'load');     
               
-              $.ajax({
-                 type: "POST",                
-                 url: "mark.php",
-                 processData: false,
-                 contentType: false,
-                 cache:false,
-                 data: fdata
-              });
-                             
+                var upload = $.ajax({
+                    type: 'POST',                
+                    url: 'mark.php',
+                    processData: false,
+                    contentType: false,
+                    cache:false,
+                    data: fdata,
+                    dataType: 'JSON',
+                    success: function(data) {
+                        console.log(data);
+                        var imgName = data.img_name;
+                        var thumbName = data.thumb_name;
+                        var theIMG = $('<li class="imgs" data-thumb="'+thumbName+'" data-url="'+imgName+'" style="width: '+images.css('width')+';"><a class="del" href="javascript:void(0);">×</a><figure><a href="'+imgName+'"><img src="'+thumbName+'" /></a></figure></li>');
+                    
+                        // add delete feature
+                        addDeleteFunction($('a.del', theIMG));
+                    
+                        $('img', theIMG).load(function(){
+                    
+                            // add to collection
+                            marked.prepend(theIMG).isotope('prepended', theIMG)
+                            marked.isotope('layout');
+                          
+                            $('body').removeClass('drag');
+                                              
+                        });
+                    }
+                }) 
             }
-
-            $('body').removeClass('drag');
-       }); 
-    }  
+        })
+        }  
 
 	// upload images on touch-based devices
 	$('#mobileUpload').change(function() {

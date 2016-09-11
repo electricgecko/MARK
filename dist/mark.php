@@ -12,6 +12,8 @@
 	if (isset($_POST[d]))  { $dir = $_POST[d];      }
 	if (isset($_FILES[u])) { $upload = true;        }
 	
+	
+	
 	switch ($a) {
     case 'del':
         markdel($file, $thumb);
@@ -46,7 +48,6 @@
 
 	
 	function markload($img, $upload) {
-	
 		function sanitizeFilename($f) {
 			$replace_chars = array(
 			    'Š'=>'S', 'š'=>'s', 'Ð'=>'Dj','Ž'=>'Z', 'ž'=>'z', 'À'=>'A', 'Á'=>'A', 'Â'=>'A', 'Ã'=>'A', 'Ä'=>'A',
@@ -91,8 +92,14 @@
 		// get time/date string
 		$img_date = date(ymdHis);
 		
-		// $img_file = basename($img);
-		$img_file = sanitizeFilename(basename($img));
+		// get original filename in case file was uploaded
+		if ($upload) {
+    		// construct file name, removing extension
+    		$img_file = sanitizeFilename(preg_replace('/\\.[^.\\s]{3,4}$/', '', $_FILES['u']['name']));
+		} else {
+            $img_file = sanitizeFilename(basename($img));    		
+		}
+		
 		$img_file = str_replace($exp, $rep_exp, $img_file);
 		
 		// define image name
@@ -109,7 +116,10 @@
 		$thumb_image = imagecreatetruecolor($thumb_width, $thumb_height);
 		imagecopyresampled($thumb_image, $img_el, 0, 0, 0, 0, $thumb_width, $thumb_height, $img_w, $img_h);
 	
-		imagejpeg($thumb_image, $thumb_name);	
+		imagejpeg($thumb_image, $thumb_name);
+		
+		echo json_encode(array('img_name' => $img_name, 'thumb_name' => $thumb_name);
 	}
 	
+	exit();
 ?>
