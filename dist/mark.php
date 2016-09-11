@@ -12,8 +12,6 @@
 	if (isset($_POST[d]))  { $dir = $_POST[d];      }
 	if (isset($_FILES[u])) { $upload = true;        }
 	
-	
-	
 	switch ($a) {
     case 'del':
         markdel($file, $thumb);
@@ -27,7 +25,6 @@
 	}
 	
 	function markdel($del_img, $del_thumb) {
-    	
 		if (!unlink($del_img)) {
 
 		}
@@ -118,7 +115,7 @@
 	
 		imagejpeg($thumb_image, $thumb_name);
 		
-		echo json_encode(array('img_name' => $img_name, 'thumb_name' => $thumb_name);
+		echo json_encode(array('img_name' => $img_name, 'thumb_name' => $thumb_name));
 	}
 	
 	exit();

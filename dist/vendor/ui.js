@@ -206,7 +206,7 @@ $(document).ready(function(){
 
             var thumb = btn.next().find('img').attr('src');
     		var url = btn.next().find('a').attr('href');
-
+    		            
     		// pass to delete helper
     		$.post('mark.php', {a: 'del', f: url, t: thumb});
     							
@@ -375,7 +375,6 @@ $(document).ready(function(){
                     data: fdata,
                     dataType: 'JSON',
                     success: function(data) {
-                        console.log(data);
                         var imgName = data.img_name;
                         var thumbName = data.thumb_name;
                         var theIMG = $('<li class="imgs" data-thumb="'+thumbName+'" data-url="'+imgName+'" style="width: '+images.css('width')+';"><a class="del" href="javascript:void(0);">×</a><figure><a href="'+imgName+'"><img src="'+thumbName+'" /></a></figure></li>');
