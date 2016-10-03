@@ -71,4 +71,5 @@ bookmarklet.js
 /vendor
 /bookmarklet
 ```
-3. If you prefer individual files only, please refer to commit notes in this repo.
+
+3. If you prefer individual files, please refer to the commit notes to identify updated components.
