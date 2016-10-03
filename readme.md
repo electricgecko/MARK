@@ -64,12 +64,12 @@ Version 0.1.8.2 (Alpha)
 1. To update your M A R K installation, [re-download](https://github.com/electricgecko/MARK/archive/master.zip) this repo.
 2. Replace the following files and folders on your server:
 
-```
-index.php
-mark.php
-bookmarklet.js
-/vendor
-/bookmarklet
-```
+    ```
+    index.php
+    mark.php
+    bookmarklet.js
+    /vendor
+    /bookmarklet
+    ```
 
 3. If you prefer individual files, please refer to the commit notes to identify updated components.
