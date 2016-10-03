@@ -73,6 +73,12 @@
 			return $arr;	
 		}
 		
+        function get_thumb($img_name) {
+    	    global $thumb_indicator;
+    	    global $exp;
+            return substr_replace($img_name, $exp.$thumb_indicator, strpos($img_name,$exp), 0);
+	    }
+		
 		// go.
 		
 		// read main image folder	
@@ -136,17 +142,18 @@
 				foreach ($images as $image) {
 		
 						// parse image info from filename
-						$img_info = explode($exp, basename($image['name']));
+						$img_info = explode($exp, basename($image[name]));
 						$image_date = $img_info[0];
 						$image_w = $img_info[1];
 						$image_h = $img_info[2];	
 						$image_title = $img_info[3];
-						$image_thumbnail = substr_replace($image['name'], $exp.$thumb_indicator, strpos($image['name'],$exp), 0);
+						$image_thumbnail = get_thumb($image[name]);
 						
 						// self-cleaning: if image is a duplicate, don't show it and delete it from server
 						if (in_array($image_title, $displayed_images)) {
-						unlink($image);
-						
+                            unlink($image[name]);
+                            unlink(get_thumb($image[name]));
+                            
 						} else {
 							
 							// make sure the image isn't still being copied – and thumbnail is created
@@ -154,7 +161,7 @@
 							
 				    			// show image
 				    			array_push($displayed_images, $image_title);
-				    			echo '<li id="'.$index.'" class="'.basename($image['folder']).'" data-thumb="'.$image_thumbnail.'" data-url="'.$image[name].'"><a class="del" href="javascript:void(0);">×</a><figure><a href="'.$image['name'].'"><img width="'.$image_w.'" height="'.$image_h.'" src="'.$image_thumbnail.'" /></a></figure></li>';
+				    			echo '<li class="'.basename($image['folder']).'" data-thumb="'.$image_thumbnail.'" data-url="'.$image[name].'"><a class="del" href="javascript:void(0);">×</a><figure><a href="'.$image['name'].'"><img width="'.$image_w.'" height="'.$image_h.'" src="'.$image_thumbnail.'" /></a>'.$image_title.'</figure></li>';
 				    			$index++;
 				    			
                             }

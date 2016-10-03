@@ -67,11 +67,13 @@
 		}
 		
 		global $exp, $rep_exp, $thumb_indicator, $thumb_width, $imgdir;
-    
+        
+        // replace image by uploaded image if applicable
         if ($upload) {
            $img = $_FILES['u']['tmp_name'];
         }    
           
+        // create image object
         if (exif_imagetype($img) == IMAGETYPE_JPEG) {
             $img_el = imagecreatefromjpeg($img);
             $ext = '.jpg';
@@ -83,6 +85,7 @@
             $ext = '.gif';
         }
         
+        // get image dimensions
 		$img_w = imagesx($img_el);
 		$img_h = imagesy($img_el);
 		
