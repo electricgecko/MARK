@@ -27,6 +27,12 @@ function removemessage() {
     $('main p').remove();
 }
 
+// invert background color
+function invertBG() {
+	$('body').toggleClass('inv');
+	localStorage.setItem('MARKbg', $('body').attr('class'));	
+}
+
 $(document).ready(function(){
     
     imgdir = $('body').data('imgdir');
@@ -120,10 +126,9 @@ $(document).ready(function(){
     		marked.isotope('layout');
     		localStorage.setItem('MARKsz', colwidth-colwidth*mult)
 
-    	// i (to change background color)
+    	// i (to invert background color)
         } else if (evt.keyCode === 73) {
-            $('body').toggleClass('inv');
-    		localStorage.setItem('MARKbg', $('body').attr('class'));
+			invertBG();
         }
         
     });
@@ -431,5 +436,10 @@ $(document).ready(function(){
                      });
                  }
               });
+	})
+	
+	// invert background color on touch-based devices
+	$('#mobileInvert').click(function(){
+		invertBG();	
 	})
 });
