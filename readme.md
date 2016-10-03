@@ -78,5 +78,5 @@ Version 0.1.8.2 (Alpha)
 M A R K 0.1.8.2 running on a mobile phone.
 
 <img src="https://github.com/electricgecko/MARK/blob/master/src/MARK-01.jpg" alt="M A R K running on a mobile phone" width="280"/>
-<img src="https://github.com/electricgecko/MARK/blob/master/src/MARK-02.jpg" alt="M A R K running on a mobile phone" width="280"/>
+<img src="https://github.com/electricgecko/MARK/blob/master/src/MARK-05.jpg" alt="M A R K running on a mobile phone" width="280"/>
 <img src="https://github.com/electricgecko/MARK/blob/master/src/MARK-04.jpg" alt="M A R K running on a mobile phone" width="280">
