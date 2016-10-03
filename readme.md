@@ -59,3 +59,16 @@ Version 0.1.8.2 (Alpha)
 - Press **+** and **-** to change thumbnail image size.
 - Press **i** to invert the color scheme.
 - Click on an image to display it in full resolution.
+
+## Updating
+1. To update your M A R K installation, [re-download](https://github.com/electricgecko/MARK/archive/master.zip) this repo.
+2. Replace the following files and folders on your server:
+
+```
+index.php
+mark.php
+bookmarklet.js
+/vendor
+/bookmarklet
+```
+3. If you prefer individual files only, please refer to commit notes in this repo.
