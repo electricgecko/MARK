@@ -33,8 +33,10 @@ function invertBG() {
 	localStorage.setItem('MARKbg', $('body').attr('class'));	
 }
 
+
+
+
 $(document).ready(function(){
-    
     imgdir = $('body').data('imgdir');
     images = $('main ul li');
     hidden = null;
@@ -138,18 +140,10 @@ $(document).ready(function(){
     	
     	if (!$(e.target).closest('li').length) {
     		
-    		// remove selected
+    		// remove selected & hide filter panel
     		if ($('li.selected').length) {
     			$('li.selected').removeClass('selected');
-    			$('main').css({
-    				'max-width': 'none',
-    				'margin': '60px auto',
-    			});
-    			
-    			$('header > nav').show();
-    			
-    			marked.isotope('layout');
-    			$('aside').hide();
+                hideFilter();
     		}
 
     	} else {
@@ -166,43 +160,55 @@ $(document).ready(function(){
     			
     			// if at least one image is selected, show sidebar
     			if ($('li.selected').length) {
-    				
-    				// adjust main container width to sidebar width
-    				$('main').css({
-    					'max-width': $(window).width()-$('aside').outerWidth(),
-    					'margin': '60px 0 60px 0'
-    				});
-    				
-    				$('header > nav').hide();
-    				
-    				// add leading 0
-    				n = $('li.selected').length;
-    				if ((n < 10)) {
-    					n = '0'+n
-    				}
-    				
-    				$('aside p > span').text(n);
-    				
-    				marked.isotope('layout');
-    				$('aside').show();
-    				
+                    showFilter(false);
     			} else {
-    			
-    			// reset main container width
-    			$('main').css({
-    					'max-width': 'none',
-    					'margin': '60px auto',
-    				});
-    				
-    				$('header > nav').show();
-    				
-    				marked.isotope('layout');
-    				$('aside').hide();
-    				
+                    hideFilter();
     			}
     		}
     	}
     });
+    
+    
+    // show filter panel
+    function showFilter(forceTouched) {
+        
+        if (!forceTouched) {
+           // adjust main container width to sidebar width
+           $('main').css({
+               'max-width': $(window).width()-$('aside').outerWidth(),
+               'margin': '60px 0 60px 0'
+           });
+        }
+    
+        $('header > nav').hide();
+        
+        // add leading 0
+        n = $('li.selected').length;
+        if ((n < 10)) {
+            n = '0'+n
+        }
+        
+        $('aside p > span').text(n);
+        
+        marked.isotope('layout');
+        $('aside').show();        
+    }
+    
+    
+    // hide filter panel   
+    function hideFilter() {
+     			
+        // reset main container width
+        $('main').css({
+            	'max-width': 'none',
+            	'margin': '60px auto',
+            });
+            
+        $('header > nav').show();
+            
+        marked.isotope('layout');
+        $('aside').hide(); 
+    }
     
     
     // add delete function to image
@@ -220,8 +226,8 @@ $(document).ready(function(){
     	})        
     }   
      
+     
     // moves an image to a different folder
-    
     function moveImage(target) {
 	// get destination folder name
     		var folder = $(target).text();
@@ -279,30 +285,44 @@ $(document).ready(function(){
     
     // move images to folders, remove images from folders
     $('aside ol li').each(function(){
-    	$(this).click(function(e){
+    	$(this).on('click touchend',function(e){
     		e.stopPropagation();
             moveImage($(this));
+            
+            if (e.type != 'click') {
+    		    if ($('li.selected').length) {
+    			    $('li.selected').removeClass('selected');
+                    hideFilter();
+    		    } 
+            }
     	});
     })
 
-
-    // long press images on mobile to filter to folder
-    // not yet implemented
-    images.each(function(){
-        $(this).longpress(function(e) {
+    // force touch images on mobile to sort them into folder
+    images.pressure({
+      startDeepPress: function(event){
+          event.preventDefault();
+            console.log('start deep');
             
-            /*
-            
-            e.preventDefault();
-            
-            $('aside').show();
-            
-            // TO DO
-            // STYLE ASIDE OVERLAY ON MOBILE
-            
-            */
+            // mark clicked image as selected
+            $(this).toggleClass('selected');
+            console.log($(this));
+            showFilter(true);
+      },
+      endDeepPress: function(){
+           console.log('end deep');
+      },
+      unsupported: function(){
+        console.log('3D touch unsupported on this device');
+      }
     });
-        
+    
+    // prevent native force touch behaviour on link wrappers
+    $('a').pressure({
+        startDeepPress: function(event) {
+            console.log('deeepz');
+            event.preventDefault();
+        }
     })
 
     // filter images by folder

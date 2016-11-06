@@ -53,7 +53,7 @@
 		
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 	<script src="vendor/isotope.min.js"></script>
-	<script src="vendor/longpress.min.js"></script>
+	<script src="vendor/pressure.min.js"></script>
 	<script src="vendor/ui.js"></script>
 </head>
 
