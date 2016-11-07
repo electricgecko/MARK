@@ -185,6 +185,7 @@
 				}
 			?>
 		</ol>
+		<span id="close" class="close">✕</span>
 		<span id="done" class="done">✔</span>
 	</aside>
 	

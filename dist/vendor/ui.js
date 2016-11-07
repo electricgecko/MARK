@@ -33,9 +33,7 @@ function invertBG() {
 	localStorage.setItem('MARKbg', $('body').attr('class'));	
 }
 
-
-
-
+// here we go
 $(document).ready(function(){
     imgdir = $('body').data('imgdir');
     images = $('main ul li');
@@ -43,15 +41,10 @@ $(document).ready(function(){
     thumbBreakpoint = 600;
     activeFilter = '*';
     filetypes = new Array('image/jpeg', 'image/png', 'image/gif');
-    
     unsortedmsg = 'No unsorted images.'
 
-    // hide sidebar
-    $('aside').hide();
-    $('aside #done').hide();
-    
-    // hide images until sorted
-    $('main ul').hide();
+    // hide things, including images until sorted
+    $('aside, aside #done, aside #close, main ul').hide();
     
     // focus login form
     $('form input').first().focus();
@@ -139,13 +132,7 @@ $(document).ready(function(){
     $(document).click(function(e){
     	
     	if (!$(e.target).closest('li').length) {
-    		
-    		// remove selected & hide filter panel
-    		if ($('li.selected').length) {
-    			$('li.selected').removeClass('selected');
-                hideFilter();
-    		}
-
+    		hideFilter();
     	} else {
     		
     		el = $(e.target).closest('li');
@@ -178,6 +165,8 @@ $(document).ready(function(){
                'max-width': $(window).width()-$('aside').outerWidth(),
                'margin': '60px 0 60px 0'
            });
+        } else {
+            $('aside #close').show();
         }
     
         $('header > nav').hide();
@@ -197,7 +186,12 @@ $(document).ready(function(){
     
     // hide filter panel   
     function hideFilter() {
-     			
+
+        // clear selected images
+        if ($('li.selected').length) {
+            $('li.selected').removeClass('selected');
+        }
+        			    	
         // reset main container width
         $('main').css({
             	'max-width': 'none',
@@ -225,7 +219,6 @@ $(document).ready(function(){
     		marked.isotope('remove', btn.parent()).isotope('layout');	
     	})        
     }   
-     
      
     // moves an image to a different folder
     function moveImage(target) {
@@ -278,9 +271,7 @@ $(document).ready(function(){
                     marked.isotope({filter: activeFilter});
     				
     			}, target));	
-    		});
-
-    		$('aside #done').fadeIn().fadeOut();        
+    		});    
     }
     
     // move images to folders, remove images from folders
@@ -288,39 +279,35 @@ $(document).ready(function(){
     	$(this).on('click touchend',function(e){
     		e.stopPropagation();
             moveImage($(this));
-            
-            if (e.type != 'click') {
-    		    if ($('li.selected').length) {
-    			    $('li.selected').removeClass('selected');
-                    hideFilter();
-    		    } 
-            }
-    	});
+            $('aside #done').fadeIn(function(){
+                if (e.type != 'click') {
+                    hideFilter(); 
+                }
+            }).fadeOut();
+        });
+    })
+    
+    // manually hide folder selection on touch-based devices
+    $('aside #close').click(function(){
+      hideFilter();  
     })
 
     // force touch images on mobile to sort them into folder
     images.pressure({
       startDeepPress: function(event){
-          event.preventDefault();
-            console.log('start deep');
-            
+          event.preventDefault();            
             // mark clicked image as selected
             $(this).toggleClass('selected');
-            console.log($(this));
             showFilter(true);
       },
-      endDeepPress: function(){
-           console.log('end deep');
-      },
       unsupported: function(){
-        console.log('3D touch unsupported on this device');
+        console.log('No support for 3D Touch on this device.');
       }
     });
     
     // prevent native force touch behaviour on link wrappers
     $('a').pressure({
         startDeepPress: function(event) {
-            console.log('deeepz');
             event.preventDefault();
         }
     })
@@ -424,7 +411,6 @@ $(document).ready(function(){
 
 	// upload images on touch-based devices
 	$('#mobileUpload').change(function() {
-    	
         var fdata = new FormData();
         fdata.append( 'u', $('#mobileUpload')[0].files[0] );
         fdata.append( 'a', 'load');     

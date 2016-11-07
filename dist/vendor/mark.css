@@ -1,6 +1,7 @@
 * {
     font-weight: normal;
     font-size: 100%;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
 }
 
 body {
@@ -217,6 +218,11 @@ aside ol li:hover {
     text-decoration: underline;
 }
 
+aside .done, aside .close {
+    position: absolute;
+    background-color: #fff;
+}
+
 a.logout {
     display: block;
     position: fixed;
@@ -386,6 +392,28 @@ and (max-device-width : 568px)  {
     
     main ul li:hover figure > a:after {
         display: none;
+    }
+    
+    aside {
+        width: 100vw;
+        min-height: 100vh;
+        padding: 5vh 0 0 0;
+        
+        font-size: 3em;
+        text-align: center;
+    }
+
+    aside p {
+        width: auto;
+    }
+    
+    aside ol {
+        margin-top: 2em;
+    }
+    
+    aside .close, aside .done {
+        text-align: center;
+        width: 100%;
     }
         
     .login form {
