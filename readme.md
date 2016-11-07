@@ -23,7 +23,7 @@ Version 0.1.8.2 (Alpha)
 - If your server does not have an SSL certificate, M A R K will not be able to save images via secure connections for cross-domain scripting reasons.
 - M A R K does not save image sources in any way. In the rare cases this is of interest to me, I use a [reverse image search](https://gist.github.com/electricgecko/44152c19c83d7d1960a9).
 - For now, folders have to be created manually, on the server. For the beta version, I'd like to add an UI for this.
-- Adding images works well on iOS devices. Moving images requires [Force Touch](https://developer.apple.com/library/content/documentation/AppleApplications/Conceptual/SafariJSProgTopics/RespondingtoForceTouchEventsfromJavaScript.html), which basically means iPhone 6S or newer using iOS 10 or newer.
+- Adding images works well on iOS devices. Moving images requires [Force Touch](https://developer.apple.com/library/content/documentation/AppleApplications/Conceptual/SafariJSProgTopics/RespondingtoForceTouchEventsfromJavaScript.html), which basically means iPhone 6S and iOS 10 or newer.
 - The user account system is rudimentary and prehistoric, to say the least. Passwords are stored as plain text, even.
 - JS & CSS remain uncompiled, no task runner, no SCSS no nothing.
 
@@ -54,7 +54,7 @@ Version 0.1.8.2 (Alpha)
 ## Usage
 - To add an image, click the M A R K bookmarklet. Saveable images are marked by a yellow frame. Click an image to save it to your collection. If an image cannot be added, try opening it in its own tab by selecting *open image in new tab* from your browser's context menu.
 - Within M A R K, **shift click** one or more images to select them. With images selected, click on a folder on the right hand side to add them to this folder. Click in white space to remove selection.
-- To sort images into folders on touch-based devices, force touch an image. The select the desired folder from the list. Tap ✕ to cancel the operation.
+- To sort images into folders on touch-based devices, force touch an image. Select the desired folder from the list. Tap ✕ to cancel the operation.
 - While hovering an image, click on the **×** in the upper right corner to delete the image from your collection.
 - Drag an image file from your desktop into the M A R K browser window to upload it.
 - Press **+** and **-** to change thumbnail image size.
