@@ -395,7 +395,7 @@ and (max-device-width : 568px)  {
     }
     
     aside {
-        position: absolute;
+        position: fixed;
         
         width: 100vw;
         padding: 5vh 0 20vh 0;
@@ -451,4 +451,8 @@ and (orientation : landscape)  {
      main ul li {
         width: 100px;
     }  
+    
+    aside {
+        position: absolute;
+    }
 }
