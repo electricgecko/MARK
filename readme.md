@@ -7,7 +7,7 @@ Version 0.1.9 (Alpha)
 ## Rationale
 - M A R K is a tool for personal bookmarking. There is no way to share your bookmarks with others, unless you grant them full access rights.
 - M A R Ks general idea is to create a singular stream of your aesthetic sensibilities, their disparities, their evolution. Every image saved becomes part of this stream, called *everything*. GimmeBar worked in this way, and I enjoyed it greatly.
-- Images are added via bookmarklet, which can be conveniently dragged to your bookmarks bar from */bookmarklet/*.
+- Images are added via bookmarklet, which can be conveniently dragged to your bookmark bar from */bookmarklet/*.
 - Alternatively, images can be uploaded via drag and drop or via the *upload* button on touch-based devices.
 - Images are always sorted by date saved.
 - The display size of images can be adjusted by using the **+** and **-** keys. I find this to be a crucial feature.
@@ -54,7 +54,7 @@ Version 0.1.9 (Alpha)
 ## Usage
 - To add an image, click the M A R K bookmarklet. Saveable images are marked by a yellow frame. Click an image to save it to your collection. If an image cannot be added, try opening it in its own tab by selecting *open image in new tab* from your browser's context menu.
 - Within M A R K, **shift click** one or more images to select them. With images selected, click on a folder on the right hand side to add them to this folder. Click in white space to remove selection.
-- To sort images into folders on touch-based devices, force touch an image. Select the desired folder from the list. Tap ✕ to cancel the operation.
+- To sort images into folders on touch-based devices, force touch an image. Select the desired folder from the list. Tap **×** to cancel the operation.
 - While hovering an image, click on the **×** in the upper right corner to delete the image from your collection.
 - Drag an image file from your desktop into the M A R K browser window to upload it.
 - Press **+** and **-** to change thumbnail image size.
