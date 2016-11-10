@@ -294,11 +294,13 @@ $(document).ready(function(){
 
     // force touch images on mobile to sort them into folder
     images.pressure({
-      startDeepPress: function(event){
+      change: function(force, event){
+        if (force > 0.5) { 
           event.preventDefault();            
             // mark clicked image as selected
             $(this).toggleClass('selected');
             showFilter(true);
+        }    
       },
       unsupported: function(){
         console.log('No support for 3D Touch on this device.');
