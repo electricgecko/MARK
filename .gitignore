@@ -2,4 +2,5 @@
 .sass-cache
 node_modules
 /dist/imgs
+/imgs/
 config.php
