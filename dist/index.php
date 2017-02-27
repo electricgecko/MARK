@@ -54,7 +54,9 @@
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 	<script src="vendor/isotope.min.js"></script>
 	<script src="vendor/pressure.min.js"></script>
-	<script src="vendor/ui.js"></script>
+	<?php if ($_SESSION['user']): ?>
+	    <script src="vendor/ui.js"></script>
+    <?php endif ?>
 </head>
 
 <body data-imgdir="<?php echo $imgdir ?>">
