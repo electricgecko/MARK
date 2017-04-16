@@ -76,13 +76,7 @@ $(document).ready(function(){
     	});
     }
     
-    // set actual image heights, dependent on current user setting and screen resolution    
-    images.slice(0, 500).each(function(){
-        var img = $(this).find('figure a img');        
-        var liHeight = parseInt($(this).css('width'))*img.attr('height')/img.attr('width');
-        
-        $(this).css('height', liHeight);
-    })
+    setImageHeights();
     
     marked = $('main ul').isotope({
     	itemSelector: 'main ul li',
@@ -167,7 +161,17 @@ $(document).ready(function(){
     	}
     });
 
-    
+
+    // set actual image heights, dependent on current user setting and screen resolution    
+    function setImageHeights() {
+        images.slice(0, 500).each(function(){
+            var img = $(this).find('figure a img');        
+            var liHeight = parseInt($(this).css('width'))*img.attr('height')/img.attr('width');
+            
+            $(this).css('height', liHeight);
+        })        
+    }
+        
     // load further images on scroll
     function initLazyLoad() {
         wp = images.waypoint({
@@ -481,5 +485,11 @@ $(document).ready(function(){
 	// invert background color on touch-based devices
 	$('#mobileInvert').click(function(){
 		invertBG();	
+	})
+	
+	// refresh image sizes & lazy load state when device orientation changes
+	$(window).on('orientationchange',function(){
+    	setImageHeights();
+    	marked.isotope('layout',Waypoint.refreshAll());
 	})
 });
