@@ -54,6 +54,7 @@
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 	<script src="vendor/isotope.min.js"></script>
 	<script src="vendor/pressure.min.js"></script>
+	<script src="vendor/jquery.waypoints.min.js"></script>
 	<?php if ($_SESSION['user']): ?>
 	    <script src="vendor/ui.js"></script>
     <?php endif ?>
@@ -163,9 +164,9 @@
 							
 				    			// show image
 				    			array_push($displayed_images, $image_title);
-				    			echo '<li class="'.basename($image['folder']).'" data-thumb="'.$image_thumbnail.'" data-url="'.$image[name].'"><a class="del" href="javascript:void(0);">×</a><figure><a href="'.$image['name'].'"><img width="'.$image_w.'" height="'.$image_h.'" src="'.$image_thumbnail.'" /></a></figure></li>';
+				    			echo '<li class="'.basename($image['folder']).'" data-thumb="'.$image_thumbnail.'" data-url="'.$image[name].'"><a class="del" href="javascript:void(0);">×</a><figure><a href="'.$image['name'].'"><img width="'.$image_w.'" height="'.$image_h.'" src="" /></a></figure></li>';
+				    			echo "\n\t\t\t";
 				    			$index++;
-				    			
                             }
 						}
 				}

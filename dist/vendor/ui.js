@@ -1,18 +1,3 @@
-$(window).load(function(){	
-    marked = $('main ul').isotope({
-    	itemSelector: 'main ul li',
-    	masonry: {
-    		gutter: 40
-    	},
-    	filter: activeFilter
-    }, $('main ul').fadeIn(100));
-    
-    if (activeFilter == '.imgs' && $(activeFilter).length == 0) {
-        showmessage(unsortedmsg);
-    }
-});
-
-    
 // show a message to the user
 function showmessage(msg) {
     if ($('main').children('p').length > 0 ) {
@@ -33,10 +18,12 @@ function invertBG() {
 	localStorage.setItem('MARKbg', $('body').attr('class'));	
 }
 
+
 // here we go
 $(document).ready(function(){
     imgdir = $('body').data('imgdir');
     images = $('main ul li');
+    loaded = 0;
     hidden = null;
     thumbBreakpoint = 600;
     activeFilter = '*';
@@ -89,15 +76,40 @@ $(document).ready(function(){
     	});
     }
     
-    // keyboard controls to adjust image size
-    $(window).keydown(function(evt) {	
+    // set actual image heights, dependent on current user setting and screen resolution    
+    images.slice(0, 500).each(function(){
+        var img = $(this).find('figure a img');        
+        var liHeight = parseInt($(this).css('width'))*img.attr('height')/img.attr('width');
+        
+        $(this).css('height', liHeight);
+    })
+    
+    marked = $('main ul').isotope({
+    	itemSelector: 'main ul li',
+    	masonry: {
+    		gutter: 40
+    	},
+    	filter: activeFilter
+    }, $('main ul').fadeIn(100));
+    
+    if (activeFilter == '.imgs' && $(activeFilter).length == 0) {
+        showmessage(unsortedmsg);
+    }
+    
+    initLazyLoad();
+    
+    // -----------------------------------------------------------------------------------------
+        
+    // keyboard controls to adjust image size and invert background color
+    $(window).keydown(function(e) {	
       
       	var colwidth = parseInt(images.css('width'));
       	var mult = .3; // image resize multiplier for each keypress
       
-      	// plus
-        if (evt.keyCode === 187) {
+      	// + for bigger thumbnails
+        if (e.keyCode === 187) {
     		images.css('width', colwidth+colwidth*mult+'px');
+            images.css('height', ''); // eventually, this should happen once the image is loaded.
 
     		if (colwidth+colwidth*mult >= thumbBreakpoint) {
     			images.each(function(){
@@ -108,9 +120,10 @@ $(document).ready(function(){
     		marked.isotope('layout');
     		localStorage.setItem('MARKsz',colwidth+colwidth*mult);
     
-    	// minus
-        } else if (evt.keyCode === 189) {
+    	// - for smaller thumbnails
+        } else if (e.keyCode === 189) {
     		images.css('width', colwidth-colwidth*mult+'px');
+    		images.css('height', ''); // eventually, this should happen once the image is loaded.
 
     		if (colwidth-colwidth*mult < thumbBreakpoint) {
     			images.each(function(){
@@ -122,10 +135,9 @@ $(document).ready(function(){
     		localStorage.setItem('MARKsz', colwidth-colwidth*mult)
 
     	// i (to invert background color)
-        } else if (evt.keyCode === 73) {
+        } else if (e.keyCode === 73) {
 			invertBG();
         }
-        
     });
 
     // remove selections by clicking in white space
@@ -154,7 +166,21 @@ $(document).ready(function(){
     		}
     	}
     });
+
     
+    // load further images on scroll
+    function initLazyLoad() {
+        wp = images.waypoint({
+            handler: function(direction) {
+                if (direction == 'down') {
+                    el = this.element;
+                    $(el).find('figure a img').attr('src',$(el).data('thumb'));
+                }
+        },
+            context: window,
+            offset: '100%'
+        })        
+    }    
     
     // show filter panel
     function showFilter(forceTouched) {
@@ -220,7 +246,7 @@ $(document).ready(function(){
     	})        
     }   
      
-    // moves an image to a different folder
+    // move an image to a different folder
     function moveImage(target) {
 	// get destination folder name
     		var folder = $(target).text();
@@ -332,7 +358,13 @@ $(document).ready(function(){
     		activeFilter = '*';	
     	}
     	
+    	// refresh waypoints to make sure all images are visible
+    	Waypoint.refreshAll;
+    	
+    	// filter images
     	marked.isotope({filter: activeFilter});
+    	
+    	// save active filter to local storage
     	localStorage.setItem('MARKfilter', activeFilter);
     	$(this).addClass('active');
     });
