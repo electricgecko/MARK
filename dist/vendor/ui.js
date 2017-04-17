@@ -182,7 +182,7 @@ $(document).ready(function(){
                 }
         },
             context: window,
-            offset: '100%'
+            offset: Waypoint.viewportHeight()
         })        
     }    
     
@@ -491,5 +491,15 @@ $(document).ready(function(){
 	$(window).on('orientationchange',function(){
     	setImageHeights();
     	marked.isotope('layout',Waypoint.refreshAll());
+    	
+    	// have we switched from portrait to landscape?
+    	if ($(window).width() > $(window).height()) {
+    	    // trigger lazy load
+    	    setTimeout( function() {
+    	        $('body').scrollTop($('body').scrollTop()-80);
+            }, 400 );        	
+    	}
+
 	})
+
 });
