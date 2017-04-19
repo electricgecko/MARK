@@ -2,6 +2,12 @@
     ob_start();
 	session_start();
 	
+	// clean up installer
+	if (file_exists('install/index.php')) {
+	    unlink('install/index.php');
+	    rmdir('install');
+    }
+	
 	require_once('config.php');
 	
 	if(isset($_GET['logout'])) {
@@ -51,7 +57,7 @@
 	
 	<link rel="stylesheet" href="vendor/mark.css">
 		
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 	<script src="vendor/isotope.min.js"></script>
 	<script src="vendor/pressure.min.js"></script>
 	<script src="vendor/jquery.waypoints.min.js"></script>

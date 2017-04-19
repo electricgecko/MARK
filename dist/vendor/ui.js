@@ -103,7 +103,6 @@ $(document).ready(function(){
       	// + for bigger thumbnails
         if (e.keyCode === 187) {
     		images.css('width', colwidth+colwidth*mult+'px');
-            images.css('height', ''); // eventually, this should happen once the image is loaded.
 
     		if (colwidth+colwidth*mult >= thumbBreakpoint) {
     			images.each(function(){
@@ -111,20 +110,21 @@ $(document).ready(function(){
     			});						
     		}
 
+            setImageHeights();
     		marked.isotope('layout');
     		localStorage.setItem('MARKsz',colwidth+colwidth*mult);
     
     	// - for smaller thumbnails
         } else if (e.keyCode === 189) {
     		images.css('width', colwidth-colwidth*mult+'px');
-    		images.css('height', ''); // eventually, this should happen once the image is loaded.
-
+            
     		if (colwidth-colwidth*mult < thumbBreakpoint) {
     			images.each(function(){
     				$(this).find('figure a img').attr('src',$(this).data('thumb'));
     			});						
     		}
     		
+    		setImageHeights();
     		marked.isotope('layout');
     		localStorage.setItem('MARKsz', colwidth-colwidth*mult)
 
@@ -183,7 +183,7 @@ $(document).ready(function(){
         },
             context: window,
             offset: Waypoint.viewportHeight()
-        })        
+        })      
     }    
     
     // show filter panel
