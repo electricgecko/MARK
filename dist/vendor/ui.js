@@ -178,12 +178,13 @@ $(document).ready(function(){
             handler: function(direction) {
                 if (direction == 'down') {
                     el = this.element;
-                    $(el).find('figure a img')
+                    $(el).find('figure a img').not('loaded')
                     .css('opacity','0')
                     .attr('src',$(el).data('thumb'))
                     .animate({
                         opacity: 1
-                    }, 200);
+                    }, 200)
+                    .addClass('loaded');
                 }
         },
             context: window,
