@@ -178,7 +178,12 @@ $(document).ready(function(){
             handler: function(direction) {
                 if (direction == 'down') {
                     el = this.element;
-                    $(el).find('figure a img').attr('src',$(el).data('thumb'));
+                    $(el).find('figure a img')
+                    .css('opacity','0')
+                    .attr('src',$(el).data('thumb'))
+                    .animate({
+                        opacity: 1
+                    }, 200);
                 }
         },
             context: window,
