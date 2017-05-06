@@ -177,7 +177,6 @@ $(document).ready(function(){
             handler: function(direction) {
                 if (direction == 'down') {
                     el = this.element;
-                    console.log($(el).find('figure a img').not('.loaded'));
                     $(el).find('figure a img').not('.loaded')
                     .css('opacity','0')
                     .attr('src',$(el).data('thumb'))
