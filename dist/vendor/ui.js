@@ -161,7 +161,6 @@ $(document).ready(function(){
     	}
     });
 
-
     // set actual image heights, dependent on current user setting and screen resolution    
     function setImageHeights() {
         images.slice(0, 500).each(function(){
@@ -178,7 +177,8 @@ $(document).ready(function(){
             handler: function(direction) {
                 if (direction == 'down') {
                     el = this.element;
-                    $(el).find('figure a img').not('loaded')
+                    console.log($(el).find('figure a img').not('.loaded'));
+                    $(el).find('figure a img').not('.loaded')
                     .css('opacity','0')
                     .attr('src',$(el).data('thumb'))
                     .animate({
@@ -188,7 +188,7 @@ $(document).ready(function(){
                 }
         },
             context: window,
-            offset: Waypoint.viewportHeight()
+            offset: Waypoint.viewportHeight()*0.8
         })      
     }    
     
@@ -367,13 +367,10 @@ $(document).ready(function(){
         	removemessage();
     		activeFilter = '*';	
     	}
-    	
-    	// refresh waypoints to make sure all images are visible
-    	Waypoint.refreshAll;
-    	
-    	// filter images
-    	marked.isotope({filter: activeFilter});
-    	
+
+    	// filter images & refresh waypoints
+    	marked.isotope({filter: activeFilter}).on( 'layoutComplete', function() { Waypoint.refreshAll(); } );
+
     	// save active filter to local storage
     	localStorage.setItem('MARKfilter', activeFilter);
     	$(this).addClass('active');
