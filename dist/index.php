@@ -1,5 +1,5 @@
 <?php
-    ob_start();
+  ob_start();
 	session_start();
 	
 	// clean up installer
@@ -22,7 +22,7 @@
 	} 
 	else if (isset($_POST['user'])) {
     	
-	    if($userinfo[$_POST['user']] == $_POST['password']) {
+	    if((array_key_exists($_POST['user'], $userinfo)) && $userinfo[$_POST['user']] == $_POST['password']) {
 	        $_SESSION['user'] = $_POST['user'];
 	        setcookie('MARKsession',$_POST['user'], time()+86400*30, '/');
 	   

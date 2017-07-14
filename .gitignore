@@ -1,5 +1,6 @@
 .DS_Store
 .sass-cache
+/dist/config.php
 node_modules
 /dist/imgs
 /imgs/
