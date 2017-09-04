@@ -257,20 +257,21 @@ $(document).ready(function(){
      
     // move an image to a different folder
     function moveImage(target) {
-	// get destination folder name
+				
+				// get destination folder name
     		var folder = $(target).text();
     		
     		if (folder == $('aside ol li:first-child').text()) {
     			folder = '';
     		}
     				
-    		// get image url
+    		// get selected images
     		var sel = $('main ul li.selected figure a img');
     
     		// pass to move helper
-    		sel.each(function(){
+    		sel.each(function() {
         		
-        		var item = $(this)
+        	var item = $(this)
     			var thumb = $(this).attr('src');
     			var file = $(this).parent().attr('href');
     			var li = $(this).closest('li');
@@ -284,28 +285,36 @@ $(document).ready(function(){
         				var pre = 'imgs/';
     				}
 
-                    var newurl = li.data('url').replace(li.attr('class').split(' ')[0],pre+folder);
-                    li.data('url', newurl);
-                    var newthumb = li.data('thumb').replace(li.attr('class').split(' ')[0], pre+folder);
-                    li.data('thumb', newthumb);
+            var newurl = li.data('url').replace(li.attr('class').split(' ')[0],pre+folder);
+            li.data('url', newurl);
+            var newthumb = li.data('thumb').replace(li.attr('class').split(' ')[0], pre+folder);
+            li.data('thumb', newthumb);
 
     				// apply urls	
     				item.attr('src', li.data('thumb'));
     				item.parent().attr('href', li.data('url'));
 
     				// keep selection & add appropiate classes
-    				if (li.hasClass('selected')) { var selection = true; }
-                    li.removeClass().addClass(folder);
-                    if (folder == '') { li.addClass('imgs') };
-    				if (selection) { li.addClass('selected') };
-    			
-                    // re-apply active filter
-                    if (activeFilter == '.imgs' && $(activeFilter).length == 0) {
-                        showmessage(unsortedmsg);
-                    }
-                    marked.isotope({filter: activeFilter});
+    				if (li.hasClass('selected')) {
+	    				var selection = true;
+	    			}
     				
-    			}, target));	
+            li.removeClass().addClass(folder);
+            
+            // if no folder was selected, re-attach base class
+            if (folder == '') {
+	            li.addClass('imgs')
+	          };
+    			
+            // if unsorted filter is applied and there are no unfiltered images
+            if (activeFilter == '.imgs' && $(activeFilter).length == 0) {
+            	showmessage(unsortedmsg);
+            }
+            
+            // re-apply active filter
+            marked.isotope({filter: activeFilter});
+    				
+    			}, target));    			
     		});    
     }
     
