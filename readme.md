@@ -2,10 +2,10 @@
 
 M A R K is a simple image bookmarking tool. I wrote it as an replacement for the now sadly dysfunctional [GimmeBar](http://gimmebar.com). It is tailored to my personal needs and preferences, so chances are it won’t fit your use case or make no sense to you at all.
 
-Version 0.2.1 (Alpha)
+Version 0.2.1
 
 ## Rationale
-- M A R K is a tool for personal bookmarking. There is no way to share your bookmarks with others, unless you grant them full access rights.
+- M A R K is a tool for personal image bookmarking. There is no way to share your bookmarks with others, unless you grant them full access rights.
 - M A R Ks general idea is to create a singular stream of your aesthetic sensibilities, their disparities, their evolution. Every image saved becomes part of this stream, called *everything*. GimmeBar worked in this way, and I enjoyed it greatly.
 - Images are added via bookmarklet, which can be conveniently dragged to your bookmark bar from */bookmarklet/*.
 - Alternatively, images can be uploaded via drag and drop or via the *upload* button on touch-based devices.
