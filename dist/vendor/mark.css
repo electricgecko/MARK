@@ -226,36 +226,29 @@ body.inv aside .close {
     background: #131313;
 }
 
-a.logout {
-    display: block;
-    position: fixed;
-    right: 20px;
-    bottom: 20px;
+footer {
+	position: fixed;
+	display: flex;
+	left: 20px;
+	bottom: 20px;
 }
 
-a.logout:hover {
+footer a {
+	margin-right: 20px;
+}
+
+footer .mobile {
+	display: none;
+}
+
+footer a:last-child {
+	margin-right: 0;
+}
+
+footer a:hover {
     text-decoration: underline;
 }
 
-.mobileUploadWrap {
-    position: fixed;
-    width: 45px;
-    height: 1.2em;
-    bottom: 20px;
-    left: 20px;
-    display: none;
-}
-
-.mobileUploadWrap a {
-    position: absolute;
-}
-
-.mobileInvert {
-	position: fixed;
-	left: 80px;
-	bottom: 20px;
-	display: none;
-}
 
 main.login {
     padding-top: 15%;
@@ -345,9 +338,8 @@ and (max-device-width : 1024px) {
         font-size: 300%;   
     }
 
-    .mobileUploadWrap,
-    .mobileInvert {
-        display: block;
+    footer .mobile {
+    	display: block;
     }    
 }
 
@@ -419,7 +411,15 @@ and (max-device-width : 568px)  {
         text-align: center;
         width: 100%;
     }
-        
+    
+    footer .mobile {
+    	display: block;
+    }   
+    
+    footer .download {
+	    display: none;
+    }
+    
     .login form {
         width: 100%;
     }
@@ -428,11 +428,6 @@ and (max-device-width : 568px)  {
     form input[type=password] {
         padding: 0;
         width: 100%;
-    }
-
-    .mobileUploadWrap,
-    .mobileInvert {
-        display: block;
     }
     
     .login > h1 {
