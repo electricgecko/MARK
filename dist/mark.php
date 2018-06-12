@@ -2,8 +2,9 @@
 	header('Access-Control-Allow-Origin: *');
 	
 	date_default_timezone_set('Europe/Berlin');
+	$validFileTypes = array('gif','png','jpg');
 	
-    require_once('config.php');
+  require_once('config.php');
  	
 	$a = $_POST[a];
     
@@ -14,13 +15,16 @@
 	
 	switch ($a) {
     case 'del':
-        markdel($file, $thumb);
-        break;
+    	markdel($file, $thumb);
+      break;
     case 'move':
     	markmove($file, $thumb, $dir);
 		break;
-	case 'load':
-        markload($file, $upload);
+		case 'download':
+			markdl();
+		break;
+		case 'load':
+      markload($file, $upload);
 		break;
 	}
 	
@@ -28,13 +32,14 @@
 		if (!unlink($del_img)) {
 
 		}
+		
 		if (!unlink($del_thumb)) {
 
 		}				
 	}	
 	
 	function markmove($move_img, $move_thumb, $move_dir) {
-    	global $imgdir;
+    global $imgdir;
     	
 		$dest = $imgdir.'/'.$move_dir.'/'.basename($move_img);
 		rename($move_img, $dest);
@@ -43,6 +48,34 @@
 		rename($move_thumb, $dest);		
 	}
 
+	function markdl() {
+		global $imgdir;
+		global $zip_name;
+		global $validFileTypes;
+
+		// delete existing zip file
+		if (file_exists($zip_name)) {
+	  	unlink ($zip_name);
+  	}
+		
+		$zip = new ZipArchive;
+		$zip->open($zip_name, ZipArchive::CREATE);
+		
+		$it = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($imgdir.'/'));
+		
+		foreach ($it as $key=>$value) {
+			$ext = pathinfo($key, PATHINFO_EXTENSION);
+			
+			if (in_array($ext, $validFileTypes)) {			
+				$zip->addFile($key) or die ('ERROR: Could not add file');
+			}
+		}
+		
+		$zip->close();
+		
+		// return download file name to app
+		echo $zip_name;
+	}
 	
 	function markload($img, $upload) {
 		function sanitizeFilename($f) {
@@ -97,7 +130,7 @@
     		// construct file name, removing extension
     		$img_file = sanitizeFilename(preg_replace('/\\.[^.\\s]{3,4}$/', '', $_FILES['u']['name']));
 		} else {
-            $img_file = sanitizeFilename(basename($img));    		
+        $img_file = sanitizeFilename(basename($img));    		
 		}
 		
 		$img_file = str_replace($exp, $rep_exp, $img_file);
@@ -118,7 +151,7 @@
 	
 		imagejpeg($thumb_image, $thumb_name);
 		
-		echo json_encode(array('img_name' => $img_name, 'thumb_name' => $thumb_name));
+		echo json_encode(array('img_name' => $img_name, 'thumb_name' => $thumb_name, 'img_width' => $img_w, 'img_height' => $img_h));
 	}
 	
 	exit();

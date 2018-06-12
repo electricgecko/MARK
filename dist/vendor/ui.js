@@ -20,7 +20,8 @@ function invertBG() {
 
 
 // here we go
-$(document).ready(function(){
+$(document).ready(function() {
+	
     imgdir = $('body').data('imgdir');
     images = $('main ul li');
     loaded = 0;
@@ -40,7 +41,9 @@ $(document).ready(function(){
     if (localStorage.getItem('MARKsz') === null) {
     	// set image size to default value
     	sz = parseInt(images.css('width'));
+    	
     } else {
+	    
     	// set image size to stored value
     	sz = localStorage.getItem('MARKsz');
     		images.css('width',localStorage.getItem('MARKsz')+'px');
@@ -102,21 +105,27 @@ $(document).ready(function(){
       
       	// + for bigger thumbnails
         if (e.keyCode === 187) {
-    		images.css('width', colwidth+colwidth*mult+'px');
+	        
+    			images.each(function(){
+	    			$(this).css('width', colwidth+colwidth*mult+'px');
+    			})
 
     		if (colwidth+colwidth*mult >= thumbBreakpoint) {
     			images.each(function(){
     				$(this).find('figure a img').attr('src',$(this).data('url'));
-    			});						
+    			});
     		}
 
-            setImageHeights();
+        setImageHeights();
     		marked.isotope('layout');
     		localStorage.setItem('MARKsz',colwidth+colwidth*mult);
     
     	// - for smaller thumbnails
         } else if (e.keyCode === 189) {
-    		images.css('width', colwidth-colwidth*mult+'px');
+	        
+    			images.each(function(){
+	    			$(this).css('width', colwidth-colwidth*mult+'px');
+    			})
             
     		if (colwidth-colwidth*mult < thumbBreakpoint) {
     			images.each(function(){
@@ -130,7 +139,7 @@ $(document).ready(function(){
 
     	// i (to invert background color)
         } else if (e.keyCode === 73) {
-			invertBG();
+					invertBG();
         }
     });
 
@@ -143,7 +152,7 @@ $(document).ready(function(){
     		
     		el = $(e.target).closest('li');
 
-            // shift-click images to mark them
+        // shift-click images to mark them
     		if (e.shiftKey) {
     					
     			e.preventDefault();
@@ -166,9 +175,8 @@ $(document).ready(function(){
         images.slice(0, 500).each(function(){
             var img = $(this).find('figure a img');        
             var liHeight = parseInt($(this).css('width'))*img.attr('height')/img.attr('width');
-            
             $(this).css('height', liHeight);
-        })        
+        })  
     }
         
     // load further images on scroll
@@ -244,7 +252,7 @@ $(document).ready(function(){
     function addDeleteFunction(btn) {
         btn.click(function(){
 
-            var thumb = btn.next().find('img').attr('src');
+        var thumb = btn.next().find('img').attr('src');
     		var url = btn.next().find('a').attr('href');
     		            
     		// pass to delete helper
@@ -305,7 +313,7 @@ $(document).ready(function(){
             if (folder == '') {
 	            li.addClass('imgs')
 	          };
-    			
+
             // if unsorted filter is applied and there are no unfiltered images
             if (activeFilter == '.imgs' && $(activeFilter).length == 0) {
             	showmessage(unsortedmsg);
@@ -389,6 +397,16 @@ $(document).ready(function(){
         addDeleteFunction($(this));
     }); 
     
+		// download all images as zip folder
+		$('#download').click(function() {
+			el = $(this);
+			el.text('preparing …');
+			
+			$.post('mark.php', {a: 'download'}, function(zipFilename) {
+				window.location.replace('./'+zipFilename);
+				el.text('download all');
+			});
+		});
     
     // upload images by drag and drop
     
@@ -438,15 +456,20 @@ $(document).ready(function(){
                     success: function(data) {
                         var imgName = data.img_name;
                         var thumbName = data.thumb_name;
-                        var theIMG = $('<li class="imgs" data-thumb="'+thumbName+'" data-url="'+imgName+'" style="width: '+images.css('width')+';"><a class="del" href="javascript:void(0);">×</a><figure><a href="'+imgName+'"><img src="'+thumbName+'" /></a></figure></li>');
-                    
+                        var imgWidth = data.img_width;
+                        var imgHeight = data.img_height;
+                        var theIMG = $('<li class="imgs" data-thumb="'+thumbName+'" data-url="'+imgName+'" style="width: '+images.css('width')+' ;"><a class="del" href="javascript:void(0);">×</a><figure><a href="'+imgName+'"><img width="'+imgWidth+'" height="'+imgHeight+'" src="'+thumbName+'" /></a></figure></li>');
+                        
                         // add delete feature
                         addDeleteFunction($('a.del', theIMG));
                     
                         $('img', theIMG).load(function(){
-                    
                             // add to collection
-                            marked.prepend(theIMG).isotope('prepended', theIMG)
+														marked.prepend(theIMG).isotope('prepended', theIMG);
+
+                            images = $('main ul li');
+                            setImageHeights();
+
                             marked.isotope('layout');
                           
                             $('body').removeClass('drag');
@@ -484,6 +507,7 @@ $(document).ready(function(){
                  
                          // add to collection
                          marked.prepend(theIMG).isotope('prepended', theIMG)
+                         images = $('main ul li');
                          marked.isotope('layout');
                        
                          $('body').removeClass('drag');
@@ -492,6 +516,7 @@ $(document).ready(function(){
                  }
               });
 	})
+	
 	
 	// invert background color on touch-based devices
 	$('#mobileInvert').click(function(){

@@ -2,14 +2,19 @@
   ob_start();
 	session_start();
 	
-	// clean up installer
-	if (file_exists('install/index.php')) {
-	    unlink('install/index.php');
-	    rmdir('install');
-    }
-	
 	require_once('config.php');
 	
+	// clean up installer
+	if (file_exists('install/index.php')) {
+	    //unlink('install/index.php');
+	    //rmdir('install');
+  }
+  
+  // clean up download file
+  if (file_exists($zip_name)) {
+	  unlink ($zip_name);
+  }
+
 	if(isset($_GET['logout'])) {
 	    $_SESSION['user'] = '';
 	    setcookie('MARKsession','', time()-86400, '/');
@@ -20,6 +25,7 @@
 	if (isset($_COOKIE['MARKsession'])) {
     	$_SESSION['user'] = $_COOKIE['MARKsession'];
 	} 
+	
 	else if (isset($_POST['user'])) {
     	
 	    if((array_key_exists($_POST['user'], $userinfo)) && $userinfo[$_POST['user']] == $_POST['password']) {
@@ -68,7 +74,7 @@
 
 <body data-imgdir="<?php echo $imgdir ?>">
 
-    <?php if ($_SESSION['user']): ?>
+  <?php if ($_SESSION['user']): ?>
         
 	<?php
 		$folders = array_filter(glob($imgdir.'/*', GLOB_NOCHECK), 'is_dir'); // read folders in main image folder
@@ -199,12 +205,15 @@
 	</aside>
 	
 
-	<a class="mobileInvert" id="mobileInvert" hred="javascript;">invert</a>
-	<div class="mobileUploadWrap">
-        <a href="javascript:;">upload</a>
-    	<input class="mobileUpload" id="mobileUpload" type="file"/>
-    </div>
-	<a class="logout" id="logout" href="?logout=1">logout</a>
+	<footer>
+		<a class="mobile mobileInvert" id="mobileInvert" hred="javascript;">invert</a>
+		<div class="mobile mobileUploadWrap">
+	  	<a href="javascript:;">upload</a>
+	    <input class="mobile mobileUpload" id="mobileUpload" type="file"/>
+	  </div>
+	  <a class="download" id="download" href="javascript:;">download all</a>
+		<a class="logout" id="logout" href="?logout=1">logout</a>
+	</footer>
 	
 	
 	<?php else: ?>
