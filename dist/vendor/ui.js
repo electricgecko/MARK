@@ -404,7 +404,7 @@ $(document).ready(function() {
 			
 			$.post('mark.php', {a: 'download'}, function(zipFilename) {
 				window.location.replace('./'+zipFilename);
-				el.text('download all');
+				el.text('download everything');
 			});
 		});
     
