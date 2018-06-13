@@ -211,7 +211,7 @@
 	  	<a href="javascript:;">upload</a>
 	    <input class="mobile mobileUpload" id="mobileUpload" type="file"/>
 	  </div>
-	  <a class="download" id="download" href="javascript:;">download all</a>
+	  <a class="download" id="download" href="javascript:;">download everything</a>
 		<a class="logout" id="logout" href="?logout=1">logout</a>
 	</footer>
 	
