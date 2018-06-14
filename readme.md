@@ -2,7 +2,7 @@
 
 M A R K is a simple image bookmarking tool. I wrote it as an replacement for the now sadly dysfunctional [GimmeBar](http://gimmebar.com). It is tailored to my personal needs and preferences, so chances are it won’t fit your use case or make no sense to you at all.
 
-Version 0.2.2
+Version 0.2.2b
 
 ## Rationale
 - M A R K is a tool for personal image bookmarking. There is no way to share your bookmarks with others, unless you grant them full access rights.
@@ -60,7 +60,7 @@ Version 0.2.2
 - Press **+** and **-** to change thumbnail image size.
 - Press **i** to invert the color scheme.
 - Click on an image to display it in full resolution.
-- Click **download all** to download a zip of your collection, sorted into folders.
+- Click **download _folder name_** to download a zip of your collection, sorted into folders. The download respects the currently active folder filter.
 
 ## Updating
 1. To update your M A R K installation, [re-download](https://github.com/electricgecko/MARK/archive/master.zip) this repo.
