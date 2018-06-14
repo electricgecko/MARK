@@ -21,7 +21,7 @@
     	markmove($file, $thumb, $dir);
 		break;
 		case 'download':
-			markdl();
+			markdl($dir);
 		break;
 		case 'load':
       markload($file, $upload);
@@ -48,11 +48,11 @@
 		rename($move_thumb, $dest);		
 	}
 
-	function markdl() {
+	function markdl($dl_dir) {
 		global $imgdir;
 		global $zip_name;
 		global $validFileTypes;
-
+		
 		// delete existing zip file
 		if (file_exists($zip_name)) {
 	  	unlink ($zip_name);
@@ -61,7 +61,7 @@
 		$zip = new ZipArchive;
 		$zip->open($zip_name, ZipArchive::CREATE);
 		
-		$it = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($imgdir.'/'));
+		$it = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($imgdir.'/'.$dl_dir));
 		
 		foreach ($it as $key=>$value) {
 			$ext = pathinfo($key, PATHINFO_EXTENSION);

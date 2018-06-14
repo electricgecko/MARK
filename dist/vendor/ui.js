@@ -66,7 +66,8 @@ $(document).ready(function() {
             setActive = $('nav ol li').last();
             break;
         default:
-            setActive = $('nav ol li:contains('+activeFilter.substr(1)+')');          
+            setActive = $('nav ol li:contains('+activeFilter.substr(1)+')');   
+            $('#download').text('download '+activeFilter.substr(1));      
         }
         
         setActive.addClass('active');
@@ -368,7 +369,8 @@ $(document).ready(function() {
 
     // filter images by folder
     $('nav ol li').click(function(){
-        $('nav ol li').removeClass();
+    	$('nav ol li').removeClass();
+    	
     	if (!$(this).is('nav ol li:first') ) {
         	if ($(this).is('nav ol li:last')) {
                 activeFilter = '.imgs';
@@ -387,6 +389,9 @@ $(document).ready(function() {
     	// filter images & refresh waypoints
     	marked.isotope({filter: activeFilter}).on( 'layoutComplete', function() { Waypoint.refreshAll(); } );
 
+			// update download link text
+			$('#download').text('download '+$(this).text());
+			
     	// save active filter to local storage
     	localStorage.setItem('MARKfilter', activeFilter);
     	$(this).addClass('active');
@@ -397,12 +402,12 @@ $(document).ready(function() {
         addDeleteFunction($(this));
     }); 
     
-		// download all images as zip folder
+		// download all images or a particular folder as zip archive
 		$('#download').click(function() {
 			el = $(this);
 			el.text('preparing …');
 			
-			$.post('mark.php', {a: 'download'}, function(zipFilename) {
+			$.post('mark.php', {a: 'download', d:  activeFilter.substr(1)}, function(zipFilename) {
 				window.location.replace('./'+zipFilename);
 				el.text('download everything');
 			});
