@@ -18,18 +18,38 @@ function invertBG() {
 	localStorage.setItem('MARKbg', $('body').attr('class'));	
 }
 
-
 // here we go
 $(document).ready(function() {
 	
-    imgdir = $('body').data('imgdir');
-    images = $('main ul li');
-    loaded = 0;
-    hidden = null;
-    thumbBreakpoint = 600;
-    activeFilter = '*';
-    filetypes = new Array('image/jpeg', 'image/png', 'image/gif');
-    unsortedmsg = 'No unsorted images.'
+    var imgdir = $('body').data('imgdir');
+    var images = $('main ul li');
+    var loaded = 0;
+    var hidden = null;
+    var sz = parseInt(images.css('width'));
+    
+		var defaultGutter = 40;
+		var smallGutter = 60;
+		var gutter = defaultGutter;
+		
+		var mult = .3; // image resize multiplier for each keypress
+    var thumbBreakpoint = 600;
+    var smallGutterBreakpoint = 90;
+    
+    var activeFilter = '*';
+    
+    var filetypes = new Array('image/jpeg', 'image/png', 'image/gif');
+    var unsortedmsg = 'No unsorted images.'
+    
+    // -----------------------------------------------------------------------------------------
+
+		// helper function to return correct gutter size
+		function getGutterSize(imgSz) {	
+			if (imgSz > smallGutterBreakpoint) {
+				return defaultGutter;
+			} else {
+				return smallGutter;
+			}
+		}
 
     // hide things, including images until sorted
     $('aside, aside #done, aside #close, main ul').hide();
@@ -37,16 +57,10 @@ $(document).ready(function() {
     // focus login form
     $('form input').first().focus();
     
-    // get image size from local storage
-    if (localStorage.getItem('MARKsz') === null) {
-    	// set image size to default value
-    	sz = parseInt(images.css('width'));
-    	
-    } else {
-	    
+    if (localStorage.getItem('MARKsz') !== null) {	    
     	// set image size to stored value
-    	sz = localStorage.getItem('MARKsz');
-    		images.css('width',localStorage.getItem('MARKsz')+'px');
+    	sz = parseInt(localStorage.getItem('MARKsz'));
+    	images.css('width',localStorage.getItem('MARKsz')+'px');
     }
     
     // get background color from local storage
@@ -79,13 +93,16 @@ $(document).ready(function() {
     		$(this).find('figure a img').attr('src',$(this).data('url'));
     	});
     }
-    
+        
     setImageHeights();
+    
+    // determine & set  correct gutter size
+    images.css('margin-bottom', getGutterSize(sz));
     
     marked = $('main ul').isotope({
     	itemSelector: 'main ul li',
     	masonry: {
-    		gutter: 40
+    		gutter: getGutterSize(sz)
     	},
     	filter: activeFilter
     }, $('main ul').fadeIn(100));
@@ -100,45 +117,44 @@ $(document).ready(function() {
         
     // keyboard controls to adjust image size and invert background color
     $(window).keydown(function(e) {	
-      
-      	var colwidth = parseInt(images.css('width'));
-      	var mult = .3; // image resize multiplier for each keypress
-      
-      	// + for bigger thumbnails
-        if (e.keyCode === 187) {
-	        
+	    
+      	// +/- for bigger/smaller thumbnails
+        if (e.keyCode === 187 || e.keyCode === 189) {
+	        	        	        
+	        if (e.keyCode === 187) {
+		        var newSz = Math.floor(sz+sz*mult);
+	        } else {
+		        var newSz = Math.floor(sz-sz*mult);
+	        }
+	        	        
     			images.each(function(){
-	    			$(this).css('width', colwidth+colwidth*mult+'px');
+	    			$(this).css('width', newSz+'px');
     			})
 
-    		if (colwidth+colwidth*mult >= thumbBreakpoint) {
-    			images.each(function(){
-    				$(this).find('figure a img').attr('src',$(this).data('url'));
-    			});
-    		}
+					if ((sz < thumbBreakpoint) && (newSz >= thumbBreakpoint)) {
+    				images.each(function(){
+    					$(this).find('figure a img').attr('src',$(this).data('url'));
+    				});
+    			}
 
-        setImageHeights();
-    		marked.isotope('layout');
-    		localStorage.setItem('MARKsz',colwidth+colwidth*mult);
+					// determine & set correct gutter size
+					if (getGutterSize(sz) != getGutterSize(newSz)) {
+						marked.isotope({
+							masonry: {
+								gutter: getGutterSize(newSz)
+							}
+						});
+						
+						images.css('margin-bottom', getGutterSize(newSz));
+					} 
+					
+					setImageHeights();
+					
+					marked.isotope('layout');
+					sz = newSz;
+					localStorage.setItem('MARKsz', newSz);
     
-    	// - for smaller thumbnails
-        } else if (e.keyCode === 189) {
-	        
-    			images.each(function(){
-	    			$(this).css('width', colwidth-colwidth*mult+'px');
-    			})
-            
-    		if (colwidth-colwidth*mult < thumbBreakpoint) {
-    			images.each(function(){
-    				$(this).find('figure a img').attr('src',$(this).data('thumb'));
-    			});						
-    		}
-    		
-    		setImageHeights();
-    		marked.isotope('layout');
-    		localStorage.setItem('MARKsz', colwidth-colwidth*mult)
-
-    	// i (to invert background color)
+    	  // i (to invert background color)
         } else if (e.keyCode === 73) {
 					invertBG();
         }
