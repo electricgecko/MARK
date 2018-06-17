@@ -25,7 +25,9 @@ $(document).ready(function() {
     var images = $('main ul li');
     var loaded = 0;
     var hidden = null;
+    
     var sz = parseInt(images.css('width'));
+    var thumbSrc = 'thumb';
     
 		var defaultGutter = 40;
 		var smallGutter = 60;
@@ -39,17 +41,6 @@ $(document).ready(function() {
     
     var filetypes = new Array('image/jpeg', 'image/png', 'image/gif');
     var unsortedmsg = 'No unsorted images.'
-    
-    // -----------------------------------------------------------------------------------------
-
-		// helper function to return correct gutter size
-		function getGutterSize(imgSz) {	
-			if (imgSz > smallGutterBreakpoint) {
-				return defaultGutter;
-			} else {
-				return smallGutter;
-			}
-		}
 
     // hide things, including images until sorted
     $('aside, aside #done, aside #close, main ul').hide();
@@ -86,14 +77,10 @@ $(document).ready(function() {
         
         setActive.addClass('active');
     }
-   
-    // dodgy, magic-number method to load full-sized images if thumbnails are set to a big size
-    if (sz >= thumbBreakpoint) {
-    	images.each(function(){
-    		$(this).find('figure a img').attr('src',$(this).data('url'));
-    	});
-    }
-        
+ 		
+ 		if (setSrcSize()) {
+	 		setImageSrcs();
+ 		};
     setImageHeights();
     
     // determine & set  correct gutter size
@@ -126,33 +113,30 @@ $(document).ready(function() {
 	        } else {
 		        var newSz = Math.floor(sz-sz*mult);
 	        }
-	        	        
-    			images.each(function(){
+	        
+    			images.each(function() {
 	    			$(this).css('width', newSz+'px');
     			})
-
-					if ((sz < thumbBreakpoint) && (newSz >= thumbBreakpoint)) {
-    				images.each(function(){
-    					$(this).find('figure a img').attr('src',$(this).data('url'));
-    				});
-    			}
-
-					// determine & set correct gutter size
+    			
 					if (getGutterSize(sz) != getGutterSize(newSz)) {
 						marked.isotope({
 							masonry: {
 								gutter: getGutterSize(newSz)
 							}
 						});
-						
 						images.css('margin-bottom', getGutterSize(newSz));
 					} 
 					
-					setImageHeights();
-					
-					marked.isotope('layout');
 					sz = newSz;
-					localStorage.setItem('MARKsz', newSz);
+					
+					if (setSrcSize()) {
+						setImageSrcs();
+ 					};
+ 					
+					setImageHeights();
+					marked.isotope('layout');
+
+					localStorage.setItem('MARKsz', sz);
     
     	  // i (to invert background color)
         } else if (e.keyCode === 73) {
@@ -179,13 +163,49 @@ $(document).ready(function() {
     			
     			// if at least one image is selected, show sidebar
     			if ($('li.selected').length) {
-                    showFilter(false);
+          	showFilter(false);
     			} else {
-                    hideFilter();
+          	hideFilter();
     			}
     		}
     	}
     });
+    
+		// return gutter size
+		function getGutterSize(imgSz) {	
+			if (imgSz > smallGutterBreakpoint) {
+				return defaultGutter;
+			} else {
+				return smallGutter;
+			}
+		}
+		
+		// set image src if 
+		function setSrcSize() {
+			var previousSrc = thumbSrc;
+			
+			if (sz >= thumbBreakpoint) {
+				thumbSrc = 'url' 
+			} else {
+				thumbSrc = 'thumb' 
+			}
+			
+			if (previousSrc != thumbSrc) {
+				return true;	
+			} else {
+				return false;
+			}
+		} 
+		
+		// select correct image sources
+		function setImageSrcs() {
+			 images.each(function(){
+				 var img = $(this).find('figure a img.loaded');
+				 if (img.length) {
+					 img.attr('src'), $(this).data(thumbSrc);
+				 }
+			 })
+		} 
 
     // set actual image heights, dependent on current user setting and screen resolution    
     function setImageHeights() {
@@ -204,7 +224,7 @@ $(document).ready(function() {
                     el = this.element;
                     $(el).find('figure a img').not('.loaded')
                     .css('opacity','0')
-                    .attr('src',$(el).data('thumb'))
+                    .attr('src',$(el).data(thumbSrc))
                     .animate({
                         opacity: 1
                     }, 200)
