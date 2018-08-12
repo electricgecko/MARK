@@ -33,7 +33,7 @@
     // default thumbnail size
     $thumb_width = 400;
 
-    // name of download zip file
-    $zip_name = 'MARK.zip';
+    // base name of download zip file, without file extension
+    $zip_name = 'MARK';
 ?>
 

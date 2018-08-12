@@ -59,6 +59,12 @@
   	}
 		
 		$zip = new ZipArchive;
+		
+		if ($dl_dir) {
+			$zip_name .= '-'.$dl_dir.'.zip';
+		} else {
+			$zip_name .= '.zip';
+		}
 		$zip->open($zip_name, ZipArchive::CREATE);
 		
 		$it = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($imgdir.'/'.$dl_dir));
