@@ -1,13 +1,11 @@
 (function(){
 	
-	// the minimum version of jQuery we want
-	var v = "2.1.1";
 
 	// check prior inclusion and version
 	if (window.jQuery === undefined || window.jQuery.fn.jquery < v) {
 		var done = false;
 		var script = document.createElement("script");
-		script.src = "http://ajax.googleapis.com/ajax/libs/jquery/" + v + "/jquery.min.js";
+		script.src = "https://code.jquery.com/jquery-2.2.4.min.js";
 		script.onload = script.onreadystatechange = function(){
 			if (!done && (!this.readyState || this.readyState == "loaded" || this.readyState == "complete")) {
 				done = true;
@@ -83,8 +81,8 @@
 					}
 					
 					// add http:// if necessary
-					if (src.indexOf('http://') < 0) {
-						url = url.replace('//','http://');
+					if (src.indexOf('https://') < 0) {
+						url = url.replace('//','https://');
 					}
 					
 					$.post(installdir+'/mark.php', {a: 'load', f: url}).done(function(data){

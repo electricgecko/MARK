@@ -1,7 +1,7 @@
 <?php 
     
     // full URL M A R K is installed to
-    $installdir = 'http://yourserver.com/yourfolder';
+    $installdir = 'https://yourserver.com/yourfolder';
     
     // user accounts
 	$userinfo = array(
