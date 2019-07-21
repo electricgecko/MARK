@@ -8,6 +8,7 @@ $(document).ready(function() {
   var filetypes = new Array('image/jpeg', 'image/png', 'image/gif');
   var unsortedmsg = 'No unsorted images.'
   var imgSz = '200';
+  var activeFilter = '*';
   
   // hide all the things
   $('main, aside, aside #done, aside #close').hide();
@@ -16,19 +17,23 @@ $(document).ready(function() {
   var lazyLoadInstance = new LazyLoad({
     elements_selector: "figure img"
   });
-
+  
+  // get settings from local storage
   if (localStorage.getItem('MARKsz') !== null) {	    
-  	// set image size to stored value
   	imgSz = parseInt(localStorage.getItem('MARKsz'));
 	  resizeImg();
   }
   
-  // get background color from local storage
   if (localStorage.getItem('MARKbg') != null) {
       $('body').addClass(localStorage.getItem('MARKbg'));
   }
-      
-  // enable delete feature
+
+  if (localStorage.getItem('MARKfilter') != null) {
+    activeFilter = localStorage.getItem('MARKfilter');
+    filterImg();
+  }
+     
+  // add delete feature to all images
   $('a.del').each(function(){
     addDeleteFunction($(this));
   }); 
@@ -46,7 +51,6 @@ $(document).ready(function() {
 	    }
 	    localStorage.setItem('MARKsz', imgSz);
 	    $('figure, figure img').css('height', imgSz+'px');
-
 
     // i (to invert background color)
     } else if (e.keyCode === 73) { invertBG(); }
@@ -88,12 +92,46 @@ $(document).ready(function() {
           }).fadeOut();
       });
   })
+
+  // filter images by folder
+  $('nav ol li').click(function(){
+  	$('nav ol li').removeClass();
+  	
+    if (!$(this).is('nav ol li:first')) {
+      if ($(this).is('nav ol li:last')) {
+        activeFilter = '.imgs';
+        if ($(activeFilter).length == 0) {
+          showmessage(unsortedmsg);   
+        }
+      } else {
+        removemessage();
+        activeFilter = '.'+$(this).text();
+      }        
+    } else {
+      removemessage();
+      activeFilter = '*';
+    }
+
+    $(this).addClass('active'); 
+    filterImg();
+  });
+
+  // download all images or a particular folder as zip archive
+  $('#download').click(function() {
+    el = $(this);
+    el.text('preparing …');
+    
+    $.post('mark.php', {a: 'download', d:  activeFilter.substr(1)}, function(zipFilename) {
+    	window.location.replace('./'+zipFilename);
+    	el.text('download everything');
+    });
+  });
   
   
   // FEATURES
     
-  // show filter panel
-  function showFilter(forceTouched) {
+  // show sidebar
+  function showFilter() {
     // adjust main container width to sidebar width
     $('main').css({
       'max-width': $(window).width()-$('aside').outerWidth(),
@@ -112,7 +150,7 @@ $(document).ready(function() {
     $('aside').show();        
   }
     
-  // hide filter panel   
+  // hide sidebar   
   function hideFilter() {
     // clear selected images
     if ($('li.selected').length) {
@@ -149,7 +187,7 @@ $(document).ready(function() {
       var file = $(this).parent().attr('href');
       var li = $(this).closest('li');
       
-      $.post('mark.php', {a: 'move', f: file, t: thumb, d: folder},function(data) {console.log(data)}).done($.proxy(function(){  				
+      $.post('mark.php', {a: 'move', f: file, t: thumb, d: folder}).done($.proxy(function(){  				
     
       	// determine new correct urls for image and thumb
       	if (li.attr('class').split(' ')[0] != 'imgs') { 
@@ -162,9 +200,7 @@ $(document).ready(function() {
         li.data('url', newurl);
         var newthumb = li.data('thumb').replace(li.attr('class').split(' ')[0], pre+folder);
         li.data('thumb', newthumb);
-        
-        console.log(newurl, newthumb);
-    
+            
       	// apply urls	
       	item.attr('src', li.data('thumb'));
       	item.parent().attr('href', li.data('url'));
@@ -208,12 +244,11 @@ $(document).ready(function() {
      e.preventDefault();
      $('body').removeClass('drag');
    }).on('drop', function (e) {
-     e.preventDefault();
-     var files = e.originalEvent.dataTransfer.files; 
+    e.preventDefault();
+    var files = e.originalEvent.dataTransfer.files; 
      
-     // simple file type validation
-     if (jQuery.inArray(files[0].type, filetypes) > -1) {
-         
+    // simple file type validation
+    if (jQuery.inArray(files[0].type, filetypes) > -1) {
       fdata = new FormData();
       fdata.append('u', files[0]);
       fdata.append('a', 'load');
@@ -274,9 +309,22 @@ $(document).ready(function() {
   		$.post('mark.php', {a: 'del', f: url, t: thumb});
   				
   		// remove image from view
-  		btn.closest('li').fadeOut(300, function(){$(this).remove()});
+  		btn.closest('li').fadeOut(function(){$(this).remove()});
   	})        
-  }  
+  } 
+  
+  function filterImg() {
+    imgs.not(activeFilter).hide();
+    imgs.filter(activeFilter).show();
+    
+    $('#download').text('download '+activeFilter.substring(1));
+
+    if (activeFilter != '*') {
+      $('nav ol li').filter(activeFilter).addClass('active');
+	  }
+
+  	localStorage.setItem('MARKfilter', activeFilter);   
+  }
   
   function resizeImg() {
     if (imgsWrap.css('flex-direction') != 'column') {
@@ -292,16 +340,16 @@ $(document).ready(function() {
   
   // show a message to the user
   function showmessage(msg) {
-      if ($('main').children('p').length > 0 ) {
-      	$('main > p').html(msg);
-      } else {
-      	$('main').prepend('<p>'+msg+'</p>');		
-      }
+    if ($('main').children('p').length > 0 ) {
+      $('main > p').html(msg);
+    } else {
+      $('main').prepend('<p>'+msg+'</p>');		
+    }
   }
   
   // remove message
   function removemessage() {
-      $('main p').remove();
+    $('main p').remove();
   }
 
   $('main').fadeIn();

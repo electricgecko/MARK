@@ -138,7 +138,7 @@
 				<li><span>everything</span></li><?php
 					if (count($folders) > 0) {				
 						foreach ($folders as $folder) {
-							echo '<li><span>'.basename($folder).'</span></li>';
+							echo '<li class="'.basename($folder).'"><span>'.basename($folder).'</span></li>';
 						}
 					}
 				?><li><span>unsorted</span></li>
