@@ -2,7 +2,7 @@
 
 M A R K is a simple image bookmarking tool. I wrote it as an replacement for the now sadly dysfunctional [GimmeBar](http://gimmebar.com). It is tailored to my personal needs and preferences, so chances are it won’t fit your use case or make no sense to you at all.
 
-Version 0.2.2b
+Version 0.2.5
 
 ## Rationale
 - M A R K is a tool for personal image bookmarking. There is no way to share your bookmarks with others, unless you grant them full access rights.
@@ -23,7 +23,7 @@ Version 0.2.2b
 - If your server does not have an SSL certificate, M A R K will not be able to save images via secure connections for cross-domain scripting reasons.
 - M A R K does not save image sources in any way. In the rare cases this is of interest to me, I use a [reverse image search](https://gist.github.com/electricgecko/44152c19c83d7d1960a9).
 - For now, folders have to be created manually, on the server. For the beta version, I'd like to add an UI for this.
-- Adding images works well on iOS devices. Moving images requires [Force Touch](https://developer.apple.com/library/content/documentation/AppleApplications/Conceptual/SafariJSProgTopics/RespondingtoForceTouchEventsfromJavaScript.html), which basically means iPhone 6S and iOS 10 or newer.
+- Adding images works well on iOS devices. ~~Moving images requires [Force Touch](https://developer.apple.com/library/content/documentation/AppleApplications/Conceptual/SafariJSProgTopics/RespondingtoForceTouchEventsfromJavaScript.html), which basically means iPhone 6S and iOS 10 or newer.~~ Moving images on mobile devices has been removed and is due for a rewrite.
 - The user account system is rudimentary and prehistoric, to say the least. Passwords are stored as plain text, even.
 - JS & CSS remain uncompiled, no task runner, no SCSS no nothing.
 
