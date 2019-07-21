@@ -126,6 +126,11 @@ $(document).ready(function() {
     	el.text('download everything');
     });
   });
+
+	// invert background color on touch-based devices
+	$('#mobileInvert').click(function(){
+		invertBG();	
+	})
   
   
   // FEATURES

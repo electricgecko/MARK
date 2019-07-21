@@ -201,7 +201,7 @@
 	
 
 	<footer>
-		<a class="mobile mobileInvert" id="mobileInvert" hred="javascript;">invert</a>
+		<a class="mobile mobileInvert" id="mobileInvert" href="javascript;">invert</a>
 		<div class="mobile mobileUploadWrap">
 	  	<a href="javascript:;">upload</a>
 	    <input class="mobile mobileUpload" id="mobileUpload" type="file"/>
