@@ -146,13 +146,11 @@ figure {
  padding: 0;
  height: 200px;
  width: auto;
- /* transition: all 0.15s linear; */
 }
 
 figure img {
   height: 100%;
   width: auto;
-  /* transition: all 0.15s linear; */
 }
 
 main ul li:hover figure > a:after {
@@ -451,17 +449,19 @@ and (max-width : 568px)  {
 }
 
 @media only screen 
-and (min-device-width : 320px) 
-and (max-device-width : 568px)
 and (orientation : landscape)  {
- 
- main {
-  width: 568px;
+  
+ nav {
+   margin-left: 20px;
  }
  
-  main ul li {
-  width: 100px;
- }  
+ nav ol li:last-child {
+  margin-left: 40px;
+ }
+ 
+ figure {
+   height: 140px;
+ }
  
  aside {
   height: 90vh;
