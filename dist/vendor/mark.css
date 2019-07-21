@@ -5,14 +5,13 @@
 }
 
 body {
- font-family: 'Eurostile', 'EurostileLT', 'EurostileTEE-Regu', 'Arial', sans-serif;
- font-weight: normal;
- font-size: 9pt;
+ font-family: 'Eurostile', 'EurostileLT', 'Eurostile LT', '-apple-system', 'Arial', sans-serif;
+ font-size: 8pt;
  letter-spacing: 1px;
- -webkit-text-size-adjust: none;
- -webkit-touch-callout: none !important;
  background-color: #fff;
  transition: background-color 0.25s;
+ -webkit-text-size-adjust: none;
+ -webkit-touch-callout: none !important;
 }
 
 body.inv {
@@ -78,18 +77,18 @@ h1 {
  letter-spacing: 3px;
  padding: 0;
  margin: 0;
- min-width: 40px;
- height: .7em;
- line-height: .8em;
- 
+ min-width: 50px;
+ height: 1em;
+ line-height:1em;
  text-indent: -9999px;
  background: url('mark.svg') no-repeat;
  background-size: contain;
 }
 
 body.inv h1 {
-  -webkit-filter: grayscale(100%) brightness(10);
-  filter: grayscale(100%) brightness(10);
+  -webkit-filter: invert(100%);
+          filter: invert(100%);
+}
 }
 
 h1 a {
@@ -117,7 +116,6 @@ main ul li {
  margin: 0 15px 30px;
  position: relative;
  font-size: 9px;
- font-family: 'Arial', sans-serif;
  letter-spacing: 1px;
 }
 
@@ -279,7 +277,7 @@ form input[type=password] {
  
  font-size: 400%;
  font-weight: normal;
- font-family: 'Eurostile', 'EurostileTEE-Regu', 'Arial', sans-serif;
+ font-family: 'Eurostile', 'EurostileLT', 'Eurostile LT', 'EurostileTEE-Regu', 'Arial', sans-serif;
  
  width: 100%;
  padding: 0;
