@@ -62,7 +62,7 @@
 	<link rel="icon" type="image/png" href="/vendor/favicons/favicon-64x64.png" sizes="64x64">
 	<link rel="icon" type="image/png" href="/vendor/favicons/favicon-32x32.png" sizes="32x32">
 	<link rel="icon" type="image/png" href="/vendor/favicons/favicon-16x16.png" sizes="16x16">
-	<link rel="mask-icon" href="/vendor/favicons/safari-pinned-tab.svg" color="#5bbad5">
+	<link rel="mask-icon" href="/vendor/favicons/safari-pinned-tab.svg" color="black">
 	<link rel="shortcut icon" href="/vendor/favicons/favicon.ico">
 	
 	<link rel="stylesheet" href="/vendor/mark.css">
