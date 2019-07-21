@@ -46,29 +46,28 @@
 	<meta name="description" content="Private collection of images, collected silently by M A R K.">
 	<meta name="robots" content="noindex, nofollow">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
     
 	<title>M A R K</title>
 	
-	<link rel="apple-touch-icon" sizes="114x114" href="vendor/favicons/apple-touch-icon-114x114.png">
-	<link rel="apple-touch-icon" sizes="120x120" href="vendor/favicons/apple-touch-icon-120x120.png">
-	<link rel="apple-touch-icon" sizes="144x144" href="vendor/favicons/apple-touch-icon-144x144.png">
-	<link rel="apple-touch-icon" sizes="152x152" href="vendor/favicons/apple-touch-icon-152x152.png">
-	<link rel="apple-touch-icon" sizes="180x180" href="vendor/favicons/apple-touch-icon-180x180.png">
-	<link rel="icon" type="image/png" href="vendor/favicons/favicon-32x32.png" sizes="32x32">
-	<link rel="icon" type="image/png" href="vendor/favicons/favicon-16x16.png" sizes="16x16">
-	<link rel="manifest" href="vendor/favicons/manifest.json">
-	<link rel="mask-icon" href="vendor/favicons/safari-pinned-tab.svg" color="#5bbad5">
-	<link rel="shortcut icon" href="vendor/favicons/favicon.ico">
+	<link rel="apple-touch-icon" sizes="114x114" href="/vendor/favicons/apple-touch-icon-114x114.png">
+	<link rel="apple-touch-icon" sizes="120x120" href="/vendor/favicons/apple-touch-icon-120x120.png">
+	<link rel="apple-touch-icon" sizes="144x144" href="/vendor/favicons/apple-touch-icon-144x144.png">
+	<link rel="apple-touch-icon" sizes="152x152" href="/vendor/favicons/apple-touch-icon-152x152.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="/vendor/favicons/apple-touch-icon-180x180.png">
+	<link rel="icon" type="image/png" href="/vendor/favicons/favicon-32x32.png" sizes="32x32">
+	<link rel="icon" type="image/png" href="/vendor/favicons/favicon-16x16.png" sizes="16x16">
+	<link rel="manifest" href="/vendor/favicons/manifest.json">
+	<link rel="mask-icon" href="/vendor/favicons/safari-pinned-tab.svg" color="#5bbad5">
+	<link rel="shortcut icon" href="/vendor/favicons/favicon.ico">
 	
-	<link rel="stylesheet" href="vendor/mark.css">
+	<link rel="stylesheet" href="/vendor/mark.css">
 		
 	<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
-	<script src="vendor/isotope.min.js"></script>
-	<script src="vendor/pressure.min.js"></script>
-	<script src="vendor/jquery.waypoints.min.js"></script>
+	<script src="/vendor/lazyload.min.js"></script>
 	<?php if ($_SESSION['user']): ?>
-	    <script src="vendor/ui.js"></script>
+	    <script src="/vendor/ui.js"></script>
     <?php endif ?>
 </head>
 
@@ -88,11 +87,11 @@
 			return $arr;	
 		}
 		
-        function get_thumb($img_name) {
-    	    global $thumb_indicator;
-    	    global $exp;
-            return substr_replace($img_name, $exp.$thumb_indicator, strpos($img_name,$exp), 0);
-	    }
+    function get_thumb($img_name) {
+      global $thumb_indicator;
+      global $exp;
+      return substr_replace($img_name, $exp.$thumb_indicator, strpos($img_name,$exp), 0);
+	  }
 		
 		// go.
 		
@@ -133,58 +132,54 @@
 	?>
 		
 	<header>
-		<h1><a href="<?php echo $installdir ?>">MARK</a></h1>
+		<h1>MARK</h1>
 		<nav>
 			<ol>
-				<li>everything</li><?php
+				<li><span>everything</span></li><?php
 					if (count($folders) > 0) {				
 						foreach ($folders as $folder) {
 							echo '<li><span>'.basename($folder).'</span></li>';
 						}
 					}
-				?><li>unsorted</li>
+				?><li><span>unsorted</span></li>
 			</ol>
 		</nav>
 	</header>
 	
 	<main>
-		<ul>
-			<?php
-	
-				$index = 0;
+    <ul>
+		  <?php
+        $index = 0;
 				$displayed_images = array();
 				
 				foreach ($images as $image) {
-		
-						// parse image info from filename
-						$img_info = explode($exp, basename($image[name]));
-						$image_date = $img_info[0];
-						$image_w = $img_info[1];
-						$image_h = $img_info[2];	
-						$image_title = $img_info[3];
-						$image_thumbnail = get_thumb($image[name]);
-						
-						// self-cleaning: if image is a duplicate, don't show it and delete it from server
-						if (in_array($image_title, $displayed_images)) {
-                            unlink($image[name]);
-                            unlink(get_thumb($image[name]));
-                            
-						} else {
-							
-							// make sure the image isn't still being copied – and thumbnail is created
-							if (file_exists($image_thumbnail)) {
-							
-				    			// show image
-				    			array_push($displayed_images, $image_title);
-				    			echo '<li class="'.basename($image['folder']).'" data-thumb="'.$image_thumbnail.'" data-url="'.$image[name].'"><a class="del" href="javascript:void(0);">×</a><figure><a href="'.$image['name'].'"><img width="'.$image_w.'" height="'.$image_h.'" src="" /></a></figure></li>';
-				    			echo "\n\t\t\t";
-				    			$index++;
-                            }
-						}
+				  // parse image info from filename
+				  $img_info = explode($exp, basename($image[name]));
+				  $image_date = $img_info[0];
+				  $image_w = $img_info[1];
+				  $image_h = $img_info[2];	
+				  $image_title = $img_info[3];
+				  $image_thumbnail = get_thumb($image[name]);
+				  
+				  // self-cleaning: if image is a duplicate, don't show it and delete it from server
+				  if (in_array($image_title, $displayed_images)) {
+            unlink($image[name]);
+            unlink(get_thumb($image[name])); 
+                         
+				  } else {
+				    
+				    // make sure the image isn't still being copied – and thumbnail is created
+				    if (file_exists($image_thumbnail)) {
+				    		// show image
+				    		array_push($displayed_images, $image_title);
+				    		echo '<li class="'.basename($image['folder']).'" data-thumb="'.$image_thumbnail.'" data-url="'.$image[name].'"><a class="del" href="javascript:void(0);">×</a><figure><a href="'.$image['name'].'"><img data-src="'.$image_thumbnail.'" width="'.$image_w.'" height="'.$image_h.'" src="" /></a></figure></li>';
+				    		echo "\n\t\t\t";
+				    		$index++;
+            }
+				  }
 				}
 			?>
 		</ul>
-
 	</main>
 	
 	<aside>
@@ -217,19 +212,15 @@
 	
 	
 	<?php else: ?>
-	    <main class="login">
-	        <h1><a href="<?php echo $installdir ?>">MARK</a></h1>
-            <form name="login" action="" method="post">
-
-    	        <input type="text" name="user" value="" />
-    	        <label for="user">Username</label>
-    	            	        
-                <input type="password" name="password" value="" />
-                <label for="password">Password</label>
-    	        
-    	        <input type="submit" name="submit" value="Submit" />
-    	   </form>	
-	    </main>
-    	
+    <main class="login">
+        <h1><a href="<?php echo $installdir ?>">MARK</a></h1>
+          <form name="login" action="" method="post">
+            <input type="text" name="user" value="" />
+            <label for="user">Username</label>
+            <input type="password" name="password" value="" />
+            <label for="password">Password</label>
+            <input type="submit" name="submit" value="Submit" />
+       </form>	
+    </main>
 	<?php endif; ?>
 </body>

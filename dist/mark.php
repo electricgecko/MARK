@@ -29,13 +29,8 @@
 	}
 	
 	function markdel($del_img, $del_thumb) {
-		if (!unlink($del_img)) {
-
-		}
-		
-		if (!unlink($del_thumb)) {
-
-		}				
+		if (!unlink($del_img)) {}
+		if (!unlink($del_thumb)) {}				
 	}	
 	
 	function markmove($move_img, $move_thumb, $move_dir) {
@@ -45,7 +40,9 @@
 		rename($move_img, $dest);
 		
 		$dest = $imgdir.'/'.$move_dir.'/'.basename($move_thumb);
-		rename($move_thumb, $dest);		
+		rename($move_thumb, $dest);
+    
+    echo "bonk";		
 	}
 
 	function markdl($dl_dir) {
@@ -107,24 +104,24 @@
 		
 		global $exp, $rep_exp, $thumb_indicator, $thumb_width, $imgdir;
         
-        // replace image by uploaded image if applicable
-        if ($upload) {
-           $img = $_FILES['u']['tmp_name'];
-        }    
-          
-        // create image object
-        if (exif_imagetype($img) == IMAGETYPE_JPEG) {
-            $img_el = imagecreatefromjpeg($img);
-            $ext = '.jpg';
-        } elseif (exif_imagetype($img) == IMAGETYPE_PNG) {
-            $img_el = imagecreatefrompng($img);
-            $ext = '.png';
-        } elseif (exif_imagetype($img) == IMAGETYPE_GIF) {
-            $img_el = imagecreatefromgif($img);
-            $ext = '.gif';
-        }
+    // replace image by uploaded image if applicable
+    if ($upload) {
+       $img = $_FILES['u']['tmp_name'];
+    }    
+      
+    // create image object
+    if (exif_imagetype($img) == IMAGETYPE_JPEG) {
+        $img_el = imagecreatefromjpeg($img);
+        $ext = '.jpg';
+    } elseif (exif_imagetype($img) == IMAGETYPE_PNG) {
+        $img_el = imagecreatefrompng($img);
+        $ext = '.png';
+    } elseif (exif_imagetype($img) == IMAGETYPE_GIF) {
+        $img_el = imagecreatefromgif($img);
+        $ext = '.gif';
+    }
         
-        // get image dimensions
+    // get image dimensions
 		$img_w = imagesx($img_el);
 		$img_h = imagesy($img_el);
 		

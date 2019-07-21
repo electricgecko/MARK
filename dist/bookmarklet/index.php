@@ -4,52 +4,48 @@
 
 <!DOCTYPE html>
 <html class="page-index" dir="ltr" lang="en-EN">
-	<head>
-		<meta charset="UTF-8"/>
-		<meta name="robots" content="noindex, nofollow">
-		
-		<title>M A R K — Bookmarklet</title>
-		
-		<style>
-    		* {
-        	    padding: 0;
-        	    margin: 0;	
-    		}
-    		
-            body {
-                font-family: 'Eurostile', 'EurostileTEE-Regu', 'Arial', sans-serif;
-                font-weight: normal;
-                font-size: 40pt;
-                letter-spacing: 1px;
-              
-            }
-            
-            div {
-                line-height: 100px;
-                width: 100%;
-                position: absolute;
-                top: 50%;
-                height: 100px;
-                margin-top: -50px;
-            }
-
-            a {
-                color: #000;
-                text-decoration: none;
-                text-align: center;
-                
-                display: block;
-                margin: 0 auto;
-
-                background: #eee;
-                width: 400px;
-
-            }
-    		
-    		p {
-                padding: 30px;        		
-    		}
-        </style>
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="robots" content="noindex, nofollow">
+    
+  <title>M A R K — Bookmarklet</title>
+    
+  <style>
+    * {
+      padding: 0;
+      margin: 0;	
+    }
+    
+    body {
+      font-family: 'Eurostile', 'EurostileTEE-Regu', 'Arial', sans-serif;
+      font-weight: normal;
+      font-size: 40pt;
+      letter-spacing: 1px;
+    }
+    
+    div {
+      line-height: 100px;
+      width: 100%;
+      position: absolute;
+      top: 50%;
+      height: 100px;
+      margin-top: -50px;
+    }
+    
+    a {
+      color: #000;
+      text-decoration: none;
+      text-align: center;
+      display: block;
+      margin: 0 auto;
+      background: #eee;
+      width: 400px;
+    }
+    
+    p {
+       padding: 30px;        		
+    }
+  style>
 </head>
 <body>
     <div>

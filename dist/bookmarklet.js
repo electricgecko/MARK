@@ -1,6 +1,4 @@
 (function(){
-	
-
 	// check prior inclusion and version
 	if (window.jQuery === undefined || window.jQuery.fn.jquery < v) {
 		var done = false;

@@ -1,92 +1,90 @@
 * {
-    font-weight: normal;
-    font-size: 100%;
-    -webkit-tap-highlight-color: rgba(0,0,0,0);
+ font-weight: normal;
+ font-size: 100%;
+ -webkit-tap-highlight-color: rgba(0,0,0,0);
 }
 
 body {
-    font-family: 'Eurostile', 'EurostileLT', 'EurostileTEE-Regu', 'Arial', sans-serif;
-    font-weight: normal;
-    font-size: 9pt;
-    letter-spacing: 1px;
-    -webkit-text-size-adjust: none;
-    -webkit-touch-callout: none !important;
-    background-color: #fff;
+ font-family: 'Eurostile', 'EurostileLT', 'EurostileTEE-Regu', 'Arial', sans-serif;
+ font-weight: normal;
+ font-size: 9pt;
+ letter-spacing: 1px;
+ -webkit-text-size-adjust: none;
+ -webkit-touch-callout: none !important;
+ background-color: #fff;
+ transition: background-color 0.25s;
 }
 
 body.inv {
-    background: #131313;
-    color: #fff;
+ background: #131313;
+ color: #fff;
 }
 
 body.drag {
-    background: #cacaca;
-    color: #000;
+ background: #cacaca;
+ color: #000;
 }
 
-
 a {
-    color: #000;
-    text-decoration: none;
+ color: #000;
+ text-decoration: none;
 }
 
 body.inv a {
-    color: #fff;
+ color: #fff;
 }
 
 ul, ol {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+ list-style: none;
+ padding: 0;
+ margin: 0;
 }
 
 header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    
-    line-height: 20px;
-    padding: 5px 10px;
-    
-    z-index: 10;
+ position: fixed;
+ top: 0;
+ left: 0;
+ line-height: 20px;
+ padding: 5px 10px;
+ z-index: 10;
 }
 
 nav {
-    display: inline;
-    margin-left: 100px;
+ display: inline;
+ margin-left: 100px;
 }
 
 nav ol {
-    display: inline;
+ display: inline;
 }
 
 nav ol li {
-    display: inline;
-    margin-right: 20px;
-    cursor: pointer;
+ display: inline;
+ margin-right: 20px;
+ cursor: pointer;
 }
 
 nav ol li:last-child {
-    margin-left: 60px;
+ margin-left: 60px;
 }
 
 nav ol li:hover,
 nav ol li.active {
-    text-decoration: underline;
+ text-decoration: underline;
 }
 
 h1 {
-    display: inline-block;
-    letter-spacing: 3px;
-    padding: 0;
-    margin: 0;
-    min-width: 40px;
-    height: .7em;
-    line-height: .8em;
-    
-    text-indent: -9999px;
-    background: url('mark.svg') no-repeat;
-    background-size: contain;
+ display: inline-block;
+ letter-spacing: 3px;
+ padding: 0;
+ margin: 0;
+ min-width: 40px;
+ height: .7em;
+ line-height: .8em;
+ 
+ text-indent: -9999px;
+ background: url('mark.svg') no-repeat;
+ background-size: contain;
 }
 
 body.inv h1 {
@@ -95,135 +93,140 @@ body.inv h1 {
 }
 
 h1 a {
-    display: block;
-    height: .7em;
-    min-width: 40px;
+ display: block;
+ height: .7em;
+ min-width: 40px;
 }
-    	
+ 	
 main {
-    margin: 60px auto;
+ margin: 60px auto;
+ transition: all 0.15s linear;
 }
 
 main > p {
-    margin: 100px 0 0 145px;
+ margin: 100px 0 0 145px;
+}
+
+main ul {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
 }
 
 main ul li {
-    width: 250px;
-    margin-bottom: 40px;
-    
-    font-size: 9px;
-    font-family: 'Arial', sans-serif;
-    letter-spacing: 1px;
+ margin: 0 15px 30px;
+ position: relative;
+ font-size: 9px;
+ font-family: 'Arial', sans-serif;
+ letter-spacing: 1px;
 }
 
 main ul li a.del {
-    display: none;
-    
-    font-size: 160%;
-    text-decoration: none;
-    color: #000;
-    line-height: 20px;
-    text-align: center;
-    
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    z-index: 10;
-    top: 0;
-    right: 0;
+ display: none;
+ font-size: 160%;
+ text-decoration: none;
+ color: #000;
+ line-height: 20px;
+ text-align: center;
+ position: absolute;
+ right: 0;
+ width: 20px;
+ height: 20px;
+ z-index: 10;
 }
 
 main ul li a.del:hover {
-    background: #fff;
+ background: #fff;
 }
 
 main ul li:hover a.del {
-    display: block;
+ display: block;
 }
 
 figure {
-    margin: 0;
-    padding: 0;
-    
+ margin: 0;
+ padding: 0;
+ height: 200px;
+ width: auto;
+ /* transition: all 0.15s linear; */
+}
+
+figure img {
+  height: 100%;
+  width: auto;
+  /* transition: all 0.15s linear; */
 }
 
 main ul li:hover figure > a:after {
-    content: ' ';
-    display: block;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    background: rgba(255, 220, 50, 0.5);
+ content: '';
+ display: block;
+ position: absolute;
+ top: 0;
+ bottom: 0;
+ left: 0;
+ right: 0;
+ background: rgba(255, 220, 50, 0.5);
 }
 
-main ul li.selected figure > a:after {
-    content: ' ';
-    display: block;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
 
-    background: rgba(0, 190, 255, 0.5);	
+main ul li.selected figure > a:after {
+ content: '';
+ display: block;
+ position: absolute;
+ top: 0;
+ bottom: 0;
+ left: 0;
+ right: 0;
+
+ background: rgba(0, 190, 255, 0.5);	
 }
 
 figure span {
-    display: block;
+ display: block;
 }
 
-img {
-    display: block;
-    width: 100%;
-    height: auto;
-}	
-
 aside {
-    position: fixed;
-    
-    top: 0;
-    right: 0;
-    min-height: 100vh;
-    width: 200px;
-    
-    line-height: 20px;
-    padding: 5px 10px;
-    
-    background: #fff;
-    
-    z-index: 15;
+ position: fixed;
+ 
+ top: 0;
+ right: 0;
+ min-height: 100vh;
+ width: 200px;
+ line-height: 20px;
+ padding: 5px 10px;
+ background: #fff;
+ z-index: 15;
 }
 
 aside p {
-    padding: 0;
-    margin: 0 0 1em 0;
-    width: 100px;
+ padding: 0;
+ margin: 0 0 1em 0;
+ width: 100px;
 }
 
 aside p span {
-    font-size: 90%;
+ font-size: 90%;
 }
 
 aside ol li {
-    cursor: pointer;
-    margin-bottom: 1em;
+ cursor: pointer;
+ margin-bottom: 1em;
 }
 
 aside ol li:hover {
-    text-decoration: underline;
+ text-decoration: underline;
 }
 
 aside .done,
 aside .close {
-    position: absolute;
-    background-color: #fff;
+ position: absolute;
+ background-color: #fff;
 }
 
 body.inv aside,
 body.inv aside .done,
 body.inv aside .close {
-    background: #131313;
+ background: #131313;
 }
 
 footer {
@@ -246,49 +249,49 @@ footer a:last-child {
 }
 
 footer a:hover {
-    text-decoration: underline;
+ text-decoration: underline;
 }
 
 
 main.login {
-    padding-top: 15%;
-    margin-top: 0;
+ padding-top: 15%;
+ margin-top: 0;
 }
 
 form {
-    width: 40%;
-    margin: 0 auto;
+ width: 40%;
+ margin: 0 auto;
 }
 
 form label {
-    margin-bottom: 1em;
-    display: block;
+ margin-bottom: 1em;
+ display: block;
 
 }
 
 form input[type=text],
 input[type=file],
 form input[type=password] {
-    -webkit-appearance: none;
-    border-radius: 0;
-    outline: none;
-    background: none;
-    
-    font-size: 400%;
-    font-weight: normal;
-    font-family: 'Eurostile', 'EurostileTEE-Regu', 'Arial', sans-serif;
-    
-    width: 100%;
-    padding: 0;
-    
-    display: block;
-        		
-    border: 0;
-    border-bottom: 1px solid;
+ -webkit-appearance: none;
+ border-radius: 0;
+ outline: none;
+ background: none;
+ 
+ font-size: 400%;
+ font-weight: normal;
+ font-family: 'Eurostile', 'EurostileTEE-Regu', 'Arial', sans-serif;
+ 
+ width: 100%;
+ padding: 0;
+ 
+ display: block;
+  		
+ border: 0;
+ border-bottom: 1px solid;
 }
 
 input[type=file] {
-    position: absolute;
+ position: absolute;
 	opacity: 0;
 	width: 45px;
 	font-size: 1em;
@@ -298,26 +301,26 @@ input[type=file] {
 }
 
 form input[type=submit] {
-    -webkit-appearance:none;
-    outline: none;
-    background: none;
+ -webkit-appearance:none;
+ outline: none;
+ background: none;
+ 
+ padding: 0;
+ border: 0;
+ cursor: pointer;
+ 
+ font-size: 100%;
     
-    padding: 0;
-    border: 0;
-    cursor: pointer;
-    
-    font-size: 100%;
-                
-    margin-top: 5em;
+ margin-top: 5em;
 }
 
 form input[type=submit]:hover {
-    text-decoration: underline;
+ text-decoration: underline;
 }
 
 body.inv form input {
-    border-color: #fff;
-    color: #fff;
+ border-color: #fff;
+ color: #fff;
 }
 
 .login > h1 {
@@ -329,139 +332,151 @@ body.inv form input {
 @media only screen 
 and (min-device-width : 768px) 
 and (max-device-width : 1024px) {
-    main ul li {
-        width: 180px;
-    }
+ main ul li {
+  width: 180px;
+ }
 
-    form input[type=text],
-    form input[type=password] {
-        font-size: 300%;   
-    }
+ form input[type=text],
+ form input[type=password] {
+  font-size: 300%;   
+ }
 
-    footer .mobile {
-    	display: block;
-    }    
+ footer .mobile {
+ 	display: block;
+ } 
 }
 
 @media only screen 
-and (min-device-width : 320px) 
-and (max-device-width : 568px)  {
-    
-    h1 {
-        position: fixed;
-        display: block;
-        float: left;
-        padding-top: 30px;
-        background-position: center center;
-        min-width: 50px;
-        margin-right: 30px;
-    }
-    
-    header {
-        width: 100%;
-    }
-    
-    nav {
-        display: block;
-        
-        margin-left: 60px;
-        padding: 10px;
-        width: auto;
+and (min-width : 320px) 
+and (max-width : 568px)  {
 
-        overflow-x: scroll;
-        overflow-y: hidden;
-    }
-    
-    main {
-        margin-top: 100px;
-        width: 300px;  
-    }
+ h1 {
+  position: fixed;
+  display: block;
+  float: left;
+  padding-top: 30px;
+  background-position: center center;
+  min-width: 50px;
+  margin-right: 30px;
+ }
+ 
+ header {
+  width: 100%;
+ }
+ 
+ nav {
+  display: block;
+  
+  margin-left: 60px;
+  padding: 10px;
+  width: auto;
 
-    main > p {
-        margin-left: 40px;
-    }
+  overflow-x: scroll;
+  overflow-y: hidden;
+ }
+ 
+ main {
+  margin-top: 100px;
+ }
 
-    main ul li {
-        width: 300px;
-    }
-    
-    main ul li:hover figure > a:after {
-        display: none;
-    }
-    
-    aside {
-        position: fixed;
-        
-        width: 100vw;
-        padding: 5vh 0 20vh 0;
-        
-        font-size: 3em;
-        text-align: center;
-    }
+ main > p {
+  margin-left: 40px;
+ }
+ 
+ main ul {
+   flex-direction: column;
+   align-items: center;
+ }
+ 
+ figure {
+   width: 90%;
+   height: auto;
+   margin: 0 auto;
+ }
+ 
+ figure img {
+   width: 100%;
+   height: auto;
+ }
 
-    aside p {
-        width: auto;
-    }
-    
-    aside ol {
-        margin-top: 2em;
-    }
-    
-    aside .close, aside .done {
-        text-align: center;
-        width: 100%;
-    }
-    
-    footer .mobile {
-    	display: block;
-    }   
-    
-    footer .download {
-	    display: none;
-    }
-    
-    .login form {
-        width: 100%;
-    }
-    
-    form input[type=text],
-    form input[type=password] {
-        padding: 0;
-        width: 100%;
-    }
-    
-    .login > h1 {
-        top: 0;
-    }
+ 
+ main ul li:hover figure > a:after {
+  display: none;
+ }
+ 
+ aside {
+  position: fixed;
+  
+  width: 100vw;
+  padding: 5vh 0 20vh 0;
+  
+  font-size: 3em;
+  text-align: center;
+ }
 
-    
+ aside p {
+  width: auto;
+ }
+ 
+ aside ol {
+  margin-top: 2em;
+ }
+ 
+ aside .close, aside .done {
+  text-align: center;
+  width: 100%;
+ }
+ 
+ footer .mobile {
+ 	display: block;
+ }   
+ 
+ footer .download {
+	 display: none;
+ }
+ 
+ .login form {
+  width: 100%;
+ }
+ 
+ form input[type=text],
+ form input[type=password] {
+  padding: 0;
+  width: 100%;
+ }
+ 
+ .login > h1 {
+  top: 0;
+ }
+
+ 
 }
 
 @media only screen 
 and (min-device-width : 320px) 
 and (max-device-width : 568px)
 and (orientation : landscape)  {
-    
-    main {
-        width: 568px;
-    }
-    
-     main ul li {
-        width: 100px;
-    }  
-    
-    aside {
-        height: 90vh;
-    }
-    
-    aside ol {
-        min-height: 60vh;
-        width: 80%;
-        margin: 0 auto;
-    }
-    
-    aside ol li  {
-        width: 50%;
-        float: left;
-    }
+ 
+ main {
+  width: 568px;
+ }
+ 
+  main ul li {
+  width: 100px;
+ }  
+ 
+ aside {
+  height: 90vh;
+ }
+ 
+ aside ol {
+  min-height: 60vh;
+  width: 80%;
+  margin: 0 auto;
+ }
+ 
+ aside ol li  {
+  width: 50%;
+  float: left;
+ }
 }
