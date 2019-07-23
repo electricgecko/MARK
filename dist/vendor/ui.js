@@ -260,7 +260,7 @@ $(document).ready(function() {
       
       var upload = $.ajax({
         type: 'POST',                
-        url: 'http://mark.dev/mark.php',
+        url: 'mark.php',
         processData: false,
         contentType: false,
         cache:false,
