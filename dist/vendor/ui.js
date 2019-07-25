@@ -53,7 +53,7 @@ $(document).ready(function() {
 	      imgSz = Math.floor(imgSz-imgSz*mult);
 	    }
 	    localStorage.setItem('MARKsz', imgSz);
-	    $('figure, figure img').css('height', imgSz+'px');
+	    resizeImg();
 
     // i (to invert background color)
     } else if (e.keyCode === 73) { invertBG(); }
