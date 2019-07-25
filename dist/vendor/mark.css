@@ -194,7 +194,6 @@ aside {
  width: 200px;
  line-height: 20px;
  padding: 5px 10px;
- background: #fff;
  z-index: 15;
 }
 
@@ -353,7 +352,6 @@ and (max-width : 568px)  {
  h1 {
   position: fixed;
   display: block;
-  float: left;
   padding-top: 30px;
   background-position: center center;
   min-width: 50px;
@@ -399,27 +397,8 @@ and (max-width : 568px)  {
    height: auto;
  }
 
- 
  main ul li:hover figure > a:after {
   display: none;
- }
- 
- aside {
-  position: fixed;
-  
-  width: 100vw;
-  padding: 5vh 0 20vh 0;
-  
-  font-size: 3em;
-  text-align: center;
- }
-
- aside p {
-  width: auto;
- }
- 
- aside ol {
-  margin-top: 2em;
  }
  
  aside .close, aside .done {
@@ -453,32 +432,15 @@ and (max-width : 568px)  {
 }
 
 @media only screen 
+and (min-width : 320px) 
+and (max-width : 812px) 
 and (orientation : landscape)  {
-  
+
  nav {
    margin-left: 20px;
  }
  
- nav ol li:last-child {
-  margin-left: 40px;
- }
- 
  figure {
    height: 140px;
- }
- 
- aside {
-  height: 90vh;
- }
- 
- aside ol {
-  min-height: 60vh;
-  width: 80%;
-  margin: 0 auto;
- }
- 
- aside ol li  {
-  width: 50%;
-  float: left;
  }
 }

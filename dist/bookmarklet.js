@@ -1,6 +1,6 @@
 (function(){
 	// check prior inclusion and version
-	if (window.jQuery === undefined || window.jQuery.fn.jquery < v) {
+	if (window.jQuery === undefined) {
 		var done = false;
 		var script = document.createElement("script");
 		script.src = "https://code.jquery.com/jquery-2.2.4.min.js";
