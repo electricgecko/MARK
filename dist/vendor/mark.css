@@ -153,6 +153,10 @@ figure img {
   width: auto;
 }
 
+figure img:not([src]) {
+  visibility: hidden;
+}
+
 main ul li:hover figure > a:after {
  content: '';
  display: block;

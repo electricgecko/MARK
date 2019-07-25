@@ -12,11 +12,6 @@ $(document).ready(function() {
   
   // hide all the things
   $('main, aside, aside #done, aside #close').hide();
-
-  // lazy load images 
-  var lazyLoadInstance = new LazyLoad({
-    elements_selector: "figure img"
-  });
   
   // get settings from local storage
   if (localStorage.getItem('MARKsz') !== null) {	    
@@ -38,6 +33,14 @@ $(document).ready(function() {
     addDeleteFunction($(this));
   }); 
 
+  resizeImg();
+
+  // lazy load images 
+  var ll = new LazyLoad({
+    elements_selector: "figure a img"
+  });
+  
+  
 
   // LISTEN FOR KEYBOARD COMMANDS
   
@@ -333,7 +336,20 @@ $(document).ready(function() {
   
   function resizeImg() {
     if (imgsWrap.css('flex-direction') != 'column') {
-      $('figure, figure img').css('height', imgSz+'px');
+      
+      $('figure > a > img').each(function(){
+        var ratio = $(this).attr('width')/$(this).attr('height');
+        
+        console.log(ratio);
+        
+        $(this).css({        
+          'height': imgSz+'px',
+          'width': Math.floor(imgSz*ratio)+'px'
+        });
+      })
+  
+      $('li > figure').css('height', imgSz+'px');
+
     }
   }
   

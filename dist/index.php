@@ -62,16 +62,12 @@
 	<link rel="icon" type="image/png" href="/vendor/favicons/favicon-64x64.png" sizes="64x64">
 	<link rel="icon" type="image/png" href="/vendor/favicons/favicon-32x32.png" sizes="32x32">
 	<link rel="icon" type="image/png" href="/vendor/favicons/favicon-16x16.png" sizes="16x16">
-	<link rel="mask-icon" href="/vendor/favicons/safari-pinned-tab.svg" color="black">
-	<link rel="shortcut icon" href="/vendor/favicons/favicon.ico">
+	<link rel="mask-icon" href="vendor/favicons/safari-pinned-tab.svg" color="black">
+	<link rel="shortcut icon" href="vendor/favicons/favicon.ico">
 	
-	<link rel="stylesheet" href="/vendor/mark.css">
+	<link rel="stylesheet" href="vendor/mark.css">
 		
 	<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
-	<script src="/vendor/lazyload.min.js"></script>
-	<?php if ($_SESSION['user']): ?>
-	    <script src="/vendor/ui.js"></script>
-    <?php endif ?>
 </head>
 
 <body data-imgdir="<?php echo $imgdir ?>">
@@ -212,6 +208,11 @@
 	  <a class="download" id="download" href="javascript:;">download everything</a>
 		<a class="logout" id="logout" href="?logout=1">logout</a>
 	</footer>
+	
+  <script src="vendor/lazyload.min.js"></script>
+	<?php if ($_SESSION['user']): ?>
+  <script src="vendor/ui.js"></script>
+  <?php endif ?>
 	
 	
 	<?php else: ?>
