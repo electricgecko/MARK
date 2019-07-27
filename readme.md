@@ -1,12 +1,12 @@
 ![alt tag](http://static.electricgecko.de/mark/mark2019.svg)
 
-M A R K is a simple image bookmarking tool. I wrote it as an replacement for the now sadly dysfunctional [GimmeBar](http://gimmebar.com). It is tailored to my personal needs and preferences, so chances are it won’t fit your use case or make no sense to you at all.
+M A R K is a simple image bookmarking tool. It is tailored to my personal needs and preferences, so chances are it won’t fit your use case or make no sense to you at all.
 
 Version 0.2.6
 
 ## Rationale
-- M A R K is a tool for personal image bookmarking. There is no way to share your bookmarks with others, unless you grant them full access rights.
-- M A R Ks general idea is to create a singular stream of your aesthetic sensibilities, their disparities, their evolution. Every image saved becomes part of this stream, called *everything*. GimmeBar worked in this way, and I enjoyed it greatly.
+- M A R K is a tool for personal image bookmarking. There is no way to share your bookmarks with others, unless you grant them access to your instance. I have been pondering a feature that would enable sharing of selected content, though.
+- M A R Ks general idea is to create a singular stream of your aesthetic sensibilities, their disparities, their evolution. Every image saved becomes part of this stream, called *everything*. The now defunctGimmeBar worked in this way, and I enjoyed it greatly.
 - Images are added via bookmarklet, which can be conveniently dragged to your bookmark bar from */bookmarklet/*.
 - Alternatively, images can be uploaded via drag and drop or via the *upload* button on touch-based devices.
 - Images are always sorted by date saved.
@@ -25,7 +25,7 @@ Version 0.2.6
 - For now, folders have to be created manually, on the server. For the beta version, I'd like to add an UI for this.
 - Adding images works well on iOS devices. ~~Moving images requires [Force Touch](https://developer.apple.com/library/content/documentation/AppleApplications/Conceptual/SafariJSProgTopics/RespondingtoForceTouchEventsfromJavaScript.html), which basically means iPhone 6S and iOS 10 or newer.~~ Moving images on mobile devices has been removed and is due for a rewrite.
 - The user account system is rudimentary and prehistoric, to say the least. Passwords are stored as plain text, even.
-- JS & CSS remain uncompiled, no task runner, no SCSS no nothing.
+- JS & CSS remain uncompiled, no task runner, no SCSS no nothing. I'd like to support View Source.
 
 ## Installation
 
@@ -39,7 +39,7 @@ Version 0.2.6
     ```
 	$userinfo = array(
   		'Jill' => 'Hveywhb9yAGbVuBu',
-  		'Jack' => 'cYpeuzvKZ7Wxht4U'
+  		'John' => 'cYpeuzvKZ7Wxht4U'
 	);
     ```
 
