@@ -224,8 +224,11 @@ $(document).ready(function() {
         if (folder == '') {
           li.addClass('imgs')
         };
+
+        filterImg();  
       	
-      }, target));    			
+      }, target));
+  			
     });    
   }
 
@@ -339,9 +342,7 @@ $(document).ready(function() {
       
       $('figure > a > img').each(function(){
         var ratio = $(this).attr('width')/$(this).attr('height');
-        
-        console.log(ratio);
-        
+                
         $(this).css({        
           'height': imgSz+'px',
           'width': Math.floor(imgSz*ratio)+'px'
