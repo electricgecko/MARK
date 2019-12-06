@@ -1,4 +1,4 @@
-<?php
+<?
   ob_start();
 	session_start();
 	
@@ -15,7 +15,7 @@
 	  unlink ($zip_name);
   }
 
-	if(isset($_GET['logout'])) {
+	if (isset($_GET['logout'])) {
 	    $_SESSION['user'] = '';
 	    setcookie('MARKsession','', time()-86400, '/');
 	    header('Location:  https://' . $_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF']));
@@ -28,7 +28,7 @@
 	
 	else if (isset($_POST['user'])) {
     	
-	    if((array_key_exists($_POST['user'], $userinfo)) && $userinfo[$_POST['user']] == $_POST['password']) {
+	    if ((array_key_exists($_POST['user'], $userinfo)) && $userinfo[$_POST['user']] == $_POST['password']) {
 	        $_SESSION['user'] = $_POST['user'];
 	        setcookie('MARKsession',$_POST['user'], time()+86400*30, '/');
 	   
@@ -47,7 +47,6 @@
 	<meta name="robots" content="noindex, nofollow">
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    
     
 	<title>M A R K</title>
 	
@@ -70,11 +69,11 @@
 	<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 </head>
 
-<body data-imgdir="<?php echo $imgdir ?>">
+<body data-imgdir="<? echo $imgdir ?>">
 
-  <?php if ($_SESSION['user']): ?>
+  <? if ($_SESSION['user']): ?>
         
-	<?php
+	<?
 		$folders = array_filter(glob($imgdir.'/*', GLOB_NOCHECK), 'is_dir'); // read folders in main image folder
 		$images = array();	
 		$c = 0;
@@ -134,7 +133,7 @@
 		<h1>MARK</h1>
 		<nav>
 			<ol>
-				<li><span>everything</span></li><?php
+				<li><span>everything</span></li><?
 					if (count($folders) > 0) {				
 						foreach ($folders as $folder) {
 							echo '<li class="'.basename($folder).'"><span>'.basename($folder).'</span></li>';
@@ -147,23 +146,23 @@
 	
 	<main>
     <ul>
-		  <?php
+		  <?
         $index = 0;
 				$displayed_images = array();
 				
 				foreach ($images as $image) {
 				  // parse image info from filename
-				  $img_info = explode($exp, basename($image[name]));
+				  $img_info = explode($exp, basename($image['name']));
 				  $image_date = $img_info[0];
 				  $image_w = $img_info[1];
 				  $image_h = $img_info[2];	
 				  $image_title = $img_info[3];
-				  $image_thumbnail = get_thumb($image[name]);
+				  $image_thumbnail = get_thumb($image['name']);
 				  
 				  // self-cleaning: if image is a duplicate, don't show it and delete it from server
 				  if (in_array($image_title, $displayed_images)) {
-            unlink($image[name]);
-            unlink(get_thumb($image[name])); 
+            unlink($image['name']);
+            unlink(get_thumb($image['name'])); 
                          
 				  } else {
 				    
@@ -171,7 +170,7 @@
 				    if (file_exists($image_thumbnail)) {
 				    		// show image
 				    		array_push($displayed_images, $image_title);
-				    		echo '<li class="'.basename($image['folder']).'" data-thumb="'.$image_thumbnail.'" data-url="'.$image[name].'"><a class="del" href="javascript:void();">×</a><figure><a href="'.$image['name'].'"><img data-src="'.$image_thumbnail.'" width="'.$image_w.'" height="'.$image_h.'" src="" /></a></figure></li>';
+				    		echo '<li class="'.basename($image['folder']).'" data-thumb="'.$image_thumbnail.'" data-url="'.$image['name'].'"><a class="del" href="javascript:void();">×</a><figure><a href="'.$image['name'].'"><img data-src="'.$image_thumbnail.'" width="'.$image_w.'" height="'.$image_h.'" src="" /></a></figure></li>';
 				    		echo "\n\t\t\t";
 				    		$index++;
             }
@@ -185,7 +184,7 @@
 		<p>add <span>0</span> to</p>
 		<ol>
 			<li><span>everything</span></li>
-			<?php
+			<?
 				// list folders 
 				if (count($folders) > 0) {				
 					foreach ($folders as $folder) {
@@ -198,7 +197,6 @@
 		<span id="done" class="done">✔</span>
 	</aside>
 	
-
 	<footer>
 		<a class="mobile mobileInvert" id="mobileInvert" href="javascript:void();">invert</a>
 		<div class="mobile mobileUploadWrap">
@@ -210,14 +208,13 @@
 	</footer>
 	
   <script src="vendor/lazyload.min.js"></script>
-	<?php if ($_SESSION['user']): ?>
+	<? if ($_SESSION['user']): ?>
   <script src="vendor/ui.js"></script>
-  <?php endif ?>
+  <? endif ?>
 	
-	
-	<?php else: ?>
+	<? else: ?>
     <main class="login">
-        <h1><a href="<?php echo $installdir ?>">MARK</a></h1>
+        <h1><a href="<? echo $installdir ?>">MARK</a></h1>
           <form name="login" action="" method="post">
             <input type="text" name="user" value="" />
             <label for="user">Username</label>
@@ -226,5 +223,5 @@
             <input type="submit" name="submit" value="Submit" />
        </form>	
     </main>
-	<?php endif; ?>
+	<? endif ?>
 </body>
