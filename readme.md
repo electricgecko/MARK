@@ -2,7 +2,7 @@
 
 M A R K is a simple image bookmarking tool. It is tailored to my personal needs and preferences, so chances are it won’t fit your use case or make no sense to you at all.
 
-Version 0.2.6
+Version 0.2.7
 
 ## Rationale
 - M A R K is a tool for personal image bookmarking. There is no way to share your bookmarks with others, unless you grant them access to your instance. I have been pondering a feature that would enable sharing of selected content, though.
@@ -17,6 +17,7 @@ Version 0.2.6
 	- M A R K folders are file system folders
 	- Files are renamed by the date/time they were saved so they keep their order even when used outside of M A R K
 	- Thumbnail images are easily identifiable by file name prefix
+- There is an <a href="https://www.are.na/malte-muller/m-a-r-k">Are.na channel</a> documenting pleasing visual moments from M A R K instances.
 
 ## Alpha version constraints
 - You need to host M A R K on your own (LAMP-) server. For now, the installation process involves uploading the package and changing some php files (see *installation*).
