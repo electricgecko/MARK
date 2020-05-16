@@ -2,7 +2,7 @@
 
 M A R K is a simple image bookmarking tool. It is tailored to my personal needs and preferences, so chances are it won’t fit your use case or make no sense to you at all.
 
-Version 0.2.7
+Version 0.2.8
 
 ## Rationale
 - M A R K is a tool for personal image bookmarking. There is no way to share your bookmarks with others, unless you grant them access to your instance. I have been pondering a feature that would enable sharing of selected content, though.

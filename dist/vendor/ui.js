@@ -41,7 +41,6 @@ $(document).ready(function() {
   });
   
   
-
   // LISTEN FOR KEYBOARD COMMANDS
   
   $(window).keydown(function(e) {	
@@ -59,7 +58,7 @@ $(document).ready(function() {
     } else if (e.keyCode === 73) { invertBG(); }
   });
     
-  
+    
   // LISTENERS
   
   // remove selections by clicking in white space
@@ -130,6 +129,19 @@ $(document).ready(function() {
     });
   });
 
+  // resize images on click (useful on larger touch-based devices)
+  $('#zoomIn').click(function() {	
+    imgSz = Math.floor(imgSz+imgSz*mult);
+    localStorage.setItem('MARKsz', imgSz);
+    resizeImg();
+  });
+
+  $('#zoomOut').click(function() {	
+    imgSz = Math.floor(imgSz-imgSz*mult);
+    localStorage.setItem('MARKsz', imgSz);
+    resizeImg();
+  });
+  
 	// invert background color on touch-based devices
 	$('#mobileInvert').click(function(){
 		invertBG();	

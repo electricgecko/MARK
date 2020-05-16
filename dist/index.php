@@ -170,7 +170,7 @@
 				    if (file_exists($image_thumbnail)) {
 				    		// show image
 				    		array_push($displayed_images, $image_title);
-				    		echo '<li class="'.basename($image['folder']).'" data-thumb="'.$image_thumbnail.'" data-url="'.$image['name'].'"><a class="del" href="javascript:void();">×</a><figure><a href="'.$image['name'].'"><img data-src="'.$image_thumbnail.'" width="'.$image_w.'" height="'.$image_h.'" src="" /></a></figure></li>';
+				    		echo '<li class="'.basename($image['folder']).'" data-thumb="'.$image_thumbnail.'" data-url="'.$image['name'].'"><a class="del" href="javascript:void(0);">×</a><figure><a href="'.$image['name'].'"><img data-src="'.$image_thumbnail.'" width="'.$image_w.'" height="'.$image_h.'" src="" /></a></figure></li>';
 				    		echo "\n\t\t\t";
 				    		$index++;
             }
@@ -198,12 +198,14 @@
 	</aside>
 	
 	<footer>
-		<a class="mobile mobileInvert" id="mobileInvert" href="javascript:void();">invert</a>
+		<a class="zoom" id="zoomIn" href="javascript:void(0);">+</a>
+		<a class="zoom" id="zoomOut" href="javascript:void(0);">-</a>
+		<a class="mobile mobileInvert" id="mobileInvert" href="javascript:void(0);">invert</a>
 		<div class="mobile mobileUploadWrap">
-	  	<a href="javascript:void();">upload</a>
+	  	<a href="javascript:void(0);">upload</a>
 	    <input class="mobile mobileUpload" id="mobileUpload" type="file"/>
 	  </div>
-	  <a class="download" id="download" href="javascript:void();">download everything</a>
+	  <a class="download" id="download" href="javascript:void(0);">download everything</a>
 		<a class="logout" id="logout" href="?logout=1">logout</a>
 	</footer>
 	
