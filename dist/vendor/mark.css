@@ -434,3 +434,9 @@ and (orientation : landscape)  {
    height: 140px;
  }
 }
+
+@media (hover: none) and (pointer: coarse) {
+  .mobile.mobileUploadWrap {
+    display: block;
+  }
+}
