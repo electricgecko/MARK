@@ -163,7 +163,7 @@
 				    if (file_exists($image_thumbnail)) {
 				    		// show image
 				    		array_push($displayed_images, $image_title);
-				    		echo '<li class="'.basename($image['folder']).'" data-thumb="'.$image_thumbnail.'" data-url="'.$image['name'].'"><a class="del" href="javascript:void(0);">×</a><figure><a href="'.$image['name'].'"><img data-src="'.$image_thumbnail.'" width="'.$image_w.'" height="'.$image_h.'" src="" /></a></figure></li>';
+				    		echo '<li class="'.basename($image['folder']).'" data-thumb="'.$image_thumbnail.'" data-url="'.$image['name'].'"><a class="del" href="javascript:void(0);">×</a><figure><a href="'.$image['name'].'"><img loading="lazy" src="'.$image_thumbnail.'" width="'.$image_w.'" height="'.$image_h.'" /></a></figure></li>';
 				    		echo "\n\t\t\t";
 				    		$index++;
             }
@@ -202,7 +202,6 @@
 		<a class="logout" id="logout" href="?logout=1">logout</a>
 	</footer>
 	
-  <script src="vendor/lazyload.min.js"></script>
 	<? if ($_SESSION['user']): ?>
   <script src="vendor/ui.js"></script>
   <? endif ?>

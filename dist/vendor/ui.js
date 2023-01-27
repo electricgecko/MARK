@@ -33,13 +33,7 @@ $(document).ready(function() {
     addDeleteFunction($(this));
   }); 
 
-  resizeImg();
-
-  // lazy load images 
-  var ll = new LazyLoad({
-    elements_selector: "figure a img"
-  });
-  
+  resizeImg();  
   
   // LISTEN FOR KEYBOARD COMMANDS
   
