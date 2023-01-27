@@ -258,16 +258,20 @@ $(document).ready(function() {
    dragto.on('dragenter', function(e) {
      e.stopPropagation();
      e.preventDefault();
+     $('body').removeClass('drag');
    }).on('dragover', function(e) {
      e.stopPropagation();
      e.preventDefault();
-     $('body').addClass('drag'); 
+     if (!$('body').hasClass('drag')) {
+       $('body').addClass('drag');
+     }
    }).on('dragleave', function(e) {
      e.stopPropagation();
      e.preventDefault();
      $('body').removeClass('drag');
    }).on('drop', function (e) {
     e.preventDefault();
+    
     var files = e.originalEvent.dataTransfer.files; 
      
     // simple file type validation
@@ -285,6 +289,8 @@ $(document).ready(function() {
         data: fdata,
         dataType: 'JSON',
         success: function(data) { appendUploadedImg(data); }
+      }).fail(function(jqXHR, textStatus, errorThrown) {
+        console.log(errorThrown);      
       }) 
     }
    })
@@ -317,7 +323,8 @@ $(document).ready(function() {
     var uploadedImg= $('<li class="imgs" data-thumb="'+thumbName+'" data-url="'+imgName+'"><a class="del" href="javascript:void(0);">×</a><figure style="height: '+imgSz+'px;"><a href="'+imgName+'"><img width="'+imgWidth+'" height="'+imgHeight+'" src="'+thumbName+'" /></a></figure></li>');
     addDeleteFunction($('a.del', uploadedImg));
     imgsWrap.prepend(uploadedImg);
-    $('body').removeClass('drag');      
+    console.log('New image uploaded');
+    $('body').removeClass('drag');
   }
 	
 
@@ -344,7 +351,9 @@ $(document).ready(function() {
 
     if (activeFilter != '*') {
       $('nav ol li').filter(activeFilter).addClass('active');
-	  }
+	  } else {
+      $('nav ol li:first-child').addClass('active');
+    }
 
   	localStorage.setItem('MARKfilter', activeFilter);   
   }

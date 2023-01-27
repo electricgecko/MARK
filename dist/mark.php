@@ -5,13 +5,18 @@
 	$validFileTypes = array('gif','png','jpg');
 	
   require_once('config.php');
- 	
-	$a = $_POST[a];
+  
+	$file = '';
+	$thumb = '';
+	$dir = '';
+	$upload = false;
+	 
+	$a = $_POST['a'];
     
-	if (isset($_POST[f]))  { $file = $_POST[f];     }
-	if (isset($_POST[t]))  { $thumb = $_POST[t];    }
-	if (isset($_POST[d]))  { $dir = $_POST[d];      }
-	if (isset($_FILES[u])) { $upload = true;        }
+	if (isset($_POST['f']))  { $file = $_POST['f'];     }
+	if (isset($_POST['t']))  { $thumb = $_POST['t'];    }
+	if (isset($_POST['d']))  { $dir = $_POST['d'];      }
+	if (isset($_FILES['u'])) { $upload = true;        }
 	
 	switch ($a) {
     case 'del':
@@ -126,7 +131,7 @@
 		$img_h = imagesy($img_el);
 		
 		// get time/date string
-		$img_date = date(ymdHis);
+		$img_date = date('ymdHis');
 		
 		// get original filename in case file was uploaded
 		if ($upload) {

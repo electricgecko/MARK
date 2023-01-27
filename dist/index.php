@@ -3,13 +3,7 @@
 	session_start();
 	
 	require_once('config.php');
-	
-	// clean up installer
-	if (file_exists('install/index.php')) {
-	    //unlink('install/index.php');
-	    //rmdir('install');
-  }
-  
+
   // clean up download file
   if (file_exists($zip_name)) {
 	  unlink ($zip_name);
@@ -45,7 +39,6 @@
 	<meta name="author" content="Malte Müller"/>
 	<meta name="description" content="Private collection of images, collected silently by M A R K.">
 	<meta name="robots" content="noindex, nofollow">
-
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     
 	<title>M A R K</title>
@@ -71,7 +64,7 @@
 
 <body data-imgdir="<? echo $imgdir ?>">
 
-  <? if ($_SESSION['user']): ?>
+  <? if (array_key_exists('user', $_SESSION) && $_SESSION['user']): ?>
         
 	<?
 		$folders = array_filter(glob($imgdir.'/*', GLOB_NOCHECK), 'is_dir'); // read folders in main image folder
