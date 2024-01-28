@@ -77,15 +77,6 @@ Version 0.2.8a
 
 3. If you prefer individual files, please refer to the commit notes to identify updated components.
 
-## Screenshots
+## Screenshot
 
-M A R K 0.2.1 running on a notebook.
-
-<img src="https://github.com/electricgecko/MARK/blob/master/src/MARK-06.jpg" alt="M A R K running on desktop" width="900"/>
-<img src="https://github.com/electricgecko/MARK/blob/master/src/MARK-07.jpg" alt="M A R K running on desktop" width="900"/>
-
-M A R K 0.1.8.2 running on a mobile phone.
-
-<img src="https://github.com/electricgecko/MARK/blob/master/src/MARK-01.jpg" alt="M A R K running on a mobile phone" width="280"/>
-<img src="https://github.com/electricgecko/MARK/blob/master/src/MARK-05.jpg" alt="M A R K running on a mobile phone" width="280"/>
-<img src="https://github.com/electricgecko/MARK/blob/master/src/MARK-04.jpg" alt="M A R K running on a mobile phone" width="280">
+<img src="https://d2w9rnfcy7mm78.cloudfront.net/23278587/original_96cd13ec3ca67cd6f3c766515914f17e.png" alt="M A R K running on a desktop computer" width="900"/>
