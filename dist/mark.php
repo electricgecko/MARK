@@ -2,7 +2,7 @@
 	header('Access-Control-Allow-Origin: *');
 	
 	date_default_timezone_set('Europe/Berlin');
-	$validFileTypes = array('gif','png','jpg');
+	$validFileTypes = array('gif','png','jpg','webp','avif');
 	
   require_once('config.php');
   

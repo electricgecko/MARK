@@ -57,7 +57,7 @@
 	<link rel="mask-icon" href="vendor/favicons/safari-pinned-tab.svg" color="black">
 	<link rel="shortcut icon" href="vendor/favicons/favicon.ico">
 	
-	<link rel="stylesheet" href="vendor/mark.css">
+	<link rel="stylesheet" href="vendor/mark.css?028">
 		
 	<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 </head>
@@ -87,7 +87,7 @@
 		// go.
 		
 		// read main image folder	
-		$main_content = glob($imgdir.'/*.{jpg,jpeg,gif,png}', GLOB_BRACE);
+		$main_content = glob($imgdir.'/*.{jpg,jpeg,gif,png,webp,avif}', GLOB_BRACE);
 		
 		// remove thumbnails
 		$main_content = remove_thumbs($main_content);
@@ -103,7 +103,7 @@
 		foreach ($folders as $folder) {
 			
 			// read folder content
-			$folder_content = glob($folder.'/*.{jpg,jpeg,gif,png}', GLOB_BRACE);
+			$folder_content = glob($folder.'/*.{jpg,jpeg,gif,png,webp,avif}', GLOB_BRACE);
 			
 			// remove thumbnails
 			$folder_content = remove_thumbs($folder_content);
@@ -124,6 +124,7 @@
 		
 	<header>
 		<h1>MARK</h1>
+		<svg xmlns="http://www.w3.org/2000/svg" width="81.936" height="21.389" viewBox="0 0 81 21.3"><path d="M19.086 0l-8.461 19.123L2.021 0H0v21.348h1.658V3.242l8.124 18.106h1.666l8.002-18.08v18.08h1.658V0zM70.236 10.464L81.422 0h-2.394L68.765 9.695H66.92V0h-1.658v21.348h1.658V11.294h1.845l10.682 10.054h2.488zM57.278 12.003c3.029-.528 3.586-2.384 3.586-5.912C60.864.84 59.294 0 54.261 0h-8.4v21.348h1.658v-9.161h6.742c.453 0 .874-.007 1.265-.022l4.201 9.224h1.842l-4.29-9.386zm-1.307-1.463c-.49.032-1.08.048-1.83.048h-6.622v-8.99h6.622c4.54 0 5.061.462 5.065 4.496-.004 3.35-.435 4.14-2.648 4.393l-.587.053zM34.504.001h-1.766l-8.256 21.347h1.732l1.152-3.026h12.252l1.134 3.026h1.727L34.504 0zm-6.53 16.724l5.623-14.551 5.423 14.55H27.975z"/></svg>
 		<nav>
 			<ol>
 				<li><span>everything</span></li><?
@@ -208,13 +209,16 @@
 	
 	<? else: ?>
     <main class="login">
-        <h1><a href="<? echo $installdir ?>">MARK</a></h1>
-          <form name="login" action="" method="post">
-            <input type="text" name="user" value="" />
-            <label for="user">Username</label>
-            <input type="password" name="password" value="" />
-            <label for="password">Password</label>
-            <input type="submit" name="submit" value="Submit" />
+			<header>
+        <h1>MARK</h1>
+				<svg xmlns="http://www.w3.org/2000/svg" width="81.936" height="21.389" viewBox="0 0 81 21.3"><path d="M19.086 0l-8.461 19.123L2.021 0H0v21.348h1.658V3.242l8.124 18.106h1.666l8.002-18.08v18.08h1.658V0zM70.236 10.464L81.422 0h-2.394L68.765 9.695H66.92V0h-1.658v21.348h1.658V11.294h1.845l10.682 10.054h2.488zM57.278 12.003c3.029-.528 3.586-2.384 3.586-5.912C60.864.84 59.294 0 54.261 0h-8.4v21.348h1.658v-9.161h6.742c.453 0 .874-.007 1.265-.022l4.201 9.224h1.842l-4.29-9.386zm-1.307-1.463c-.49.032-1.08.048-1.83.048h-6.622v-8.99h6.622c4.54 0 5.061.462 5.065 4.496-.004 3.35-.435 4.14-2.648 4.393l-.587.053zM34.504.001h-1.766l-8.256 21.347h1.732l1.152-3.026h12.252l1.134 3.026h1.727L34.504 0zm-6.53 16.724l5.623-14.551 5.423 14.55H27.975z"/></svg>	
+      </header>
+			<form name="login" action="" method="post">
+      	<input type="text" name="user" value="" />
+        <label for="user">Username</label>
+      	<input type="password" name="password" value="" />
+        <label for="password">Password</label>
+        <input type="submit" name="submit" value="Submit" />
        </form>	
     </main>
 	<? endif ?>

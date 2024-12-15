@@ -5,7 +5,7 @@ $(document).ready(function() {
   var thumbSrc = 'thumb';
   var mult = .3; // image resize multiplier for each keypress
   var thumbBreakpoint = 600;
-  var filetypes = new Array('image/jpeg', 'image/png', 'image/gif');
+  var filetypes = new Array('image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/avif');
   var unsortedmsg = 'No unsorted images.'
   var imgSz = '200';
   var activeFilter = '*';
