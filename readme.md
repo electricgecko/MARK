@@ -1,4 +1,4 @@
-![MARK Logotype](http://static.electricgecko.de/mark/MARK-bg.svg)
+![MARK Logotype](https://static.electricgecko.de/mark/MARK-bg.svg)
 
 M A R K is a simple image bookmarking tool. It is tailored to my personal needs and preferences, so chances are it won’t fit your use case or make no sense to you at all.
 
