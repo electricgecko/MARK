@@ -57,9 +57,7 @@
 	<link rel="mask-icon" href="vendor/favicons/safari-pinned-tab.svg" color="black">
 	<link rel="shortcut icon" href="vendor/favicons/favicon.ico">
 	
-	<link rel="stylesheet" href="vendor/mark.css?028">
-		
-	<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+	<link rel="stylesheet" href="vendor/mark.css?0309">		
 </head>
 
 <body data-imgdir="<? echo $imgdir ?>">
@@ -103,7 +101,7 @@
 		foreach ($folders as $folder) {
 			
 			// read folder content
-			$folder_content = glob($folder.'/*.{jpg,jpeg,gif,png,webp,avif}', GLOB_BRACE);
+			$folder_content = glob($folder.'/*.{jpg,jpeg,gif,png,webp,avif}', GLOB_BRACE);			
 			
 			// remove thumbnails
 			$folder_content = remove_thumbs($folder_content);
@@ -139,6 +137,7 @@
 	</header>
 	
 	<main>
+		
     <ul>
 		  <?
         $index = 0;

@@ -14,14 +14,16 @@ body {
  -webkit-touch-callout: none !important;
 }
 
-body.inv {
- background: #131313;
- color: #fff;
-}
-
-body.drag {
- background: #cacaca;
- color: #000;
+body {
+  &.inv {
+    background: #131313;
+    color: #fff;
+  }
+  
+  &.drag {
+    background: #cacaca;
+    color: #000;
+  }
 }
 
 a {
@@ -41,6 +43,8 @@ ul, ol {
 
 header {
  position: fixed;
+ display: flex;
+ align-items: center;
  top: 0;
  left: 0;
  line-height: 20px;
@@ -165,7 +169,6 @@ main ul li:hover figure > a:after {
  background: rgba(255, 220, 50, 0.5);
 }
 
-
 main ul li.selected figure > a:after {
  content: '';
  display: block;
@@ -174,7 +177,6 @@ main ul li.selected figure > a:after {
  bottom: 0;
  left: 0;
  right: 0;
-
  background: rgba(0, 190, 255, 0.5);	
 }
 
@@ -184,7 +186,6 @@ figure span {
 
 aside {
  position: fixed;
- 
  top: 0;
  right: 0;
  min-height: 100vh;
@@ -262,7 +263,6 @@ form {
 form label {
  margin-bottom: 1em;
  display: block;
-
 }
 
 form input[type=text],
@@ -326,19 +326,33 @@ body.inv form input {
 }
 
 @media only screen and (max-width: 600px) {	
-
  form input[type=text],
  form input[type=password] {
   font-size: 300%;   
  }
-
- footer .mobile {
- 	display: block;
- } 
  
  header {
   width: 100%;
  }
+ 
+ svg {
+   height: 2.2em;
+   width: auto;
+   
+   path {
+     fill: #fff;
+   }
+ }
+ 
+ header,
+ footer {    
+    nav li span,
+    a {
+      color: #fff;
+    }
+    
+    mix-blend-mode: difference;
+  }
  
  nav {
   display: block;
@@ -349,6 +363,10 @@ body.inv form input {
 
   overflow-x: scroll;
   overflow-y: hidden;
+  
+  &::-webkit-scrollbar {
+      display: none;
+  }
  }
  
  main {
@@ -362,10 +380,15 @@ body.inv form input {
  main ul {
    flex-direction: column;
    align-items: center;
+   
+   li {
+     margin-left: 0;
+     margin-right: 0;
+   }
  }
  
  figure {
-   width: 90%;
+   width: 95%;
    height: auto;
    margin: 0 auto;
  }
@@ -385,10 +408,11 @@ body.inv form input {
  }
  
  footer .mobile {
- 	display: block;
- }   
+    display: block;
+  } 
  
- footer .download {
+ footer .download,
+ footer .zoom {
 	 display: none;
  }
  
@@ -406,13 +430,12 @@ body.inv form input {
   top: 0;
  }
 
- 
 }
 
 @media only screen 
-and (min-width : 320px) 
-and (max-width : 812px) 
-and (orientation : landscape)  {
+  and (min-width: 320px) 
+  and (max-width: 812px) 
+  and (orientation: landscape)  {
 
  nav {
    margin-left: 20px;
@@ -423,7 +446,7 @@ and (orientation : landscape)  {
  }
 }
 
-@media (hover: none) and (pointer: coarse) {
+@media (pointer: coarse) {
   .mobile.mobileUploadWrap {
     display: block;
   }
