@@ -1,4 +1,5 @@
 <?
+	ob_start();
 	$secure = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off');
 	session_set_cookie_params([
 			'httponly' => true,
@@ -16,7 +17,7 @@
 
 	if (isset($_GET['logout'])) {
 		session_destroy();
-		header('Location: '.$installdir);
+		header('Location: ./');
 		exit;
 	}
 	
@@ -27,12 +28,13 @@
 		if (isset($userinfo[$user]) && password_verify($password, $userinfo[$user])) {
 			session_regenerate_id(true);
 			$_SESSION['user'] = $user;
-			header('Location: '.$installdir);
+			header('Location: ./');
 			exit;
 		} else {
 			echo 'Invalid login.';
 		}
 	}
+	ob_flush();
 ?>
 
 <!DOCTYPE html>
