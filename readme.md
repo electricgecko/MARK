@@ -22,10 +22,10 @@ Version 0.3
 ## Alpha version constraints
 - You need to host M A R K on your own (LAMP-) server. For now, the installation process involves uploading the package and changing some php files (see *installation*).
 - If your server does not have an SSL certificate, M A R K will not be able to save images via secure connections for cross-domain scripting reasons.
-- M A R K does not save image sources in any way. In the rare cases this is of interest to me, I use a [reverse image search](https://gist.github.com/electricgecko/44152c19c83d7d1960a9).
+- M A R K does not retain image sources.
 - For now, folders have to be created manually, on the server. For the beta version, I'd like to add an UI for this.
-- The user account system is rudimentary, to say the least. Passwords are stored as plain text, even.
-- JS & SCSS remain uncompiled, no task runner, no SCSS no nothing.
+- The user account system is rudimentary, to say the least.
+- JS & CSS remain uncompiled.
 - No dependencies.
 
 ## Installation
@@ -35,14 +35,14 @@ Version 0.3
 2. Copy all files within the */dist/* folder to your server. Most likely, you will want to place it in some subfolder of your */htdocs/* directory.
 3. Create an empty folder named */imgs/* in the same directory you installed M A R K to.
 4. On your server, edit **config_sample.php** and change the value of the very first variable (**$installpath**) to match the sever folder you installed M A R K to.
-5. In **config_sample.php**, also change the user account info to your desired login name and password. Yes, in plain text. I am sorry. Feel free to add multiple users like so:
+5. In **config_sample.php**, also change the user account info to your desired login name and password. State your passwords in plain text – they will get hashed upon first login. You can add multiple users like so:
 
-    ```
+  ```
 	$userinfo = array(
   		'Jill' => 'Hveywhb9yAGbVuBu',
   		'John' => 'cYpeuzvKZ7Wxht4U'
 	);
-    ```
+  ```
 
 6. Save and close **config_sample.php**, then rename it to **config.php**.
 
