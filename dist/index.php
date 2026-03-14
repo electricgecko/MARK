@@ -1,7 +1,12 @@
 <?
-  ob_start();
-	session_start();
+	$secure = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off');
+	session_set_cookie_params([
+			'httponly' => true,
+			'secure' => $secure,
+			'samesite' => 'Strict'
+	]);
 	
+	session_start();
 	require_once('config.php');
 
   // clean up download file
@@ -10,27 +15,24 @@
   }
 
 	if (isset($_GET['logout'])) {
-	    $_SESSION['user'] = '';
-	    setcookie('MARKsession','', time()-86400, '/');
-	    header('Location:  https://' . $_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF']));
-	    exit;
+		session_destroy();
+		header('Location: '.$installdir);
+		exit;
 	}
 	
-	if (isset($_COOKIE['MARKsession'])) {
-    	$_SESSION['user'] = $_COOKIE['MARKsession'];
-	} 
+	if (isset($_POST['user'], $_POST['password'])) {
+		$user = $_POST['user'];
+		$password = $_POST['password'];
 	
-	else if (isset($_POST['user'])) {
-    	
-	    if ((array_key_exists($_POST['user'], $userinfo)) && $userinfo[$_POST['user']] == $_POST['password']) {
-	        $_SESSION['user'] = $_POST['user'];
-	        setcookie('MARKsession',$_POST['user'], time()+86400*30, '/');
-	   
-	    } else {
-	       echo 'invalid login';
-	    }
+		if (isset($userinfo[$user]) && password_verify($password, $userinfo[$user])) {
+			session_regenerate_id(true);
+			$_SESSION['user'] = $user;
+			header('Location: '.$installdir);
+			exit;
+		} else {
+			echo 'Invalid login.';
+		}
 	}
-	ob_end_flush();
 ?>
 
 <!DOCTYPE html>
