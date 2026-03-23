@@ -327,13 +327,35 @@ document.addEventListener('DOMContentLoaded', () => {
 		const li = btn.closest('li');
 		const thumb = li.querySelector('img').src;
 		const url = li.querySelector('figure a').href;
-
+		console.log(li, thumb, url);
+		
 		fetch('mark.php', {
-			method:'POST',
-			headers:{'Content-Type':'application/x-www-form-urlencoded'},
-			body:new URLSearchParams({
-				a:'del', f:url, t:thumb
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/x-www-form-urlencoded'
+			},
+			body: new URLSearchParams({
+				a: 'del',
+				f: url,
+				t: thumb
 			})
+		})
+		.then(response => {
+			console.log('Response:', response);
+		
+			// Check HTTP status
+			if (!response.ok) {
+				throw new Error(`HTTP error! Status: ${response.status}`);
+			}
+		
+			// Try to read response (adjust depending on your PHP output)
+			return response.text(); // or response.json()
+		})
+		.then(data => {
+			console.log('Success:', data);
+		})
+		.catch(error => {
+			console.error('Fetch error:', error);
 		});
 
 		li.style.opacity = '0';

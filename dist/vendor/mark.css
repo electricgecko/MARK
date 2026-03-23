@@ -332,7 +332,7 @@ body.inv form input {
  }
  
  svg {
-   height: 1.2em;
+   height: 3em;
    width: auto;
    
    path {
@@ -384,7 +384,6 @@ body.inv form input {
  }
  
  figure {
-   width: 95%;
    height: auto;
    margin: 0 auto;
  }
@@ -392,6 +391,11 @@ body.inv form input {
  figure img {
    width: 100%;
    height: auto;
+ }
+ 
+ main ul {
+   max-width: 95%;
+   margin: 0 auto;
  }
 
  main ul li:hover figure > a:after {
@@ -415,9 +419,18 @@ body.inv form input {
   main.login {
     padding-top: 2em;
     
+    header {
+      position: relative;
+      padding: 0;
+    }
+    
+    svg {
+      height: 1.5em;
+    }
+    
     form {
       width: 80%;
-      margin: 0 auto 0 0;
+      margin: 2em auto 0 0;
      }
      
     form input[type=text],

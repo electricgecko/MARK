@@ -12,7 +12,7 @@
 	$upload = false;
 	 
 	$a = $_POST['a'];
-    
+
 	if (isset($_POST['f']))  { $file = $_POST['f'];     }
 	if (isset($_POST['t']))  { $thumb = $_POST['t'];    }
 	if (isset($_POST['d']))  { $dir = $_POST['d'];      }
@@ -34,8 +34,20 @@
 	}
 	
 	function markdel($del_img, $del_thumb) {
-		if (!unlink($del_img)) {}
-		if (!unlink($del_thumb)) {}				
+		$del_img_path = $_SERVER['DOCUMENT_ROOT'] . parse_url($del_img, PHP_URL_PATH);
+		$del_thumb_path = $_SERVER['DOCUMENT_ROOT'] . parse_url($del_thumb, PHP_URL_PATH);
+				
+		if (file_exists($del_img_path)) { 
+			unlink($del_img_path);
+		} else {
+			echo 'Could not delete image, it does not exist';
+		}
+		
+		if (file_exists($del_thumb_path)) { 
+			unlink($del_thumb_path);	
+		} else {
+			echo 'Could not delete thumb, it does not exist';
+		}		
 	}	
 	
 	function markmove($move_img, $move_thumb, $move_dir) {
