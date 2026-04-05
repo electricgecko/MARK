@@ -61,7 +61,7 @@
 	<link rel="mask-icon" href="vendor/favicons/safari-pinned-tab.svg" color="black">
 	<link rel="shortcut icon" href="vendor/favicons/favicon.ico">
 	
-	<link rel="stylesheet" href="vendor/mark.css?0309">		
+	<link rel="stylesheet" href="vendor/mark.css?04">		
 </head>
 
 <body data-imgdir="<? echo $imgdir ?>">

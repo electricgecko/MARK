@@ -278,6 +278,7 @@ form input[type=password] {
  
  width: 100%;
  padding: 0;
+ margin-bottom: 3px;
  
  display: block;
   		
@@ -296,12 +297,13 @@ input[type=file] {
 }
 
 form input[type=submit] {
- -webkit-appearance:none;
+ -webkit-appearance: none;
  outline: none;
  background: none;
  padding: 0;
  border: 0;
  cursor: pointer;
+ letter-spacing: 1px;
  font-size: 100%;
  margin-top: 5em;
 }
@@ -324,7 +326,7 @@ body.inv form input {
 @media only screen and (max-width: 600px) {	  
  form input[type=text],
  form input[type=password] {
-  font-size: 300%;   
+  font-size: 300%;
  }
  
  header {
@@ -374,10 +376,11 @@ body.inv form input {
  }
  
  main ul {
-   flex-direction: column;
    align-items: center;
+   gap: 5%;
    
    li {
+     flex: 1 1 45%;
      margin-left: 0;
      margin-right: 0;
    }
