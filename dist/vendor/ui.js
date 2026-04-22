@@ -267,27 +267,33 @@ document.addEventListener('DOMContentLoaded', () => {
 		if (folder === first) folder = '';
 
 		const images = document.querySelectorAll('li.selected figure a img');
+		
 
 		for (const img of images) {
-
-			const li = img.closest('li');
-			const thumb = img.src;
-			const file = img.parentElement.href;
-
-			await fetch('mark.php', {
-				method:'POST',
-				headers:{'Content-Type':'application/x-www-form-urlencoded'},
-				body:new URLSearchParams({
-					a:'move', f:file, t:thumb, d:folder
-				})
-			});
+			const 
+				li = img.closest('li'),
+				thumb = img.src,
+				file = img.parentElement.href;
+			
+			try {
+				const response = await fetch('mark.php', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+					body: new URLSearchParams({
+						a: 'move',
+						f: file,
+						t: thumb,
+						d: folder
+					})
+				});
+			} catch (err) {console.error('Fetch failed:', err);}
 
 			const baseClass = li.classList[0];
 			const prefix = baseClass !== 'imgs' ? '' : 'imgs/';
-
+						
 			li.dataset.url = li.dataset.url.replace(baseClass, prefix + folder);
 			li.dataset.thumb = li.dataset.thumb.replace(baseClass, prefix + folder);
-
+			
 			img.src = li.dataset.thumb;
 			img.parentElement.href = li.dataset.url;
 

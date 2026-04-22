@@ -52,14 +52,17 @@
 	
 	function markmove($move_img, $move_thumb, $move_dir) {
     global $imgdir;
-    	
+		
+    $move_img = parse_url($move_img , PHP_URL_PATH);
+		$move_thumb = parse_url($move_thumb , PHP_URL_PATH);
+		$move_img = strstr($move_img, $imgdir);
+		$move_thumb = strstr($move_thumb, $imgdir);
+		
 		$dest = $imgdir.'/'.$move_dir.'/'.basename($move_img);
 		rename($move_img, $dest);
 		
 		$dest = $imgdir.'/'.$move_dir.'/'.basename($move_thumb);
-		rename($move_thumb, $dest);
-    
-    echo "bonk";		
+		rename($move_thumb, $dest);    
 	}
 
 	function markdl($dl_dir) {
