@@ -139,7 +139,10 @@
     } elseif (exif_imagetype($img) == IMAGETYPE_GIF) {
         $img_el = imagecreatefromgif($img);
         $ext = '.gif';
-    }
+    } elseif (exif_imagetype($img) == IMAGETYPE_WEBP) {
+				$img_el = imagecreatefromwebp($img);
+				$ext = '.webp';
+		}
         
     // get image dimensions
 		$img_w = imagesx($img_el);
