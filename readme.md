@@ -30,6 +30,9 @@ Version 0.3.3
 
 ## Installation
 
+### Requirements
+- Support for AVIF files requires PHP > 8.3
+
 ### Installation to server
 1. [Download](https://github.com/electricgecko/MARK/archive/master.zip) this repo.
 2. Copy all files within the */dist/* folder to your server. Most likely, you will want to place it in some subfolder of your */htdocs/* directory.

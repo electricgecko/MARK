@@ -120,7 +120,7 @@
 	
 		// sort image object
 		uasort($images, function($a, $b) {
-			return basename($b['name']) - basename($a['name']);
+			return strcmp(basename($b['name']), basename($a['name']));
 		});
 	?>
 		
