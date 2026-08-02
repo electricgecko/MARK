@@ -1,8 +1,8 @@
-![MARK Logotype](https://static.electricgecko.de/mark/MARK-bg.svg)
+![MARK Logotype](http://static.maltemueller.com/mark/MARK-bg.svg)
 
 M A R K is a simple image bookmarking tool. It is tailored to my personal needs and preferences, so chances are it won’t fit your use case or make no sense to you at all.
 
-Version 0.3.3
+Version 0.4
 
 ## Rationale
 - M A R K is a tool for personal image bookmarking. There is no way to share your bookmarks with others, unless you grant them access to your instance. I have been pondering a feature that would enable sharing of selected content, though.
@@ -20,25 +20,25 @@ Version 0.3.3
 - There is an <a href="https://www.are.na/malte-muller/m-a-r-k">Are.na channel</a> documenting pleasing visual moments from M A R K instances.
 
 ## Alpha version constraints
-- You need to host M A R K on your own (LAMP-) server. For now, the installation process involves uploading the package and changing some php files (see *installation*).
-- If your server does not have an SSL certificate, M A R K will not be able to save images via secure connections for cross-domain scripting reasons.
+- You need to host M A R K on your own (LAMP-) server. Installation requires uploading the package and visiting `/setup` in your browser. (see *installation*).
 - M A R K does not retain image sources.
-- For now, folders have to be created manually, on the server. For the beta version, I'd like to add an UI for this.
-- The user account system is rudimentary, to say the least.
+- For now, folders have to be created manually, on the server.
+- The user account system is very simple.
 - JS & CSS remain uncompiled.
 - No dependencies.
 
 ## Installation
 
 ### Requirements
-- Support for AVIF files requires PHP > 8.3
+- Support for saving AVIF files requires PHP > 8.3
 
-### Installation to server
+### Installation
 1. [Download](https://github.com/electricgecko/MARK/archive/master.zip) this repo.
-2. Copy all files within the */dist/* folder to your server. Most likely, you will want to place it in some subfolder of your */htdocs/* directory.
-3. Create an empty folder named */imgs/* in the same directory you installed M A R K to.
-4. On your server, edit **config_sample.php** and change the value of the very first variable (**$installpath**) to match the sever folder you installed M A R K to.
-5. In **config_sample.php**, also change the user account info to your desired login name and password. State your passwords in plain text – they will get hashed upon first login. You can add multiple users like so:
+2. Copy all files within the `/dist` folder to your server. Most likely, you will want to place it in some subfolder of your */htdocs/* directory.
+3. Create an empty folder named `/imgs` in the same directory you installed M A R K to.
+4. Open the server URL you just copied M A R K to. You will be redirected to the one-step setup process. Make sure permissions are set to allow your server writing to your installation directory.
+5. Once setup is complete, you can start using M A R K. 
+6. If you would like to add multiple users later, you can edit `config.php` as follows – any password you enter will get hashed by the system upon first login:
 
   ```
 	$userinfo = array(
@@ -47,13 +47,11 @@ Version 0.3.3
 	);
   ```
 
-6. Save and close **config_sample.php**, then rename it to **config.php**.
-
-### Setup & configuration
-1. In your */imgs/* folder, create subfolders you want M A R K to use, such as **architecture**, **art** or **textures**. Folder names should not contain spaces.
-2. Open the */bookmarklet/* subfolder within the path you installed M A R K to in your browser. On this page, drag the bookmarklet to your favourites bar.
-3. In **config.php**, you will find some basic configuration options, such as the default thumbnail size and the name of your image folder. You may change these values if you like.
-4. Good to go. Happy M A R King!
+### Configuration
+1. In your `/imgs` folder, create subfolders you want M A R K to use, such as **architecture**, **art** or **textures**. Folder names should not contain spaces.
+2. Open the `/bookmarklet` subfolder within the path you installed M A R K to in your browser. On this page, drag the bookmarklet to your favourites bar.
+3. In `config.php`, you will find some basic configuration options, such as the default thumbnail size and the name of your image folder. Change these values if you like.
+4. Good to go.
 
 ## Usage
 - To add an image, click the M A R K bookmarklet. Saveable images are marked by a yellow frame. Click an image to save it to your collection. If an image cannot be added, try opening it in its own tab by selecting *open image in new tab* from your browser's context menu.
@@ -66,7 +64,7 @@ Version 0.3.3
 - Click on an image to display it in full resolution.
 - Click **download _folder name_** to download a zip of your collection, sorted into folders. The download respects the currently active folder filter.
 
-## Updating
+## Updating M A R K
 1. To update your M A R K installation, [re-download](https://github.com/electricgecko/MARK/archive/master.zip) this repo.
 2. Replace the following files and folders on your server:
 
@@ -74,6 +72,7 @@ Version 0.3.3
     index.php
     mark.php
     bookmarklet.js
+    /setup
     /vendor
     /bookmarklet
     ```
