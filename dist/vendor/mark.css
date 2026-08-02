@@ -272,7 +272,7 @@ form input[type=password] {
  outline: none;
  background: none;
  
- font-size: 400%;
+ font-size: 200%;
  font-weight: normal;
  font-family: 'Eurostile', 'EurostileLT', 'Eurostile LT', '-apple-system', 'Arial', sans-serif;
  
@@ -308,7 +308,8 @@ form input[type=submit] {
  margin-top: 5em;
 }
 
-form input[type=submit]:hover {
+form input[type=submit]:hover,
+a.underline:hover {
  text-decoration: underline;
 }
 
@@ -321,6 +322,11 @@ body.inv form input {
    position: absolute;
    top: 10px;
    left: 10px;
+}
+
+.login p {
+ width: 40%;
+ margin: 1em auto 0;
 }
 
 @media only screen and (max-width: 600px) {	  
