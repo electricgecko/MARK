@@ -7,7 +7,7 @@ Version 0.4
 ## Rationale
 - M A R K is a tool for personal image bookmarking. There is no way to share your bookmarks with others, unless you grant them access to your instance. I have been pondering a feature that would enable sharing of selected content, though.
 - M A R Ks general idea is to create a singular stream of your aesthetic sensibilities, their disparities, their evolution. Every image saved becomes part of this stream, called *everything*. The now defunctGimmeBar worked in this way, and I enjoyed it greatly.
-- Images are added via bookmarklet, which can be conveniently dragged to your bookmark bar from */bookmarklet/*.
+- Images are added via bookmarklet, which can be conveniently dragged to your bookmark bar from `/bookmarklet`.
 - Alternatively, images can be uploaded via drag and drop or via the *upload* button on touch-based devices.
 - Images are always sorted by date saved.
 - The display size of images can be adjusted by using the **+** and **-** keys. I find this to be a crucial feature.
@@ -20,7 +20,7 @@ Version 0.4
 - There is an <a href="https://www.are.na/malte-muller/m-a-r-k">Are.na channel</a> documenting pleasing visual moments from M A R K instances.
 
 ## Alpha version constraints
-- You need to host M A R K on your own (LAMP-) server. Installation requires uploading the package and visiting `/setup` in your browser. (see *installation*).
+- You need to host M A R K on your web server. Installation requires uploading the package and visiting `/setup` in your browser. (see *installation*).
 - M A R K does not retain image sources.
 - For now, folders have to be created manually, on the server.
 - The user account system is very simple.
@@ -66,7 +66,7 @@ Version 0.4
 - Click **download _folder name_** to download a zip of your collection, sorted into folders. The download respects the currently active folder filter.
 
 ## Updating M A R K
-1. To update your M A R K installation, [re-download](https://github.com/electricgecko/MARK/archive/master.zip) this repo.
+1. To update your M A R K installation, [download](https://github.com/electricgecko/MARK/archive/master.zip) the latest version of this repo.
 2. Replace the following files and folders on your server:
 
     ```
