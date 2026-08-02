@@ -30,11 +30,12 @@ Version 0.4
 ## Installation
 
 ### Requirements
+- Apache & PHP
 - Support for saving AVIF files requires PHP > 8.3
 
 ### Installation
 1. [Download](https://github.com/electricgecko/MARK/archive/master.zip) this repo.
-2. Copy all files within the `/dist` folder to your server. Most likely, you will want to place it in some subfolder of your */htdocs/* directory.
+2. Copy all files within the `/dist` folder to your web server.
 3. Create an empty folder named `/imgs` in the same directory you installed M A R K to.
 4. Open the server URL you just copied M A R K to. You will be redirected to the one-step setup process. Make sure permissions are set to allow your server writing to your installation directory.
 5. Once setup is complete, you can start using M A R K. 
