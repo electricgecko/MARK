@@ -1,4 +1,5 @@
 <?php
+	ob_start();
 	header('Access-Control-Allow-Origin: *');
 	
 	date_default_timezone_set('Europe/Berlin');
@@ -17,15 +18,21 @@
 	if (isset($_POST['t']))  { $thumb = $_POST['t'];    }
 	if (isset($_POST['d']))  { $dir = $_POST['d'];      }
 	if (isset($_FILES['u'])) { $upload = true;        }
-	
+
+	session_start();
+	$authed = !empty($_SESSION['user']);
+
 	switch ($a) {
     case 'del':
+    	if (!$authed) { http_response_code(403); exit; }
     	markdel($file, $thumb);
       break;
     case 'move':
+    	if (!$authed) { http_response_code(403); exit; }
     	markmove($file, $thumb, $dir);
 		break;
 		case 'download':
+			if (!$authed) { http_response_code(403); exit; }
 			markdl($dir);
 		break;
 		case 'load':
@@ -37,7 +44,7 @@
 		$del_img_path = $_SERVER['DOCUMENT_ROOT'] . parse_url($del_img, PHP_URL_PATH);
 		$del_thumb_path = $_SERVER['DOCUMENT_ROOT'] . parse_url($del_thumb, PHP_URL_PATH);
 				
-		if (file_exists($del_img_path)) { 
+		if (file_exists($del_img_path)) {
 			unlink($del_img_path);
 		} else {
 			echo 'Could not delete image, it does not exist';
@@ -52,7 +59,8 @@
 	
 	function markmove($move_img, $move_thumb, $move_dir) {
     global $imgdir;
-		
+
+    $move_dir = basename($move_dir);
     $move_img = parse_url($move_img , PHP_URL_PATH);
 		$move_thumb = parse_url($move_thumb , PHP_URL_PATH);
 		$move_img = strstr($move_img, $imgdir);
@@ -69,7 +77,9 @@
 		global $imgdir;
 		global $zip_name;
 		global $validFileTypes;
-		
+
+		$dl_dir = basename($dl_dir);
+
 		// delete existing zip file
 		if (file_exists($zip_name)) {
 	  	unlink ($zip_name);
@@ -142,6 +152,9 @@
     } elseif (exif_imagetype($img) == IMAGETYPE_WEBP) {
 				$img_el = imagecreatefromwebp($img);
 				$ext = '.webp';
+		} elseif (exif_imagetype($img) == IMAGETYPE_AVIF) {
+				$img_el = imagecreatefromavif($img);
+				$ext = '.avif';
 		}
         
     // get image dimensions
@@ -156,22 +169,22 @@
     		// construct file name, removing extension
     		$img_file = sanitizeFilename(preg_replace('/\\.[^.\\s]{3,4}$/', '', $_FILES['u']['name']));
 		} else {
-        $img_file = sanitizeFilename(basename($img));    		
+        $img_file = sanitizeFilename(preg_replace('/\.[^.\s]{3,4}$/', '', basename($img)));
 		}
-		
+
 		$img_file = str_replace($exp, $rep_exp, $img_file);
-		
+
 		// define image name
 		$img_name = $imgdir.'/'.$img_date.$exp.$img_w.$exp.$img_h.$exp.$img_file;
-		if ($upload) { $img_name .= $ext; }
+		$img_name .= $ext;
 		
 		// copy actual image
 		copy($img, $img_name);
 		
 		// create thumbnail	
 		$thumb_height = floor($img_h * ($thumb_width / $img_w));	
-		$thumb_name = $imgdir.'/'.$img_date.$exp.$thumb_indicator.$exp.$img_w.$exp.$img_h.$exp.$img_file;   
-		if ($upload) { $thumb_name .= $ext; }
+		$thumb_name = $imgdir.'/'.$img_date.$exp.$thumb_indicator.$exp.$img_w.$exp.$img_h.$exp.$img_file;
+		$thumb_name .= $ext;
 		$thumb_image = imagecreatetruecolor($thumb_width, $thumb_height);
 		imagecopyresampled($thumb_image, $img_el, 0, 0, 0, 0, $thumb_width, $thumb_height, $img_w, $img_h);
 	

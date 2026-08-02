@@ -56,7 +56,7 @@
 						url = src;
 					}
 
-					if (!url.startsWith('https://')) {url = url.replace('//', 'https://');}
+					url = url.replace(/^(https?:)?\/\//, 'https://');
 
 					try {
 						const response = await fetch(installdir + '/mark.php', {

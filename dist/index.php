@@ -8,6 +8,11 @@
 	]);
 	
 	session_start();
+
+	if (!file_exists('config.php')) {
+		header('Location: setup/');
+		exit;
+	}
 	require_once('config.php');
 
   // clean up download file
@@ -120,7 +125,7 @@
 	
 		// sort image object
 		uasort($images, function($a, $b) {
-			return basename($b['name']) - basename($a['name']);
+			return strcmp(basename($b['name']), basename($a['name']));
 		});
 	?>
 		
@@ -221,7 +226,7 @@
         <label for="user">Username</label>
       	<input type="password" name="password" value="" />
         <label for="password">Password</label>
-        <input type="submit" name="submit" value="Submit" />
+        <input type="submit" name="submit" value="Log in" />
        </form>	
     </main>
 	<? endif ?>
